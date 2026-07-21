@@ -7,12 +7,14 @@ export { isRemotePath } from "./io/isRemotePath.js";
 export { createHyogenError } from "./errors/createError.js";
 export { formatMessage } from "./errors/formatMessage.js";
 export { formatDiagnosticLog } from "./errors/formatDiagnosticLog.js";
+export { loadDataSources } from "./io/loadDataSources.js";
 export type {
   HyogenContext,
   HyogenDiagnostic,
   HyogenError,
   HyogenWarning,
   Loader,
+  DataSourcesMap,
   RenderOptions,
   RenderResult,
   ServerRenderOptions,
