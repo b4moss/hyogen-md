@@ -2,9 +2,11 @@ import { copyFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import inject from '@rollup/plugin-inject'
+import { resolveSiteVersion } from './scripts/resolveSiteVersion'
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url))
 const appSrc = path.resolve(rootDir, '../app/src')
+const siteVersion = resolveSiteVersion(rootDir)
 
 const docRoutes = [
   '/',
@@ -47,7 +49,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteName: 'hyogen-md',
-      siteVersion: '0.10.0-docs.8',
+      siteVersion,
       githubUrl: 'https://github.com/b4moss/hyogen-md',
       footerText: 'MIT License · 2026 Bicycle for Mind LLC.',
     },
