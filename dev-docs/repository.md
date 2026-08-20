@@ -137,17 +137,16 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 |------|------|
 | トリガ | **`release` への push**（マージ含む） |
 | Workflow | [`.github/workflows/publish.yml`](../.github/workflows/publish.yml) |
-| 動作 | `app/` で build のあと `npm publish --access public` |
+| 動作 | `app/` で build のあと `npm publish --access public --provenance`（Trusted Publishing / OIDC） |
 | 既存版 | registry に **同じ `name@version` がある場合は publish をスキップ**（成功終了）。初期 `release` = `0.10.0` でも再公開しない |
 | 版 | git tag と `app/package.json` の version を **一致**させてから `release` へ載せる |
-| Secret | リポジトリ Secrets に **`NPM_TOKEN`**（npm Automation / Granular Access Token。`@b4moss` への publish 権限） |
+| Auth | 長期 `NPM_TOKEN` は使わない。npm パッケージの **Trusted Publisher（GitHub Actions）** + workflow `permissions.id-token: write` |
 
-### NPM_TOKEN の登録手順
+### Trusted Publisher の設定手順
 
-1. [npmjs.com](https://www.npmjs.com/) で Access Token を発行（Automation 推奨）
-2. GitHub リポジトリ **Settings → Secrets and variables → Actions**
-3. Name: `NPM_TOKEN`、Value: トークンを保存
-4. 対象リポジトリは **`b4m-oss/hyogen-md`**（github リモートを正とする）
+1. [npmjs.com](https://www.npmjs.com/package/@b4moss/hyogen-md) → Access → Trusted Publisher
+2. GitHub Actions を選び、リポジトリ **`b4moss/hyogen-md`**、Workflow ファイル名 **`publish.yml`**（パスなし）を登録
+3. 動作確認後、不要になった GitHub Secrets の `NPM_TOKEN` があれば削除
 
 初回公開済みの前提・パッケージ境界は [need_decision.md](./need_decision.md)「配布・公開」。
 
