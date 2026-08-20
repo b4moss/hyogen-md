@@ -34,8 +34,7 @@ const githubUrl = computed(() => String(config.public.githubUrl || ""));
         </p>
       </div>
       <div class="header-actions">
-        <ColorModeToggle />
-        <LanguageSelect />
+        <HeaderPrefsMenu />
         <a
           v-if="githubUrl"
           class="github-link"
