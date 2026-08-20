@@ -100,7 +100,7 @@ API details: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/d
 
 ### Documentation & Playground
 
-**Site:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)** (deploys from `main`).  
+**Site:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)** (GitHub Pages; `/ja`, `/en`, `/playground`).  
 **Playground:** **[https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)**
 
 Local:

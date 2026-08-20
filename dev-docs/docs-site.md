@@ -30,7 +30,8 @@
 | hyogen-md 参照 | 開発時は alias で `../app` ソースを読む（現行 Playground と同様） |
 | ホスティング | **GitHub Pages**（Actions）。production branch は **`main`** |
 | URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。README の導線を更新 |
-| 言語 | 英語を正とし、日本語ページを併設（ルート方針は実装時。`/ja` 等） |
+| 言語 | `@nuxtjs/i18n` の `prefix` 戦略。`/ja/…` と `/en/…`（デフォルト locale は `ja`。`/` は locale redirect） |
+| UI 殻 | [b4moss/git-template `doc-site`](https://github.com/b4moss/git-template/tree/doc-site) を適用（ヘッダー dropdown・sidebar・pager） |
 | npm | **含めない** |
 
 ---

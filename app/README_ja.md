@@ -100,7 +100,7 @@ API の詳細: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob
 
 ### ドキュメントサイト & Playground
 
-**サイト:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)**（`main` からデプロイ）  
+**サイト:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)**（GitHub Pages。`/ja`・`/en`・`/playground`）  
 **Playground:** **[https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)**
 
 ローカル:
