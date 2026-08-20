@@ -94,7 +94,7 @@ flowchart LR
 
 ---
 
-## Playground / ドキュメントサイトの公開（Netlify）
+## Playground / ドキュメントサイトの公開（GitHub Pages）
 
 製品仕様: [docs-site.md](./docs-site.md)。
 
@@ -102,17 +102,15 @@ flowchart LR
 |------|------|
 | サイト | **`docs-site/`**（Nuxt Content）。Playground は **`/playground`** に統合済み |
 | テーマ | dark / light / system をサイトと Playground で共有 |
-| デプロイ | **`main`**。根 `netlify.toml` で `app/` + `docs-site/` をビルド |
-| URL | **https://hyogen-md.netlify.app**（Playground: `/playground`） |
+| デプロイ | **`main`** への push。Workflow [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
+| URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。独自ドメインは `docs-site/public/CNAME` |
 | npm | サイト・Playground とも **含めない** |
 
-### Netlify 接続手順（参照用）
+### GitHub Pages 接続手順（参照用）
 
-1. [Netlify](https://app.netlify.com/) で **Add new site → Import an existing project**
-2. GitHub の **`b4m-oss/hyogen-md`** を選択
-3. Branch: **`main`**。Build settings はリポジトリ根の `netlify.toml` を使用
-4. Site name を **`hyogen-md`**（URL: `https://hyogen-md.netlify.app`）にする。取れない場合は別名にし README を更新
-5. Deploy。以降 `main` への push で自動デプロイ
+1. リポジトリ **Settings → Pages** で Source を **GitHub Actions** にする
+2. 独自ドメイン **`hyogenmd.oss.b4m.jp`** を設定し、DNS で Pages へ向ける（CNAME ファイルはリポジトリ側に同梱）
+3. 以降 `main` への push（または `workflow_dispatch`）で自動デプロイ
 
 ---
 
@@ -128,6 +126,14 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - `make check`（app typecheck / build / test / pack）
 - `make test-pg`（docs-site 内 Playground テスト）
 - `make build-docs`（docs-site 静的生成）
+
+### CD（docs site）
+
+| 項目 | 方針 |
+|------|------|
+| トリガ | **`main` への push**（および手動 `workflow_dispatch`） |
+| Workflow | [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) |
+| 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
 
 ---
 
@@ -172,7 +178,7 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - [x] hotfix は `main` → `release` 可（方針確定）
 - [x] CI: PR → `dev-v*` / `develop`（`.github/workflows/ci.yml`）
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
-- [x] Playground を Netlify 公開し、README から導線（`netlify.toml` + `https://hyogen-md.netlify.app`。サイト接続はダッシュボード手順）
+- [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [ ] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
 
 以上

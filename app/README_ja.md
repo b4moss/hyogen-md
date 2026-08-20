@@ -16,8 +16,8 @@ TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジン�
 - **ライセンス:** MIT
 - **English README:** [README.md](./README.md)
 - **Changelog:** [user-docs/changelog_ja.md](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog_ja.md)
-- **ドキュメントサイト:** [https://hyogen-md.netlify.app](https://hyogen-md.netlify.app)（Nuxt Content。npm 非同梱）
-- **Playground:** [https://hyogen-md.netlify.app/playground](https://hyogen-md.netlify.app/playground)（同一サイト。npm 非同梱）
+- **ドキュメントサイト:** [https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)（Nuxt Content。npm 非同梱）
+- **Playground:** [https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)（同一サイト。npm 非同梱）
 - **仕様（日本語・メンテナー向け）:** [dev-docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/dev-docs)
 
 > **Homepage:** [https://github.com/b4m-oss/hyogen-md](https://github.com/b4m-oss/hyogen-md)
@@ -94,14 +94,14 @@ API の詳細: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob
 | パス | 役割 |
 |------|------|
 | `app/` | npm 公開するライブラリ（`dist` + README / LICENSE） |
-| `docs-site/` | [Netlify](https://hyogen-md.netlify.app) 上のドキュメントサイト + Playground（**npm 非同梱**） |
+| `docs-site/` | [GitHub Pages](https://hyogenmd.oss.b4m.jp) 上のドキュメントサイト + Playground（**npm 非同梱**） |
 | `user-docs/` | 利用者向けドキュメント（例: [changelog](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog_ja.md)） |
 | `dev-docs/` | 仕様・ロードマップ（**日本語**・メンテナー向け） |
 
 ### ドキュメントサイト & Playground
 
-**サイト:** **[https://hyogen-md.netlify.app](https://hyogen-md.netlify.app)**（`main` からデプロイ）  
-**Playground:** **[https://hyogen-md.netlify.app/playground](https://hyogen-md.netlify.app/playground)**
+**サイト:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)**（`main` からデプロイ）  
+**Playground:** **[https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)**
 
 ローカル:
 

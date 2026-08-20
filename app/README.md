@@ -16,8 +16,8 @@ Control flow and templating live in HTML comments (`@hg` â€¦ `@endhg` or `@@` â€
 - **License:** MIT
 - **Japanese README:** [README_ja.md](./README_ja.md)
 - **Changelog:** [user-docs/changelog.md](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog.md)
-- **Documentation:** [https://hyogen-md.netlify.app](https://hyogen-md.netlify.app) (Nuxt Content; not in npm)
-- **Playground:** [https://hyogen-md.netlify.app/playground](https://hyogen-md.netlify.app/playground) (same site; not in npm)
+- **Documentation:** [https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp) (Nuxt Content; not in npm)
+- **Playground:** [https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground) (same site; not in npm)
 - **Specs (Japanese, maintainers):** [dev-docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/dev-docs)
 
 > **Homepage:** [https://github.com/b4m-oss/hyogen-md](https://github.com/b4m-oss/hyogen-md)
@@ -94,14 +94,14 @@ API details: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/d
 | Path | Role |
 |------|------|
 | `app/` | Library published to npm (`files`: `dist`, plus README / LICENSE) |
-| `docs-site/` | Documentation site + Playground on [Netlify](https://hyogen-md.netlify.app) (**not** in npm) |
+| `docs-site/` | Documentation site + Playground on [GitHub Pages](https://hyogenmd.oss.b4m.jp) (**not** in npm) |
 | `user-docs/` | User-facing docs (e.g. [changelog](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog.md)) |
 | `dev-docs/` | Specs and roadmap (**Japanese**, maintainers) |
 
 ### Documentation & Playground
 
-**Site:** **[https://hyogen-md.netlify.app](https://hyogen-md.netlify.app)** (deploys from `main`).  
-**Playground:** **[https://hyogen-md.netlify.app/playground](https://hyogen-md.netlify.app/playground)**
+**Site:** **[https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)** (deploys from `main`).  
+**Playground:** **[https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)**
 
 Local:
 
