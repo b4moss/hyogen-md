@@ -22,6 +22,7 @@ export default {
     playground: 'Playground',
     changelog: 'Changelog',
     language: '言語',
+    prefs: '表示設定',
     menu: 'メニュー',
     github: 'GitHub',
     prev: '前へ',

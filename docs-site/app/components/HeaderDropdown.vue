@@ -142,7 +142,7 @@ defineExpose({ close, open });
   top: calc(100% + 0.35rem);
   right: 0;
   z-index: 40;
-  min-width: 100%;
+  min-width: max(100%, 11rem);
   padding: 0.3rem;
   border: 1px solid var(--color-border);
   border-radius: 0.45rem;
@@ -169,7 +169,7 @@ defineExpose({ close, open });
   }
 
   .dropdown-menu {
-    min-width: 9.5rem;
+    min-width: 11rem;
     padding: 0.4rem;
   }
 }
