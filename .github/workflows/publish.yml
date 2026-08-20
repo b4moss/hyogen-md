@@ -9,6 +9,10 @@ concurrency:
   group: publish-npm
   cancel-in-progress: false
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     name: npm publish (@b4moss/hyogen-md)
@@ -27,6 +31,9 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
 
+      - name: Upgrade npm for Trusted Publishing
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: npm ci
 
@@ -34,8 +41,6 @@ jobs:
         run: npm run build
 
       - name: Publish if version is new
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
           NAME="$(node -p "require('./package.json').name")"
@@ -44,8 +49,4 @@ jobs:
             echo "Skip publish: ${NAME}@${VERSION} already on npm"
             exit 0
           fi
-          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
-            echo "NPM_TOKEN secret is not set" >&2
-            exit 1
-          fi
-          npm publish --access public
+          npm publish --access public --provenance
