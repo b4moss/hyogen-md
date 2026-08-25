@@ -2,10 +2,12 @@
 
 ![masthead](https://raw.githubusercontent.com/b4m-oss/hyogen-md/develop/user-docs/hyogen-md-masthead.png)
 
-[![npm version](https://img.shields.io/npm/v/@b4moss/hyogen-md.svg)](https://www.npmjs.com/package/@b4moss/hyogen-md)
-[![license](https://img.shields.io/github/license/b4m-oss/hyogen-md)](./LICENSE)
-[![node](https://img.shields.io/node/v/@b4moss/hyogen-md.svg)](https://www.npmjs.com/package/@b4moss/hyogen-md)
-[![coverage](https://img.shields.io/badge/coverage-84%25-brightgreen)](#ステータス)
+[![CI](https://github.com/b4moss/hyogen-md/actions/workflows/ci.yml/badge.svg)](https://github.com/b4moss/hyogen-md/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/b4moss/hyogen-md)](https://codecov.io/gh/b4moss/hyogen-md)
+[![npm](https://img.shields.io/npm/v/@b4moss/hyogen-md)](https://www.npmjs.com/package/@b4moss/hyogen-md)
+[![Release](https://img.shields.io/github/v/release/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/releases)
+[![License](https://img.shields.io/github/license/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/blob/main/LICENSE)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/b4moss/hyogen-md/badge)](https://securityscorecards.dev/viewer/?uri=github.com/b4moss/hyogen-md)
 
 TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジンです。
 
