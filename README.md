@@ -20,7 +20,7 @@ Control flow and templating live in HTML comments (`@hg` â€¦ `@endhg` or `@@` â€
 - **Changelog:** [user-docs/changelog.md](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog.md)
 - **Documentation:** [https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp) (Nuxt Content; not in npm)
 - **Playground:** [https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground) (same site; not in npm)
-- **Specs (Japanese, maintainers):** [dev-docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/dev-docs)
+- **Specs (Japanese, maintainers):** [docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/docs)
 
 > **Homepage:** [https://github.com/b4m-oss/hyogen-md](https://github.com/b4m-oss/hyogen-md)
 
@@ -87,7 +87,7 @@ const { files, warnings } = await build({
 });
 ```
 
-API details: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/develop/dev-docs/specs/api.md).
+API details: [docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/specs/api.md).
 
 ---
 
@@ -98,7 +98,7 @@ API details: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/d
 | `app/` | Library published to npm (`files`: `dist`, plus README / LICENSE) |
 | `docs-site/` | Documentation site + Playground on [GitHub Pages](https://hyogenmd.oss.b4m.jp) (**not** in npm) |
 | `user-docs/` | User-facing docs (e.g. [changelog](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog.md)) |
-| `dev-docs/` | Specs and roadmap (**Japanese**, maintainers) |
+| `docs/` | Specs and roadmap (**Japanese**, maintainers) |
 
 ### Documentation & Playground
 

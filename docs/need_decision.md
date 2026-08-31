@@ -46,7 +46,7 @@
 | LICENSE | **MIT**（リポジトリ根および `app/package.json` の `license`） | — |
 | README | **英語**の `README.md` をリポジトリ根と **`app/README.md` で同内容同期**。同内容の日本語を `README_ja.md`（根・必要なら `app/` も同期） | [roadmap.md](./roadmap.md) |
 | CHANGELOG | **`user-docs/changelog.md`**（日本語: `changelog_ja.md`）。README からはリンクする | — |
-| `dev-docs/` | **日本語のまま**（仕様の正・メンテナー向け）。利用者向けは `user-docs/` / README | [main.md](./main.md) |
+| `docs/` | **日本語のまま**（仕様の正・メンテナー向け）。利用者向けは `user-docs/` / README | [main.md](./main.md) |
 | 公開前チェック | `build` / `test` / `npm pack --dry-run` 等を実施してから publish | [roadmap.md](./roadmap.md) |
 | ドキュメントサイト | **完了**（`docs-site/` + Netlify）。利用者向けの正 | [docs-site.md](./docs-site.md) |
 
