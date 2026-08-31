@@ -13,18 +13,18 @@ English: [changelog.md](/changelog)
 
 - 根の `netlify.toml`（`playground/` をビルド、`main` からデプロイ）
 - README（英・日、根・`app/`）から **https://hyogen-md.netlify.app** へ導線
-- サイト接続手順は `dev-docs/repository.md`（ダッシュボード、サイト名 `hyogen-md`）
+- サイト接続手順は `docs/repository.md`（ダッシュボード、サイト名 `hyogen-md`）
 
 ### 0.10.0-docs.2 — CD / ブランチ保護
 
 - **`release`** への push で npm publish（`.github/workflows/publish.yml`）。既存 `name@version` はスキップ
-- `NPM_TOKEN` と branch protection（`main` / `release` / `develop`）を `dev-docs/repository.md` に記載
+- `NPM_TOKEN` と branch protection（`main` / `release` / `develop`）を `docs/repository.md` に記載
 
 ### 0.10.0-docs.1 — リポジトリ運用
 
 - 長期ブランチ **`main`** / **`release`**（`v0.10.0` 時点の `develop` から）。`develop` は維持
 - GitHub Actions CI（PR base: `develop` / `dev-v*`）。`.github/workflows/ci.yml`
-- 仕様: [dev-docs/repository.md](https://github.com/b4m-oss/hyogen-md/blob/develop/dev-docs/repository.md)（Netlify の production は **`main`**）
+- 仕様: [docs/repository.md](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/repository.md)（Netlify の production は **`main`**）
 
 ### 0.10.0 — Playground UX + npm 初回公開
 
@@ -40,7 +40,7 @@ Playground（npm 非同梱）:
 
 - `app/` から `@b4moss/hyogen-md@0.10.0` を初回公開（`dist` + README / LICENSE。`*.map` 除外）
 - git tag `v0.10.0` と npm 版を一致
-- ドキュメント構成: `dev-docs/`（メンテナー）、`user-docs/`（changelog 等）
+- ドキュメント構成: `docs/`（メンテナー）、`user-docs/`（changelog 等）
 
 ### 0.10.0-beta.3
 
