@@ -1,12 +1,35 @@
-import { copyFileSync } from 'node:fs'
+import { copyFileSync, existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { parse as parseYaml } from 'yaml'
 import inject from '@rollup/plugin-inject'
+import { normalizeSiteMeta, type SiteMeta } from './app/utils/siteMeta'
 import { resolveSiteVersion } from './scripts/resolveSiteVersion'
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url))
 const appSrc = path.resolve(rootDir, '../app/src')
-const siteVersion = resolveSiteVersion(rootDir)
+
+function loadSiteMeta(rootDirPath: string): SiteMeta {
+  const candidates = [
+    path.join(rootDirPath, 'site.meta.yaml'),
+    path.join(rootDirPath, 'site.meta.yaml.example'),
+  ]
+  for (const filePath of candidates) {
+    if (!existsSync(filePath)) continue
+    try {
+      const raw = parseYaml(readFileSync(filePath, 'utf8')) as Record<
+        string,
+        unknown
+      > | null
+      return normalizeSiteMeta(raw || undefined)
+    } catch (error) {
+      console.warn(`[doc-site] Failed to parse ${filePath}:`, error)
+    }
+  }
+  return normalizeSiteMeta(undefined)
+}
+
+const siteMeta = loadSiteMeta(rootDir)
 
 const docRoutes = [
   '/',
@@ -34,6 +57,8 @@ const docRoutes = [
 const prerenderRoutes = [
   '/playground',
   ...docRoutes.flatMap((route) => [`/ja${route === '/' ? '' : route}`, `/en${route === '/' ? '' : route}`]),
+  '/sitemap.xml',
+  '/robots.txt',
 ]
 
 export default defineNuxtConfig({
@@ -48,10 +73,15 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css', '~/assets/css/playground.css'],
   runtimeConfig: {
     public: {
-      siteName: 'hyogen-md',
-      siteVersion,
-      githubUrl: 'https://github.com/b4moss/hyogen-md',
-      footerText: 'MIT License · 2026 Bicycle for Mind LLC.',
+      siteName: siteMeta.siteName,
+      siteUrl: siteMeta.siteUrl,
+      siteVersion: resolveSiteVersion(rootDir),
+      description: siteMeta.description,
+      githubUrl: siteMeta.githubUrl,
+      footerText: siteMeta.footerText,
+      software: siteMeta.software,
+      organization: siteMeta.organization,
+      jsonLdExtra: siteMeta.jsonLdExtra,
     },
   },
   scripts: {
@@ -71,10 +101,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: {
-            default: 'github-light',
-            dark: 'github-dark',
-          },
+          theme: 'github-dark-high-contrast',
         },
       },
     },
@@ -86,7 +113,6 @@ export default defineNuxtConfig({
     head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Documentation for @b4moss/hyogen-md' },
       ],
       link: [
         {
@@ -97,6 +123,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    baseUrl: siteMeta.siteUrl,
     locales: [
       { code: 'ja', name: '日本語', language: 'ja-JP', file: 'ja.ts' },
       { code: 'en', name: 'English', language: 'en-US', file: 'en.ts' },
@@ -123,7 +150,7 @@ export default defineNuxtConfig({
       const parts = String(file.body).split(/(```[\s\S]*?```)/g)
       file.body = parts
         .map((part, i) => {
-          if (i % 2 === 1) return part // fenced code
+          if (i % 2 === 1) return part
           return part
             .replaceAll('{{', '&#123;&#123;')
             .replaceAll('}}', '&#125;&#125;')

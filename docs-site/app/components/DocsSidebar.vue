@@ -58,10 +58,15 @@ function isActive(item: { to: string }) {
   overflow-y: auto;
   transform: translateX(-100%);
   transition: transform 0.2s ease;
+  /* Off-canvas menus can still intercept taps on iOS Safari unless disabled. */
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .sidebar.open {
   transform: translateX(0);
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .sidebar-nav {
@@ -114,6 +119,8 @@ function isActive(item: { to: string }) {
     height: calc(100vh - var(--header-height));
     transform: none;
     flex-shrink: 0;
+    pointer-events: auto;
+    visibility: visible;
   }
 
   .sidebar-backdrop {

@@ -42,8 +42,15 @@ watch(open, (isOpen) => {
     return;
   }
   if (isOpen) {
-    document.addEventListener("pointerdown", onDocumentPointerDown);
-    document.addEventListener("keydown", onKeydown);
+    // Defer outside-dismiss so the opening tap cannot immediately close on
+    // touch / Mobile Safari (pointerdown may still be in the same gesture).
+    queueMicrotask(() => {
+      if (!open.value) {
+        return
+      }
+      document.addEventListener('pointerdown', onDocumentPointerDown)
+      document.addEventListener('keydown', onKeydown)
+    })
   } else {
     document.removeEventListener("pointerdown", onDocumentPointerDown);
     document.removeEventListener("keydown", onKeydown);
