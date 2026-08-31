@@ -25,18 +25,18 @@ Japanese: [changelog_ja.md](./changelog_ja.md)
 
 - Root `netlify.toml` (build `docs-site/`, deploy from `main`; requires `app/` for Playground aliases)
 - README (en/ja, root + `app/`) links to **https://hyogen-md.netlify.app**
-- Site connect steps in `dev-docs/repository.md` (dashboard; site name `hyogen-md`)
+- Site connect steps in `docs/repository.md` (dashboard; site name `hyogen-md`)
 
 ### 0.10.0-docs.2 — CD / branch protection
 
 - GitHub Actions CD on push to **`release`** (`.github/workflows/publish.yml`); skip if `name@version` already on npm
-- Document `NPM_TOKEN` secret and branch protection (`main` / `release` / `develop`) in `dev-docs/repository.md`
+- Document `NPM_TOKEN` secret and branch protection (`main` / `release` / `develop`) in `docs/repository.md`
 
 ### 0.10.0-docs.1 — Repository ops
 
 - Long-lived branches **`main`** / **`release`** (from `develop` at `v0.10.0`); `develop` unchanged
 - GitHub Actions CI on PRs to `develop` / `dev-v*` (`.github/workflows/ci.yml`)
-- Spec: [`dev-docs/repository.md`](https://github.com/b4m-oss/hyogen-md/blob/develop/dev-docs/repository.md) (Netlify deploys from **`main`**)
+- Spec: [`docs/repository.md`](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/repository.md) (Netlify deploys from **`main`**)
 
 ### 0.10.0 — Playground UX + first npm publish
 
@@ -52,7 +52,7 @@ Library packaging:
 
 - First publish of `@b4moss/hyogen-md@0.10.0` from `app/` (`dist` + README / LICENSE; `*.map` excluded)
 - git tag `v0.10.0` matches npm version
-- Docs layout: `dev-docs/` (maintainers), `user-docs/` (changelog, etc.)
+- Docs layout: `docs/` (maintainers), `user-docs/` (changelog, etc.)
 
 ### 0.10.0-beta.3
 

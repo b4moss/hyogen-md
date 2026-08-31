@@ -5,3 +5,7 @@ dist/
 *.tsbuildinfo
 .env
 .env.local
+vendor/
+.cursor/
+docs-site/site.meta.yaml
+.vscode/
