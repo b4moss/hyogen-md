@@ -1,16 +1,16 @@
 # 開発方針
 
-機能仕様は [specs/](./specs/) が正。本書は **実装の進め方** を定める。  
+機能仕様は [specs/](./) が正。本書は **実装の進め方** を定める。  
+TDD の一般原則は [charter/tdd.md](../charter/tdd.md) に従い、本書は hyogen-md 固有の置き場・コマンドを補足する。  
 ブランチ・CI/CD・公開運用は [repository.md](./repository.md)。  
-ドキュメントサイトは [docs-site.md](./docs-site.md)（docs.5〜8）。
+ドキュメントサイトは [docs-site.md](./docs-site.md)。
 
 ---
 
 ## TDD 実装
 
-**1 関数・1 メソッドごと**に、必ず単体テストと結合テストを書く。
-
-サイクルは **Red → Green → Refactor**。実装コードより先にテスト仕様書を書く。
+[charter/tdd.md](../charter/tdd.md) の Red → Green → Refactor に従う。  
+本プロジェクトでは **1 関数・1 メソッドごと**に単体テストと結合テストを書く（詳細は下記）。
 
 ### 手順
 
@@ -22,7 +22,7 @@
 
 ### テスト仕様書の置き場所
 
-**バージョンごとに 1 ファイル**（[roadmap.md](./roadmap.md) の `v0.n.0` に対応）:
+**バージョンごとに 1 ファイル**（[roadmap.md](../roadmap.md) の `v0.n.0` に対応）:
 
 ```
 app/test/specs/v0.1.0.md
@@ -74,7 +74,7 @@ app/test/{モジュール}/{関数・メソッド名}.integration.test.ts … �
 - 見出し直下の箇条書き（3 行）は **処理概要**（何を入力に何を返すか、副作用の有無）
 - 「テスト: 正常系 / 異常系」は **Given / When / Then を意識した期待結果**（入力・条件・出力・エラーコードまで具体に）
 - 異常系は 5 行すべてを埋める必要はない。**3〜5 件**が目安
-- 仕様 [specs/](./specs/) と矛盾したら **spec を先に更新**してからテスト仕様書を直す
+- 仕様 [specs/](./) と矛盾したら **spec を先に更新**してからテスト仕様書を直す
 
 ### 実行
 
@@ -91,7 +91,7 @@ make size          # dist / gzip / npm pack 容量
 make pack          # npm pack --dry-run
 make check         # 公開前: typecheck + build + test + pack
 make dev-docs      # docs-site 開発サーバ（/playground 含む）
-make build-docs    # docs-site 静的生成（Netlify 向け）
+make build-docs    # docs-site 静的生成
 make check-docs    # docs-site 静的生成の確認
 ```
 
@@ -107,9 +107,9 @@ npm run build
 
 ## 関連
 
-- [roadmap.md](./roadmap.md) … バージョンごとの機能塊
-- [specs/](./specs/) … 製品仕様
-- [need_decision.md](./need_decision.md) … 未決事項
+- [charter/tdd.md](../charter/tdd.md) … TDD 一般原則
+- [roadmap.md](../roadmap.md) … 版一覧
+- [GitHub Issues](https://github.com/b4moss/hyogen-md/issues) … 未実装・追加機能
 
 ---
 

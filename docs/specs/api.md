@@ -92,7 +92,7 @@ declare function formatDiagnosticLog(
 - **別引数 `serverContext`** を採用する
 - `renderServer` / `build` のみ `serverContext` を受け取れる
 - `renderClient` の options に `serverContext` 相当が渡された場合は **エラー**（`server_context_on_client`）
-- context に秘密キー名を機械検出する機能は **当面設けない**（API 分離とドキュメントで防ぐ）
+- context に秘密キー名を機械検出する機能は **設けない**（API 分離とドキュメントで防ぐ）
 
 ```ts
 await renderServer("./page.md", { title: "public" }, {
@@ -163,17 +163,11 @@ await renderServer("./page.md", { title: "public" }, {
   via: include
 ```
 
-## 後続候補（未実装）
-
-- **データソースのインポート**: DSL では読まない。**API 側のみ**で YAML / JSON / CSV 等を読み、変数へバインド。**複数ファイル**対応。具体 API 形は後続（[need_decision.md](../need_decision.md)）
-- **TOC 専用ヘルパ**: 入れる方針。構文・詳細は後続
-
 ## 関連
 
 - パイプライン: [pipeline.md](./pipeline.md)
 - パス: [paths.md](./paths.md)
 - セキュリティ: [security.md](./security.md)
-- 未決: [need_decision.md](../need_decision.md)
 
 ---
 

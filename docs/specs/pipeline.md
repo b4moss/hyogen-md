@@ -50,8 +50,6 @@ TypeScript で実装し、npm パッケージとして配布する。
 - 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行。step 5 の `if` / `each` 展開とは別）
 - **`if` / `each` が先**、その本体中および分岐外の `{{ }}` が後。**`{{ }}` の中で `if` / `each` は書けない**
 - 未展開ソースに `{{ }}` が残るプレビューは許容する（Markdown 互換の範囲）
-  - 明示的な API オプション化は **当面不要**（現状の許容で十分）
-- component 挿入による見出し階層の崩れは **採用時期未定**（親深さに合わせる適合は先送り。詳細は [need_decision.md](../need_decision.md)）
 
 ## 出力
 
@@ -95,13 +93,13 @@ TypeScript で実装し、npm パッケージとして配布する。
 
 - ファイル全体の `\n\n\n+` → `\n\n` 一括圧縮など、グローバルな余白正規化
 
-テスト仕様: [app/test/specs/v0.9.2.md](../../app/test/specs/v0.9.2.md) / ロードマップ（完了）: [_archive/roadmap/v0.9.2.md](../_archive/roadmap/v0.9.2.md)
+テスト仕様: [app/test/specs/v0.9.2.md](../../app/test/specs/v0.9.2.md) / ロードマップ（完了）: [_archived/roadmap/v0.9.2.md](../_archived/roadmap/v0.9.2.md)
 
 ## 関連
 
 - パス・リモート: [paths.md](./paths.md)
 - API: [api.md](./api.md)
-- プレイグラウンド: [playground.md](../playground.md)
+- プレイグラウンド: [playground.md](./playground.md)
 
 ---
 

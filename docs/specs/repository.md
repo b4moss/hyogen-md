@@ -1,9 +1,23 @@
 # リポジトリ運用・ブランチ・CI/CD
 
 Playground の公開面、Git ブランチ戦略、CI/CD、docs 系バージョンの運用を定める。  
-ライブラリ製品仕様の正は [specs/](./specs/)。本ファイルは **リポジトリ運用の正**。
+ライブラリ機能仕様は同ディレクトリ（`api.md` 等）および [main.md](../main.md) が正。本ファイルは **リポジトリ運用の正**。
 
-関連: [playground.md](./playground.md) / [roadmap.md](./roadmap.md) / [need_decision.md](./need_decision.md) / [development.md](./development.md)
+Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う。本プロジェクト固有の差分は [override-charter.md](../override-charter.md) を優先する。
+
+関連: [charter/](../charter/) / [playground.md](./playground.md) / [docs-site.md](./docs-site.md) / [distribution.md](./distribution.md) / [roadmap.md](../roadmap.md) / [development.md](./development.md)
+
+---
+
+## リモート
+
+| 名称 | URL | 用途 |
+|------|-----|------|
+| **`origin`** | 社内 `b4m-oss/hyogen-md` | ブランチ同期・社内作業 |
+| **`github`** | 公開 `b4moss/hyogen-md` | OSS 正本・CI/CD・Pages |
+| **`charter`** | `https://github.com/b4moss/charter.git` | 開発憲章（`docs` ブランチ）。更新時は `git fetch charter` → `git merge charter/docs` |
+
+憲章の取り込み方式は [charter/README.md](../charter/README.md) を参照。プロジェクト側で憲章ファイルを上書き・削除しない。
 
 ---
 
@@ -31,7 +45,7 @@ Playground の公開面、Git ブランチ戦略、CI/CD、docs 系バージョ�
 | **`main`** | **いつでもリリース可能な状態**を保つブランチ。安定版の正 |
 | **`release`** | **実際に npm へ出すパッケージ**のためのブランチ。ここへのマージが CD のトリガ |
 
-初期化時は、現状の安定点（例: `v0.10.0` 相当の `develop`）から `main` / `release` を作成する（実施済み。履歴は [_archive/roadmap/v0.10.0-docs.md](./_archive/roadmap/v0.10.0-docs.md)）。
+初期化時は、現状の安定点（例: `v0.10.0` 相当の `develop`）から `main` / `release` を作成する（実施済み。履歴は [_archived/roadmap/v0.10.0-docs.md](../_archived/roadmap/v0.10.0-docs.md)）。
 
 ---
 
@@ -154,7 +168,7 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 2. GitHub Actions を選び、リポジトリ **`b4moss/hyogen-md`**、Workflow ファイル名 **`publish.yml`**（パスなし）を登録
 3. 動作確認後、不要になった GitHub Secrets の `NPM_TOKEN` があれば削除
 
-初回公開済みの前提・パッケージ境界は [need_decision.md](./need_decision.md)「配布・公開」。
+初回公開済みの前提・パッケージ境界は [distribution.md](./distribution.md)。
 
 ---
 
@@ -164,9 +178,9 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 
 | ブランチ | 設定 |
 |----------|------|
-| `main` | PR 必須。**Allow force pushes = ON**（クラシック保護。意図する利用者は **`@kohki-shikata`**。書き込み権限のある他ユーザーも force push 可能な点に注意。Rulesets でアクター限定できる場合はそちらへ移行） |
+| `main` | PR 必須。**Allow force pushes = ON**（クラシック保護。Rulesets でアクター限定を推奨） |
 | `release` | PR 必須。force push 不可。マージ後の push で CD 起動 |
-| `develop` | PR 必須。force push 不可。CI 安定後に status check **`app + playground`** を Require に追加推奨 |
+| `develop` | PR 必須。force push 不可 |
 
 ---
 
@@ -179,6 +193,6 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - [x] CI: PR → `dev-v*` / `develop`（`.github/workflows/ci.yml`）
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
 - [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
-- [ ] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
+- [x] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
 
 以上

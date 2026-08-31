@@ -282,13 +282,6 @@ output:
 - 未上書き block は layout のデフォルトが残る
 - `extend` は先頭 `@hg` 必須（その上の front matter は可）
 
-### mixin（保留）
-
-**当面は廃止（非ゴール）。** `component` で事足りる想定。必要があれば将来実装する。
-
-- 再利用は **component**（ファイル単位）または **include** を用いる
-- 同一ファイル内の関数相当が必要になった時点で mixin を再検討する
-
 ### 予約語（初期）
 
 識別子として使えない:
@@ -296,8 +289,6 @@ output:
 `if` `else` `else if` `endif` `const` `let` `for` `do` `while` `each` `endeach` `block` `endblock` `extend` `include` `component` `as`
 
 - 今後増やしうる
-- ビルトイン関数名は **当面予約しない**（ビルトイン自体を当面導入しないため）
-- `mixin` は当面仕様に含めない（将来再導入時に予約語へ追加しうる）
 
 ### テンプレートリテラル内の式
 
@@ -438,8 +429,8 @@ JS と同じ。あってもなくても可。
 | 式 | 比較・論理（`===` `&&` `||` `!` 等）、算術（`+ - * /` 等） |
 | リテラル | 上記「リテラル」表のとおり |
 | テンプレーティング | `include` / `extend` / `block` / `endblock` / `component ... as ...` 等（[templating.md](./templating.md)） |
-| 関数呼び出し | **ユーザー登録関数のみ**（現状は `component ... as name` で登録した `name(...)`）。**ビルトイン関数は当面なし**（v0.8 時点で導入しない。将来候補は v0.9+） |
-| メソッド呼び出し | 当面 **`.toLocaleString(...)` のみ許容**。それ以外のメソッドは不可（候補メモ: `.length` / `.slice` 等 → [need_decision.md](../need_decision.md)） |
+| 関数呼び出し | **ユーザー登録関数のみ**（現状は `component ... as name` で登録した `name(...)`） |
+| メソッド呼び出し | **`.toLocaleString(...)` のみ許容** |
 
 ### 禁止（代表）
 
@@ -452,18 +443,6 @@ JS と同じ。あってもなくても可。
 | メソッド | `.toLocaleString` 以外（例: `.map` / `.trim` 等） |
 | モジュール | `import` / `require` |
 | その他 | `try` / `catch`、`new`、分割代入 |
-
----
-
-## 後続で詰める項目
-
-- 許可メソッドの追加（都度 spec 更新。実装は当面 `.toLocaleString` のみ）
-  - **候補メモ（未実装）**: `.length` / `.slice` など配列操作系
-- ビルトイン関数（**当面なし**。必要なら v0.9+ で spec 追加）
-- mixin（保留。必要時に再検討）
-- データソース読込は **API 側のみ**（DSL の `import` / `require` は引き続き禁止）。詳細は [need_decision.md](../need_decision.md)
-- `@hg` 内の `echo` による本文展開は **採用時期未定**（現状は `{{ }}`）
-- TOC 専用ヘルパ（詳細未定）
 
 ---
 

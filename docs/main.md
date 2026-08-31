@@ -2,6 +2,10 @@
 
 `hyogen.md`（表現.md）は、Markdownをテンプレートエンジンとして用いる TypeScript ライブラリ（npm パッケージ）である。
 
+開発の最上位方針は [charter/](./charter/)（[b4moss/charter](https://github.com/b4moss/charter) から取り込み）に従う。プロジェクト固有の例外は [override-charter.md](./override-charter.md) を参照。
+
+**未実装・追加機能は [GitHub Issues](https://github.com/b4moss/hyogen-md/issues) / [Milestones](https://github.com/b4moss/hyogen-md/milestones) で管理する**（`docs/` は現行実装の仕様正本）。
+
 ## モチベーション
 
 - Markdownの表現力を上げる
@@ -17,73 +21,58 @@
   - 展開後の出力も通常の Markdown パーサで読める
 - テンプレートエンジンとしての能力（include / component / extend / 変数 / ロジック）は、既存エンジン（Pug / Blade / Twig / Mustache）と同系統の体験を提供する
 
-### 非ゴール（初期）
+### 非ゴール（現行）
 
-- Mustache のセクション（`{{#x}}...{{/x}}`）や partial（`{{> foo}}`）の完全互換
-- extend の多重継承
-- **mixin**（保留。component で代替）
 - 任意 JavaScript の評価（`eval` / `new Function` 等）
 - **HTML 出力**（Markdown 出力のみ。HTML 化は利用側）
-- **ドキュメントサイトを npm に同梱すること**（サイトは別デプロイ。利用者向けはサイト＋ README / `user-docs/`。仕様の正は `docs/`）
+- **ドキュメントサイトを npm に同梱すること**
 
 ### 表記
 
-- 正式名称は **`hyogen.md`**（`hyougen.md` は用いない）
-
-### 周辺（方針メモ）
-
-- **ドキュメントサイト**: **v0.10.0-docs.5〜8**（Nuxt Content・Playground 内包）→ [docs-site.md](./docs-site.md)
-- **プレイグラウンド**: 当面単独 Netlify。docs.6 でサイト内移植。**npm には含めない** → [playground.md](./playground.md)
-- **npm 公開**: **v0.10.0 で初回公開済み**。以降は **`release`** 経由（CD）→ [repository.md](./repository.md)
-- **ブランチ・CI/CD**: [repository.md](./repository.md)
+- 正式名称: **`hyogen.md`**（`hyougen.md` は用いない）
+- パス・npm・Git 名: **`hyogen-md`**（`@b4moss/hyogen-md`）
 
 ---
 
 ## ドキュメント構成
 
-本ディレクトリ（`docs/`）はメンテナー向け仕様の正。利用者向けはドキュメントサイト（構築中）とリポジトリ根の README・[`user-docs/`](../user-docs/)。
+メンテナー向け仕様の正は **`docs/`**（**実装済みのみ**）。利用者向けは [ドキュメントサイト](https://hyogenmd.oss.b4m.jp) と README・[`user-docs/`](../user-docs/)。
+
+| パス | 内容 |
+|------|------|
+| [charter/](./charter/) | 開発憲章 |
+| [override-charter.md](./override-charter.md) | 憲章のプロジェクト例外 |
+| [roadmap.md](./roadmap.md) | 版一覧・進捗ハブ |
+| [specs/](./specs/) | 現行機能の仕様正本 |
+| [_archived/](./_archived/) | 完了ロードマップ・歴史 |
+| [wishlist.md](./wishlist.md) | PO 個人メモ（未整理のみ） |
+| [app/test/specs/](../app/test/specs/) | テスト仕様（TDD 入力） |
+| GitHub [Issues](https://github.com/b4moss/hyogen-md/issues) | 未実装・追加機能 |
+
+### specs/ 主要文書
 
 | 文書 | 内容 |
 |------|------|
-| [specs/pipeline.md](./specs/pipeline.md) | 処理パイプライン・実行環境 |
-| [specs/templating.md](./specs/templating.md) | include / component / extend・block |
-| [specs/variables.md](./specs/variables.md) | 変数・front matter・スコープ |
-| [specs/logic.md](./specs/logic.md) | if / each / 三項 |
-| [specs/dsl.md](./specs/dsl.md) | DSL（`@hg` / `@@` ショートハンド） |
-| [specs/paths.md](./specs/paths.md) | パス解決・`.doc_root`・リモート |
-| [specs/security.md](./specs/security.md) | セキュリティ方針 |
-| [specs/api.md](./specs/api.md) | 公開 API・loader・エラーコード |
-| [specs/messages.en.json](./specs/messages.en.json) | 英語エラー・警告メッセージ |
-| [need_decision.md](./need_decision.md) | 未決定・後続定義事項 |
-| [repository.md](./repository.md) | ブランチ戦略・CI/CD・Netlify・docs 版 |
-| [docs-site.md](./docs-site.md) | ドキュメントサイト製品仕様（docs.5〜8） |
-| [playground.md](./playground.md) | プレイグラウンド製品仕様（v0.9.0〜） |
-| [roadmap.md](./roadmap.md) | 開発ロードマップ（現行: docs.5〜8 → v0.11.0〜） |
-| [_archive/roadmap/](./_archive/roadmap/) | 完了ロードマップ（`v0.1.0`〜`v0.10.0` / docs.1〜4） |
-| [development.md](./development.md) | 開発方針（TDD） |
-| [app/test/specs/v0.1.0.md](../app/test/specs/v0.1.0.md) | v0.1.0 テスト仕様書 |
-| [app/test/specs/v0.2.0.md](../app/test/specs/v0.2.0.md) | v0.2.0 テスト仕様書 |
-| [app/test/specs/v0.3.0.md](../app/test/specs/v0.3.0.md) | v0.3.0 テスト仕様書 |
-| [app/test/specs/v0.4.0.md](../app/test/specs/v0.4.0.md) | v0.4.0 テスト仕様書 |
-| [app/test/specs/v0.5.0.md](../app/test/specs/v0.5.0.md) | v0.5.0 テスト仕様書 |
-| [app/test/specs/v0.6.0.md](../app/test/specs/v0.6.0.md) | v0.6.0 テスト仕様書 |
-| [app/test/specs/v0.7.0.md](../app/test/specs/v0.7.0.md) | v0.7.0 テスト仕様書 |
-| [app/test/specs/v0.8.0.md](../app/test/specs/v0.8.0.md) | v0.8.0 テスト仕様書 |
-| [app/test/specs/v0.9.0.md](../app/test/specs/v0.9.0.md) | v0.9.0 テスト仕様書 |
-| [app/test/specs/v0.9.1.md](../app/test/specs/v0.9.1.md) | v0.9.1 テスト仕様書 |
-| [app/test/specs/v0.9.2.md](../app/test/specs/v0.9.2.md) | v0.9.2 テスト仕様書 |
-| [app/test/specs/v0.10.0.md](../app/test/specs/v0.10.0.md) | v0.10.0 テスト仕様書 |
+| [api.md](./specs/api.md) | 公開 API・loader・エラー |
+| [pipeline.md](./specs/pipeline.md) | 処理パイプライン |
+| [templating.md](./specs/templating.md) | include / component / extend |
+| [variables.md](./specs/variables.md) | 変数・front matter |
+| [logic.md](./specs/logic.md) | if / each / 三項 |
+| [dsl.md](./specs/dsl.md) | `@hg` / `@@` DSL |
+| [paths.md](./specs/paths.md) | パス解決 |
+| [security.md](./specs/security.md) | セキュリティ |
+| [playground.md](./specs/playground.md) | Playground |
+| [docs-site.md](./specs/docs-site.md) | ドキュメントサイト |
+| [distribution.md](./specs/distribution.md) | npm・公開 |
+| [repository.md](./specs/repository.md) | ブランチ・CI/CD |
+| [development.md](./specs/development.md) | TDD・make コマンド |
 
 ---
 
-## 実装優先度（目安）
+## 現行版
 
-1. **v0.10.0-docs.5〜8**: ドキュメントサイト（[docs-site.md](./docs-site.md)）
-2. **v0.11.0**: データソースのインポート（API・複数ファイル）※ docs.8 後
-3. **v0.12.0**: TOC 専用ヘルパ
-4. **v0.13.0**: 許可メソッド（`.length` / `.slice` 等）
-
-詳細: [roadmap.md](./roadmap.md)
+- npm: **`@b4moss/hyogen-md@0.10.1`**（`app/package.json`）
+- 次 Milestone: [v0.11.0](https://github.com/b4moss/hyogen-md/milestone/1)（[roadmap.md](./roadmap.md)）
 
 ---
 
