@@ -8,7 +8,6 @@ export { isRemotePath } from "./io/isRemotePath.js";
 export { createHyogenError } from "./errors/createError.js";
 export { formatMessage } from "./errors/formatMessage.js";
 export { formatDiagnosticLog } from "./errors/formatDiagnosticLog.js";
-export { loadDataSources } from "./io/loadDataSources.js";
 export type {
   HyogenContext,
   HyogenDiagnostic,
@@ -21,5 +20,4 @@ export type {
   ServerRenderOptions,
   BuildOptions,
   BuildResult,
-  DataSourcesMap,
 } from "./types.js";
