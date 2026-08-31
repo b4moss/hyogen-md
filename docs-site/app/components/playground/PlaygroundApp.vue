@@ -382,13 +382,13 @@ onBeforeUnmount(() => {
   font-size: 0.72rem;
   color: var(--ink-muted);
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-deep) 55%, white);
+  background: var(--pg-path-bg);
   display: flex;
   gap: 0.5rem;
 }
 
 html[data-theme='dark'] .pane-editor__path {
-  background: color-mix(in srgb, var(--bg-deep) 55%, black);
+  background: var(--pg-path-bg);
 }
 
 .muted {

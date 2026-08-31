@@ -49,7 +49,7 @@ defineProps<{
 <style scoped>
 .diag {
   border-top: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-panel) 90%, white);
+  background: var(--pg-diag-bg);
   padding: 0.55rem 0.85rem;
   height: var(--diag-h);
   overflow: auto;
