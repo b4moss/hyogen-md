@@ -29,7 +29,10 @@ jobs:
           persist-credentials: false
 
       - name: Run analysis
-        uses: ossf/scorecard-action@99c09fe975337306107572b4fdf4db224cf8e2f2 # v2.4.3
+        # Pin the release *commit* SHA (not the annotated tag object SHA).
+        # Annotated tag 99c09fe… for v2.4.3 is rejected as an "imposter commit"
+        # when publish_results: true (Scorecard webapp workflow verification).
+        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc # v2.4.4
         with:
           results_file: results.sarif
           results_format: sarif
