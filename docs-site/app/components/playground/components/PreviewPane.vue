@@ -64,7 +64,7 @@ const highlightedMarkdown = computed(() => highlightMarkdown(props.markdown || "
   display: flex;
   gap: 0;
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-deep) 70%, white);
+  background: var(--pg-tabs-bg);
 }
 
 .preview__tabs button {
@@ -118,7 +118,7 @@ const highlightedMarkdown = computed(() => highlightMarkdown(props.markdown || "
 
 .preview__md :deep(.hljs-link),
 .preview__md :deep(.hljs-string) {
-  color: #0a5f8c;
+  color: var(--pg-hl-link);
 }
 
 .preview__md :deep(.hljs-quote) {
@@ -128,7 +128,7 @@ const highlightedMarkdown = computed(() => highlightMarkdown(props.markdown || "
 
 .preview__md :deep(.hljs-code),
 .preview__md :deep(.hljs-literal) {
-  color: #6b3d7a;
+  color: var(--pg-hl-code);
 }
 
 .preview__md :deep(.hljs-comment) {
