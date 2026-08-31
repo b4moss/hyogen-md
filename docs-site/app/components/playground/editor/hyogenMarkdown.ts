@@ -7,11 +7,8 @@ import {
 } from "@codemirror/view";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { javascriptLanguage } from "@codemirror/lang-javascript";
-import {
-  defaultHighlightStyle,
-  LRLanguage,
-  syntaxHighlighting,
-} from "@codemirror/language";
+import { LRLanguage } from "@codemirror/language";
+import { playgroundSyntaxHighlighting } from "./playgroundHighlightStyle";
 import { parseMixed } from "@lezer/common";
 import type { LRParser } from "@lezer/lr";
 import type { Extension } from "@codemirror/state";
@@ -78,19 +75,18 @@ const mustacheHighlight = ViewPlugin.fromClass(
   { decorations: (v) => v.decorations },
 );
 
-/** Soft red for `@hg` / `@endhg` / `@@` delimiters only. */
 const hyogenDirectiveTheme = EditorView.baseTheme({
   ".cm-hg-directive": {
-    color: "#c45c5c",
-    backgroundColor: "color-mix(in srgb, #c45c5c 12%, transparent)",
+    color: "var(--pg-hg-directive)",
+    backgroundColor: "color-mix(in srgb, var(--pg-hg-directive) 12%, transparent)",
     borderRadius: "2px",
   },
 });
 
 const mustacheTheme = EditorView.baseTheme({
   ".cm-hg-mustache": {
-    color: "#0b6e4f",
-    backgroundColor: "color-mix(in srgb, #0b6e4f 12%, transparent)",
+    color: "var(--pg-hg-mustache)",
+    backgroundColor: "color-mix(in srgb, var(--pg-hg-mustache) 12%, transparent)",
     borderRadius: "2px",
   },
 });
@@ -123,7 +119,7 @@ export function hyogenMarkdown(): Extension {
 
   return [
     markdown({ base: mixedMarkdown }),
-    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+    playgroundSyntaxHighlighting(),
     hyogenDirectiveHighlight,
     hyogenDirectiveTheme,
     mustacheHighlight,

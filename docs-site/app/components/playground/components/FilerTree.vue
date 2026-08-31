@@ -142,7 +142,7 @@ defineEmits<{
 }
 
 .tree__glyph--file {
-  color: color-mix(in srgb, var(--ink-muted) 55%, white);
+  color: color-mix(in srgb, var(--ink-muted) 55%, var(--pg-surface-tint));
 }
 
 .tree__item.is-selected .tree__icon {
@@ -150,7 +150,7 @@ defineEmits<{
 }
 
 .tree__item.is-selected .tree__glyph--file {
-  color: color-mix(in srgb, var(--accent) 55%, white);
+  color: color-mix(in srgb, var(--accent) 55%, var(--pg-surface-tint));
 }
 
 .tree__label {
