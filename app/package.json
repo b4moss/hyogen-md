@@ -1,6 +1,6 @@
 {
   "name": "@b4moss/hyogen-md",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Extended Markdown template engine (hyogen.md)",
   "type": "module",
   "license": "MIT",
@@ -61,9 +61,10 @@
     "@vitest/coverage-v8": "^3"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
+    "csv-parser": "^3.2.1",
     "fast-glob": "^3.3.3",
     "path-browserify": "^1.0.1",
     "picomatch": "^4.0.5",

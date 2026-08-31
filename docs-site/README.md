@@ -1,6 +1,6 @@
 # Documentation site (v0.10.0-docs.8+)
 
-Nuxt Content site for **@b4moss/hyogen-md**, based on the [b4moss/git-template `doc-site`](https://github.com/b4moss/git-template/tree/doc-site) shell. Spec: [`dev-docs/docs-site.md`](../dev-docs/docs-site.md).
+Nuxt Content site for **@b4moss/hyogen-md**, based on the [b4moss/git-template `doc-site`](https://github.com/b4moss/git-template/tree/doc-site) shell. Spec: [`docs/docs-site.md`](../docs/docs-site.md).
 
 Production: **https://hyogenmd.oss.b4m.jp** (GitHub Pages).
 

@@ -7,7 +7,7 @@
 [![npm](https://img.shields.io/npm/v/@b4moss/hyogen-md)](https://www.npmjs.com/package/@b4moss/hyogen-md)
 [![Release](https://img.shields.io/github/v/release/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/releases)
 [![License](https://img.shields.io/github/license/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/blob/main/LICENSE)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/b4moss/hyogen-md/badge)](https://securityscorecards.dev/viewer/?uri=github.com/b4moss/hyogen-md)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/b4moss/hyogen-md/badge)](https://scorecard.dev/viewer/?uri=github.com/b4moss/hyogen-md)
 
 TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジンです。
 
@@ -20,7 +20,7 @@ TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジン�
 - **Changelog:** [user-docs/changelog_ja.md](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog_ja.md)
 - **ドキュメントサイト:** [https://hyogenmd.oss.b4m.jp](https://hyogenmd.oss.b4m.jp)（Nuxt Content。npm 非同梱）
 - **Playground:** [https://hyogenmd.oss.b4m.jp/playground](https://hyogenmd.oss.b4m.jp/playground)（同一サイト。npm 非同梱）
-- **仕様（日本語・メンテナー向け）:** [dev-docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/dev-docs)
+- **仕様（日本語・メンテナー向け）:** [docs/](https://github.com/b4m-oss/hyogen-md/tree/develop/docs)
 
 > **Homepage:** [https://github.com/b4m-oss/hyogen-md](https://github.com/b4m-oss/hyogen-md)
 
@@ -34,7 +34,7 @@ TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジン�
 npm install @b4moss/hyogen-md
 ```
 
-**Node.js >= 20** が必要です。
+**Node.js >= 24** が必要です。
 
 ---
 
@@ -87,7 +87,7 @@ const { files, warnings } = await build({
 });
 ```
 
-API の詳細: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/develop/dev-docs/specs/api.md)。
+API の詳細: [docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/specs/api.md)。
 
 ---
 
@@ -98,7 +98,7 @@ API の詳細: [dev-docs/specs/api.md](https://github.com/b4m-oss/hyogen-md/blob
 | `app/` | npm 公開するライブラリ（`dist` + README / LICENSE） |
 | `docs-site/` | [GitHub Pages](https://hyogenmd.oss.b4m.jp) 上のドキュメントサイト + Playground（**npm 非同梱**） |
 | `user-docs/` | 利用者向けドキュメント（例: [changelog](https://github.com/b4m-oss/hyogen-md/blob/develop/user-docs/changelog_ja.md)） |
-| `dev-docs/` | 仕様・ロードマップ（**日本語**・メンテナー向け） |
+| `docs/` | 仕様・ロードマップ（**日本語**・メンテナー向け） |
 
 ### ドキュメントサイト & Playground
 

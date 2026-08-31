@@ -1,6 +1,10 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
+      - "dev-v*"
   pull_request:
     branches:
       - develop
@@ -19,11 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "22"
+          node-version: "24"
           cache: npm
           cache-dependency-path: |
             app/package-lock.json
@@ -45,7 +49,7 @@ jobs:
         working-directory: app
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@1f60566a86da84c4b4b64c17662a90de97fbb8d7 # v5.4.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: app/coverage/lcov.info

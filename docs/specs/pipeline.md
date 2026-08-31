@@ -1,0 +1,106 @@
+# 処理パイプライン
+
+TypeScript で実装し、npm パッケージとして配布する。
+
+## 実行環境
+
+| 実行環境 | モード | 入力 | 出力 | 典型用途 |
+|----------|--------|------|------|----------|
+| Node | SSG / SSR | md ソース群（または 1 本）+ context | レンダリング済み md | サイト生成・サーバ描画 |
+| ブラウザ | CSR | 該当 md + context（依存は loader 経由） | レンダリング結果 | クライアント描画 |
+
+### Node
+
+- **SSG**: エントリを指定し、依存（include / component / extend）を辿って走査・レンダリングする
+- **SSR**: リクエスト時に 1 本を描画する
+- 入力の集め方は **パス列挙**に加え **glob** も許可する（[api.md](./api.md)）
+
+### SSG / SSR のエントリ対象外（Sass の `_` partial に相当）
+
+次は **SSG / SSR のレンダリング対象（エントリ）に含めない**:
+
+- ファイル名が `_` で始まるファイル（例: `_meta.md`）
+- `_` で始まるディレクトリ配下のファイル（例: `_partials/card.md`）
+
+これらは単体では出力されないが、他ファイルから `include` / `component` 等で参照することはできる。
+
+- `_` 除外は **マッチ後フィルタ**（一度候補に上がってから落とす）
+- glob で `_partials/**` 等を **明示した場合は除外を上書きしてエントリに含めてよい**
+
+### ブラウザ（CSR）
+
+- 該当 md が hyogen.md を通して CSR される
+- `include` / `component` 等の依存解決は、実行環境に注入する **loader** に委ねる
+- ライブラリ本体はネットワーク取得を行わない（loader 必須）
+- クロスオリジン取得はサポートしない（同一オリジン想定。詳細は [paths.md](./paths.md) / [api.md](./api.md)）
+
+## ファイル1本の処理順（確定）
+
+1. YAML front matter のパース・変数注入
+2. hyogen ブロックの実行（`@hg` / `@@` ショートハンド。文書順。宣言・代入・`component as`・`extend` 指示の収集など。**`if` / `each` の本文展開は含まない**）
+3. `extend` / block の解決（**include より先**）
+4. `include` の展開
+5. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）
+6. 本文の `{{ }}` 評価（component 呼び出し含む）
+7. hyogen コメントの strip（オプション）
+8. front matter の strip（デフォルト）
+
+補足:
+
+- 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行。step 5 の `if` / `each` 展開とは別）
+- **`if` / `each` が先**、その本体中および分岐外の `{{ }}` が後。**`{{ }}` の中で `if` / `each` は書けない**
+- 未展開ソースに `{{ }}` が残るプレビューは許容する（Markdown 互換の範囲）
+
+## 出力
+
+- ライブラリの出力は **レンダリング済み Markdown のみ**
+- HTML 化は **対象外**（利用側の責務。hyogen.md は HTML 出力レイヤを提供しない）
+
+### 出力 Markdown の空白・改行（方針）
+
+展開後の Markdown は、**可能な限り通常の手書き Markdown に寄せる**（余分な空行を残さない）。
+
+背景:
+
+- `stripHgComments` が hyogen コメント塊だけを除去し、前後の改行を残すと、リスト項目のあいだに空行が入りうる
+- `each` 展開が反復ごとに opener / closer（コメント）を載せると、strip 後に空行が増えやすい
+- Markdown では空行でリストが切れるため、見た目が大きく崩れる
+
+方針:
+
+- **ライブラリ本体で直す**（プレイグラウンドの HTML プレビュー CSS や表示補正だけでは足りない）
+- 目標は「制御構文を除去したあとも、意図したブロック構造（連続リスト・段落）が保たれる」こと
+- 著者ソースに明示された空行は尊重する。問題にするのは **ディレクティブ除去・構造展開の副作用で増える空行**
+
+#### 確定アルゴリズム（v0.9.2）
+
+**A. 構造展開**（`expandControlStructures`）:
+
+- `preserveHgComments !== true` のとき:
+  - `each`: 反復ごとに **body のみ**連結。opener / closer の raw は載せない
+  - `if`: 選ばれた branch の **body のみ**。他 branch の opener や closer raw は載せない
+- `preserveHgComments === true`: 現行どおり opener / closer raw を残す（デバッグ用）
+
+**B. ディレクティブ除去の縫い目**（`joinRemovalSeam` / `stripHgComments` ほか）:
+
+- hyogen ディレクティブを除去（または `block` opener/closer を子 body に置換）したとき、接合部の改行は **max(左側の末尾改行, 右側の先頭改行)** でつなぐ
+- 適用箇所: 最終 `stripHgComments`、`component` 除去、宣言ブロック除去、`extend`/`block` マージ、`include` 置換
+- 例: `Hello\n<!-- ... -->\nWorld` → `Hello\nWorld`
+- 著者がコメントの外側に明示した空行（段落区切り）は残す
+- 連続するディレクティブ除去で空行が積み上がらない（デモの H1 直下など）
+
+**C. やらないこと:**
+
+- ファイル全体の `\n\n\n+` → `\n\n` 一括圧縮など、グローバルな余白正規化
+
+テスト仕様: [app/test/specs/v0.9.2.md](../../app/test/specs/v0.9.2.md) / ロードマップ（完了）: [_archived/roadmap/v0.9.2.md](../_archived/roadmap/v0.9.2.md)
+
+## 関連
+
+- パス・リモート: [paths.md](./paths.md)
+- API: [api.md](./api.md)
+- プレイグラウンド: [playground.md](./playground.md)
+
+---
+
+以上

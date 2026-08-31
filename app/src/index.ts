@@ -3,6 +3,7 @@ export { renderClient } from "./renderClient.js";
 export { build } from "./build/build.js";
 export { createFsLoader } from "./io/createFsLoader.js";
 export { createNodeLoader } from "./io/createNodeLoader.js";
+export { loadDataSources } from "./io/loadDataSources.js";
 export { isRemotePath } from "./io/isRemotePath.js";
 export { createHyogenError } from "./errors/createError.js";
 export { formatMessage } from "./errors/formatMessage.js";
@@ -18,4 +19,5 @@ export type {
   ServerRenderOptions,
   BuildOptions,
   BuildResult,
+  DataSourcesMap,
 } from "./types.js";
