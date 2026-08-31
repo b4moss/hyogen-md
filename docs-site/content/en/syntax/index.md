@@ -28,6 +28,7 @@ hyogen.md extends Markdown with HTML-comment directives and Mustache-style expre
 - [Declarations](/en/syntax/declarations) — `const`, `let`, reassignment
 - [Includes and components](/en/syntax/includes) — `include`, `component … as`, `extend` + `block`
 - [Control flow](/en/syntax/control-flow) — `if` / `else` / `each`
+- [TOC helper](/en/syntax/toc) — `toc` / `toc(N)` table of contents
 
 ### Safety
 

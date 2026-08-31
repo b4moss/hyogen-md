@@ -51,6 +51,7 @@ const docRoutes = [
   '/syntax/declarations',
   '/syntax/includes',
   '/syntax/control-flow',
+  '/syntax/toc',
   '/syntax/paths-and-security',
 ]
 

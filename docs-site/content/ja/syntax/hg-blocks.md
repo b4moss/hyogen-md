@@ -75,10 +75,11 @@ const title = "Hello"
 
 | 領域 | 内容 |
 |------|------|
-| hyogen ブロック内 | 宣言・代入・`include`・`if` / `each` の構造ディレクティブなど |
+| hyogen ブロック内 | 宣言・代入・`include`・`if` / `each`・`toc` など |
 | `{{ }}` 内 | 式のみ |
 
 ## 関連
 
 - [宣言と代入](/ja/syntax/declarations)
 - [制御構造](/ja/syntax/control-flow)
+- [TOC ヘルパ](/ja/syntax/toc)
