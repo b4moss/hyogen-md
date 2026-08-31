@@ -59,7 +59,7 @@
     "vitest": "^3.2.4"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
     "csv-parser": "^3.2.1",

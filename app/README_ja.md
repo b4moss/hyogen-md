@@ -32,7 +32,7 @@ TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジン�
 npm install @b4moss/hyogen-md
 ```
 
-**Node.js >= 20** が必要です。
+**Node.js >= 24** が必要です。
 
 ---
 
