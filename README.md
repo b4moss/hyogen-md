@@ -34,7 +34,7 @@ This file is kept **in sync** at the repository root and at `app/README.md` (npm
 npm install @b4moss/hyogen-md
 ```
 
-Requires **Node.js >= 20**.
+Requires **Node.js >= 24**.
 
 ---
 
