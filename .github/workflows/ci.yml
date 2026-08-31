@@ -9,6 +9,7 @@ on:
     branches:
       - develop
       - "dev-v*"
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -38,7 +39,9 @@ jobs:
         working-directory: app
 
       - name: Install docs-site dependencies
-        run: npm ci
+        # npm ci rejects cross-platform optional native deps (esbuild, lightningcss, …)
+        # when lockfile is generated on macOS. Makefile uses npm install for docs-site.
+        run: npm install --no-audit --no-fund
         working-directory: docs-site
 
       - name: make check

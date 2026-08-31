@@ -41,7 +41,7 @@ jobs:
         working-directory: app
 
       - name: Install docs-site dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
         working-directory: docs-site
 
       - name: Generate static site
