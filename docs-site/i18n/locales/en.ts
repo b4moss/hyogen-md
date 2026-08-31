@@ -40,4 +40,8 @@ export default {
     expand: 'Show more',
     collapse: 'Show less',
   },
+  faq: {
+    expandAll: 'Expand all',
+    collapseAll: 'Collapse all',
+  },
 }
