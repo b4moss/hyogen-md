@@ -463,7 +463,7 @@ JS と同じ。あってもなくても可。
 - mixin（保留。必要時に再検討）
 - データソース読込は **API 側のみ**（DSL の `import` / `require` は引き続き禁止）。詳細は [need_decision.md](../need_decision.md)
 - `@hg` 内の `echo` による本文展開は **採用時期未定**（現状は `{{ }}`）
-- TOC 専用ヘルパ（詳細未定）
+- TOC 専用ヘルパ → [toc.md](./toc.md)（v0.12.0）
 
 ---
 
