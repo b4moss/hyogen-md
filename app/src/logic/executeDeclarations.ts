@@ -16,6 +16,7 @@ import {
   joinRemovalSeam,
   removalSeamNewlineDelta,
 } from "../pipeline/joinRemovalSeam.js";
+import { isTocDirectiveLine } from "../toc/parseTocDirective.js";
 
 export type ExecuteDeclarationsOptions = {
   path?: string;
@@ -57,6 +58,10 @@ export async function executeDeclarations(
   for (const block of blocks) {
     const lines = extractHgBlockLines(block.inner);
     if (lines.length === 1 && isControlDirectiveLine(lines[0]!)) {
+      continue;
+    }
+
+    if (lines.length === 1 && isTocDirectiveLine(lines[0]!)) {
       continue;
     }
 

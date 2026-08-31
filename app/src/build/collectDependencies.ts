@@ -15,6 +15,7 @@ import {
   scanHgBlocks,
 } from "../parse/scanHgBlocks.js";
 import { parseExtendDirective } from "../layout/parseExtendDirective.js";
+import { isTocDirectiveLine } from "../toc/parseTocDirective.js";
 
 export type DependencyRef = {
   kind: "include" | "component" | "extend";
@@ -54,6 +55,10 @@ export function collectDependencies(
     }
 
     if (lines.length === 1 && isControlDirectiveLine(lines[0]!)) {
+      continue;
+    }
+
+    if (lines.length === 1 && isTocDirectiveLine(lines[0]!)) {
       continue;
     }
 
