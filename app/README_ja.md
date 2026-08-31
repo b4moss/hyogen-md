@@ -7,7 +7,7 @@
 [![npm](https://img.shields.io/npm/v/@b4moss/hyogen-md)](https://www.npmjs.com/package/@b4moss/hyogen-md)
 [![Release](https://img.shields.io/github/v/release/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/releases)
 [![License](https://img.shields.io/github/license/b4moss/hyogen-md)](https://github.com/b4moss/hyogen-md/blob/main/LICENSE)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/b4moss/hyogen-md/badge)](https://securityscorecards.dev/viewer/?uri=github.com/b4moss/hyogen-md)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/b4moss/hyogen-md/badge)](https://scorecard.dev/viewer/?uri=github.com/b4moss/hyogen-md)
 
 TypeScript / JavaScript 向けの拡張 Markdown テンプレートエンジンです。
 
