@@ -1,17 +1,17 @@
 {
   "name": "@b4moss/hyogen-md",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Extended Markdown template engine (hyogen.md)",
   "type": "module",
   "license": "MIT",
   "author": "Kohki SHIKATA <kohki.shikata@gmail.com>",
-  "homepage": "https://github.com/b4m-oss/hyogen-md",
+  "homepage": "https://github.com/b4moss/hyogen-md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b4m-oss/hyogen-md.git"
+    "url": "git+https://github.com/b4moss/hyogen-md.git"
   },
   "bugs": {
-    "url": "https://github.com/b4m-oss/hyogen-md/issues"
+    "url": "https://github.com/b4moss/hyogen-md/issues"
   },
   "keywords": [
     "markdown",
@@ -45,9 +45,10 @@
   "scripts": {
     "build": "vite build && vite build --config vite.client.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --coverage",
     "test:watch": "vitest",
-    "dev": "vite build --watch"
+    "dev": "vite build --watch",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
@@ -56,10 +57,11 @@
     "typescript": "^5.9.2",
     "vite": "^7.0.6",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "@vitest/coverage-v8": "^3"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
     "csv-parser": "^3.2.1",

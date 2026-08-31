@@ -31,7 +31,7 @@ describe("diagnostics behavior (v0.8): warnings continue", () => {
     const result = await renderServer({
       path: p("v0.7/suspicious/script-in-context.md"),
     });
-    assert.match(result.markdown, /<script>/);
+    assert.ok(result.markdown.includes("<script>"));
     assert.ok(
       result.warnings.some((w) => w.code === "suspicious_context_value"),
     );

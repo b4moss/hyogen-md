@@ -1,14 +1,22 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
+      - "dev-v*"
   pull_request:
     branches:
       - develop
       - "dev-v*"
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   check:
@@ -16,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
           cache-dependency-path: |
             app/package-lock.json
@@ -31,11 +39,25 @@ jobs:
         working-directory: app
 
       - name: Install docs-site dependencies
-        run: npm ci
+        # npm ci rejects cross-platform optional native deps (esbuild, lightningcss, …)
+        # when lockfile is generated on macOS. Makefile uses npm install for docs-site.
+        run: npm install --no-audit --no-fund
         working-directory: docs-site
 
       - name: make check
         run: make check
+
+      - name: app coverage
+        run: npm run test:coverage
+        working-directory: app
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@1f60566a86da84c4b4b64c17662a90de97fbb8d7 # v5.4.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: app/coverage/lcov.info
+          fail_ci_if_error: false
+          verbose: true
 
       - name: playground test
         run: make test-pg
