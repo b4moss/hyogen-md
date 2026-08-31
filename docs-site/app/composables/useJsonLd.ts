@@ -187,7 +187,9 @@ export function useJsonLd(options: UseJsonLdOptions) {
       {
         key: 'json-ld',
         type: 'application/ld+json',
-        children: JSON.stringify(graph.value),
+        // `children` is serialized as an HTML attribute in SSG output; use
+        // innerHTML so crawlers (Google Rich Results Test, etc.) read the JSON.
+        innerHTML: JSON.stringify(graph.value),
       },
     ]),
   })
