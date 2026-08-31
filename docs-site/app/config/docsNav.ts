@@ -32,6 +32,7 @@ export const docsNavItems: DocsNavItem[] = [
   { key: 'syntaxDeclarations', path: '/syntax/declarations', labelKey: 'syntaxDeclarations', parent: 'syntax' },
   { key: 'syntaxIncludes', path: '/syntax/includes', labelKey: 'syntaxIncludes', parent: 'syntax' },
   { key: 'syntaxControlFlow', path: '/syntax/control-flow', labelKey: 'syntaxControlFlow', parent: 'syntax' },
+  { key: 'syntaxToc', path: '/syntax/toc', labelKey: 'syntaxToc', parent: 'syntax' },
   { key: 'syntaxPaths', path: '/syntax/paths-and-security', labelKey: 'syntaxPaths', parent: 'syntax' },
   { key: 'playground', path: '/playground', labelKey: 'playground', absolute: true },
   { key: 'changelog', path: '/changelog', labelKey: 'changelog' },
