@@ -94,7 +94,7 @@ flowchart LR
 
 ---
 
-## Playground / ドキュメントサイトの公開（Netlify）
+## Playground / ドキュメントサイトの公開（GitHub Pages）
 
 製品仕様: [docs-site.md](./docs-site.md)。
 
@@ -102,17 +102,15 @@ flowchart LR
 |------|------|
 | サイト | **`docs-site/`**（Nuxt Content）。Playground は **`/playground`** に統合済み |
 | テーマ | dark / light / system をサイトと Playground で共有 |
-| デプロイ | **`main`**。根 `netlify.toml` で `app/` + `docs-site/` をビルド |
-| URL | **https://hyogen-md.netlify.app**（Playground: `/playground`） |
+| デプロイ | **`main`** への push。Workflow [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
+| URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。独自ドメインは `docs-site/public/CNAME` |
 | npm | サイト・Playground とも **含めない** |
 
-### Netlify 接続手順（参照用）
+### GitHub Pages 接続手順（参照用）
 
-1. [Netlify](https://app.netlify.com/) で **Add new site → Import an existing project**
-2. GitHub の **`b4m-oss/hyogen-md`** を選択
-3. Branch: **`main`**。Build settings はリポジトリ根の `netlify.toml` を使用
-4. Site name を **`hyogen-md`**（URL: `https://hyogen-md.netlify.app`）にする。取れない場合は別名にし README を更新
-5. Deploy。以降 `main` への push で自動デプロイ
+1. リポジトリ **Settings → Pages** で Source を **GitHub Actions** にする
+2. 独自ドメイン **`hyogenmd.oss.b4m.jp`** を設定し、DNS で Pages へ向ける（CNAME ファイルはリポジトリ側に同梱）
+3. 以降 `main` への push（または `workflow_dispatch`）で自動デプロイ
 
 ---
 
@@ -129,6 +127,14 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - `make test-pg`（docs-site 内 Playground テスト）
 - `make build-docs`（docs-site 静的生成）
 
+### CD（docs site）
+
+| 項目 | 方針 |
+|------|------|
+| トリガ | **`main` への push**（および手動 `workflow_dispatch`） |
+| Workflow | [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) |
+| 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
+
 ---
 
 ## CD（npm publish）
@@ -137,17 +143,16 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 |------|------|
 | トリガ | **`release` への push**（マージ含む） |
 | Workflow | [`.github/workflows/publish.yml`](../.github/workflows/publish.yml) |
-| 動作 | `app/` で build のあと `npm publish --access public` |
+| 動作 | `app/` で build のあと `npm publish --access public --provenance`（Trusted Publishing / OIDC） |
 | 既存版 | registry に **同じ `name@version` がある場合は publish をスキップ**（成功終了）。初期 `release` = `0.10.0` でも再公開しない |
 | 版 | git tag と `app/package.json` の version を **一致**させてから `release` へ載せる |
-| Secret | リポジトリ Secrets に **`NPM_TOKEN`**（npm Automation / Granular Access Token。`@b4moss` への publish 権限） |
+| Auth | 長期 `NPM_TOKEN` は使わない。npm パッケージの **Trusted Publisher（GitHub Actions）** + workflow `permissions.id-token: write` |
 
-### NPM_TOKEN の登録手順
+### Trusted Publisher の設定手順
 
-1. [npmjs.com](https://www.npmjs.com/) で Access Token を発行（Automation 推奨）
-2. GitHub リポジトリ **Settings → Secrets and variables → Actions**
-3. Name: `NPM_TOKEN`、Value: トークンを保存
-4. 対象リポジトリは **`b4m-oss/hyogen-md`**（github リモートを正とする）
+1. [npmjs.com](https://www.npmjs.com/package/@b4moss/hyogen-md) → Access → Trusted Publisher
+2. GitHub Actions を選び、リポジトリ **`b4moss/hyogen-md`**、Workflow ファイル名 **`publish.yml`**（パスなし）を登録
+3. 動作確認後、不要になった GitHub Secrets の `NPM_TOKEN` があれば削除
 
 初回公開済みの前提・パッケージ境界は [need_decision.md](./need_decision.md)「配布・公開」。
 
@@ -173,7 +178,7 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 - [x] hotfix は `main` → `release` 可（方針確定）
 - [x] CI: PR → `dev-v*` / `develop`（`.github/workflows/ci.yml`）
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
-- [x] Playground を Netlify 公開し、README から導線（`netlify.toml` + `https://hyogen-md.netlify.app`。サイト接続はダッシュボード手順）
+- [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [ ] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
 
 以上

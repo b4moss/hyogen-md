@@ -28,9 +28,10 @@
 | フレームワーク | **Nuxt** + **Nuxt Content** |
 | Playground | 既存 `playground/`（Vite + Vue）を **サイト内に移植**する。Vue コンポーネントとして統合。移植後の単独 `playground/` の扱いは実装時に決める（削除 / 薄いラッパ / 開発用エイリアス） |
 | hyogen-md 参照 | 開発時は alias で `../app` ソースを読む（現行 Playground と同様） |
-| ホスティング | **Netlify**。production branch は **`main`** |
-| URL | 実装時に確定（例: 既存 `hyogen-md.netlify.app` をサイトに載せ替える、または docs 用ホストに Playground を統合）。README の導線を更新 |
-| 言語 | 英語を正とし、日本語ページを併設（ルート方針は実装時。`/ja` 等） |
+| ホスティング | **GitHub Pages**（Actions）。production branch は **`main`** |
+| URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。README の導線を更新 |
+| 言語 | `@nuxtjs/i18n` の `prefix` 戦略。`/ja/…` と `/en/…`（デフォルト locale は `ja`。`/` は locale redirect） |
+| UI 殻 | [b4moss/git-template `doc-site`](https://github.com/b4moss/git-template/tree/doc-site) を適用（ヘッダー dropdown・sidebar・pager） |
 | npm | **含めない** |
 
 ---
@@ -78,7 +79,7 @@
 | 機能パリティ | 現行 [playground.md](./playground.md) の製品要件を維持（仮想 FS、ファイラー、CM6、自動 render、診断、Reset、**ペイン幅ドラッグ可変** 等） |
 | 配置 | docs サイト内の専用ルート（例: `/playground`） |
 | テーマ | サイトの **dark / light / system** 設定と **同じ切替・永続化**を共有する（下節） |
-| 単独 Netlify サイト | 統合後は **docs サイトが正**。旧 `hyogen-md.netlify.app` はリダイレクトまたはホスト載せ替え |
+| 旧 Netlify サイト | 統合後は **GitHub Pages（hyogenmd.oss.b4m.jp）が正**。旧 `hyogen-md.netlify.app` はリダイレクトまたは廃止 |
 
 詳細 UI 仕様は引き続き [playground.md](./playground.md)。本書は「サイト内に置く」こととテーマ統合を追加する。
 

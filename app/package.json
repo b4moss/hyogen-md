@@ -5,13 +5,13 @@
   "type": "module",
   "license": "MIT",
   "author": "Kohki SHIKATA <kohki.shikata@gmail.com>",
-  "homepage": "https://github.com/b4m-oss/hyogen-md",
+  "homepage": "https://github.com/b4moss/hyogen-md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b4m-oss/hyogen-md.git"
+    "url": "git+https://github.com/b4moss/hyogen-md.git"
   },
   "bugs": {
-    "url": "https://github.com/b4m-oss/hyogen-md/issues"
+    "url": "https://github.com/b4moss/hyogen-md/issues"
   },
   "keywords": [
     "markdown",
