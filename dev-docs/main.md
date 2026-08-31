@@ -50,6 +50,7 @@
 | [specs/variables.md](./specs/variables.md) | 変数・front matter・スコープ |
 | [specs/logic.md](./specs/logic.md) | if / each / 三項 |
 | [specs/dsl.md](./specs/dsl.md) | DSL（`@hg` / `@@` ショートハンド） |
+| [specs/toc.md](./specs/toc.md) | TOC 専用ヘルパ（v0.12.0） |
 | [specs/paths.md](./specs/paths.md) | パス解決・`.doc_root`・リモート |
 | [specs/security.md](./specs/security.md) | セキュリティ方針 |
 | [specs/api.md](./specs/api.md) | 公開 API・loader・エラーコード |

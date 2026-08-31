@@ -241,12 +241,17 @@ await renderServer("./page.md", { ...fromFiles, extra: 1 });
   via: include
 ```
 
+## TOC 専用ヘルパ（v0.12.0・未実装）
+
+構文・見出し抽出・出力形式は [toc.md](./toc.md) が正。レンダリング API（`renderServer` / `renderClient` / `build`）のシグネチャ変更は不要（パイプライン内で自動処理）。
+
 ## 後続候補（未実装）
 
-- **TOC 専用ヘルパ**: 入れる方針。構文・詳細は後続
+（現時点なし）
 
 ## 関連
 
+- TOC: [toc.md](./toc.md)
 - パイプライン: [pipeline.md](./pipeline.md)
 - パス: [paths.md](./paths.md)
 - セキュリティ: [security.md](./security.md)

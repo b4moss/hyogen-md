@@ -42,8 +42,9 @@ TypeScript で実装し、npm パッケージとして配布する。
 4. `include` の展開
 5. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）
 6. 本文の `{{ }}` 評価（component 呼び出し含む）
-7. hyogen コメントの strip（オプション）
-8. front matter の strip（デフォルト）
+7. **`toc` ヘルパの展開**（[toc.md](./toc.md)）
+8. hyogen コメントの strip（オプション）
+9. front matter の strip（デフォルト）
 
 補足:
 
