@@ -40,6 +40,27 @@ Requires **Node.js >= 24**.
 
 ## Quick start
 
+### CLI (`hyogen-md`)
+
+```bash
+npx hyogen-md create my-site
+cd my-site
+npm install
+npm run dev    # preview with file tree + HMR (default http://127.0.0.1:4173)
+npm run build  # write Markdown to outDir (default ./out)
+```
+
+`hyogen.config.js` (or `.ts`):
+
+```js
+import { defineConfig } from "@b4moss/hyogen-md/config";
+
+export default defineConfig({
+  input: "./src/**/*.md",
+  // outDir: "./out",
+});
+```
+
 ### Client / CSR (`@b4moss/hyogen-md/client`)
 
 ```ts
