@@ -37,7 +37,7 @@ TypeScript で実装し、npm パッケージとして配布する。
 ## ファイル1本の処理順（確定）
 
 1. YAML front matter のパース・変数注入
-2. hyogen ブロックの実行（`@hg` / `@@` ショートハンド。文書順。宣言・代入・`component as`・`extend` 指示の収集など。**`if` / `each` の本文展開は含まない**）
+2. hyogen ブロックの実行（`@hg` / `@@` ショートハンド。文書順。宣言・代入・`echo`（本文置換）・`component as`・`extend` 指示の収集など。**`if` / `each` の本文展開は含まない**）
 3. `extend` / block の解決（**include より先**）
 4. `include` の展開
 5. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）

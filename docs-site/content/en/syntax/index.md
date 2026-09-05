@@ -20,7 +20,7 @@ hyogen.md extends Markdown with HTML-comment directives and Mustache-style expre
 
 - [Front matter](/en/syntax/front-matter) — YAML metadata and component props
 - [Expressions](/en/syntax/expressions) — `{{ }}`, defaults, ternary
-- [Methods](/en/syntax/methods) — `.toLocaleString` and allowed calls
+- [Methods](/en/syntax/methods) — `.toLocaleString`, allowed property `.length`
 
 ### Blocks and directives
 

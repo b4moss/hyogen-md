@@ -45,11 +45,43 @@ include ./partials/header.md
 
 Use `/* */` for inline comments in one-line blocks (not `//`, which ends at newline).
 
+
+## echo
+
+`echo <expr>` writes the expression result into the document by **replacing the enclosing `@hg` / `@@` comment**.
+
+```markdown
+<!--
+@hg
+const greet = "Hello world!"
+echo greet
+@endhg
+-->
+```
+
+Output:
+
+```markdown
+Hello world!
+```
+
+You can declare in one block and echo in a shorthand block:
+
+```markdown
+<!--@hg
+const greet = "Hello world!"
+@endhg-->
+<!--@@ echo greet @@-->
+```
+
+Multiple `echo` statements (including inside `for` / `do…while`) concatenate with no separator. `null` / `undefined` become an empty string (same as `{{ }}`).
+
 ## What goes inside
 
 | Category | Examples |
 |----------|----------|
 | Declarations | `const`, `let`, reassignment |
+| Output | `echo <expr>` — replace the block with the evaluated string |
 | Includes | `include`, `component … as`, `extend` |
 | Control flow | `if` / `else` / `each` (structural — wrap Markdown body) |
 | Loops | `for (…)`, `do … while` |

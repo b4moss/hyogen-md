@@ -55,7 +55,7 @@ Sass の `_` partial と同様:
 
 | 項目 | 方針 |
 |------|------|
-| 式の範囲 | `{{ }}` は式のみ。任意の JS 評価はしない |
+| 式の範囲 | `{{ }}` は式のみ。メソッドは `.toLocaleString` のみ。許可プロパティ `.length`。任意の JS 評価はしない |
 | 危険キー | `__proto__` / `prototype` / `constructor` / `__defineGetter__` |
 | 危険キーアクセス | **エラー**（`forbidden_property_access`） |
 

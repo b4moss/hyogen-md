@@ -57,7 +57,7 @@ description: "{{ }} による変数展開と式の書き方"
 - 文（`const`、`if` など）— hyogen ブロック内で書く
 - `each` — 構造ディレクティブとして hyogen ブロックで書く
 - 未登録の関数呼び出し（`foo()` など）
-- `.toLocaleString` 以外のメソッド（`.map`、`.trim` など）
+- `.toLocaleString` 以外のメソッド（`.map`、`.trim`、`.slice` など）。プロパティ `.length` は [許可メソッド](/ja/syntax/methods) を参照
 
 ## 例
 
