@@ -4,26 +4,95 @@ export type ExtractedHeading = {
   explicitId?: string;
 };
 
-const ATX_PATTERN = /^(#{1,6})[ \t]+(.+?)(?:[ \t]+#+)?[ \t]*$/;
-const EXPLICIT_ID_PATTERN = /^(.*?)\s*\{#([A-Za-z][\w:.-]*)\}\s*$/;
 const SETEXT_EQUALS = /^=+[ \t]*$/;
 const SETEXT_DASHES = /^-+[ \t]*$/;
 const FENCE_OPEN = /^(```|~~~)/;
+const EXPLICIT_ID_TAIL = /\{#([A-Za-z][\w:.-]*)\}\s*$/;
 
 type ScanState = {
   inFence: false | { marker: string };
   inHtmlComment: boolean;
 };
 
+/**
+ * Parse trailing `{#id}` without nested quantifiers (CodeQL js/polynomial-redos).
+ * Equivalent to `/^(.*?)\s*\{#([A-Za-z][\w:.-]*)\}\s*$/` but linear-time.
+ */
 function parseHeadingText(raw: string): {
   text: string;
   explicitId?: string;
 } {
-  const idMatch = EXPLICIT_ID_PATTERN.exec(raw);
-  if (idMatch) {
-    return { text: idMatch[1]!.trim(), explicitId: idMatch[2]! };
+  const idMatch = EXPLICIT_ID_TAIL.exec(raw);
+  if (idMatch && idMatch.index !== undefined) {
+    return {
+      text: raw.slice(0, idMatch.index).trim(),
+      explicitId: idMatch[1]!,
+    };
   }
   return { text: raw.trim() };
+}
+
+/**
+ * Parse an ATX heading line without nested quantifiers (CodeQL js/polynomial-redos).
+ * Equivalent to `/^(#{1,6})[ \t]+(.+?)(?:[ \t]+#+)?[ \t]*$/`.
+ */
+function parseAtxHeading(line: string): ExtractedHeading | null {
+  let level = 0;
+  while (level < line.length && level < 6 && line[level] === "#") {
+    level += 1;
+  }
+  if (level === 0) {
+    return null;
+  }
+  // More than 6 leading `#` is not an ATX heading (CommonMark).
+  if (level === 6 && level < line.length && line[level] === "#") {
+    return null;
+  }
+  if (level >= line.length || (line[level] !== " " && line[level] !== "\t")) {
+    return null;
+  }
+
+  let textStart = level;
+  while (
+    textStart < line.length &&
+    (line[textStart] === " " || line[textStart] === "\t")
+  ) {
+    textStart += 1;
+  }
+  if (textStart >= line.length) {
+    return null;
+  }
+
+  let end = line.length;
+  while (end > textStart && (line[end - 1] === " " || line[end - 1] === "\t")) {
+    end -= 1;
+  }
+
+  // Optional closing sequence: [ \t]+#+
+  let textEnd = end;
+  if (end > textStart && line[end - 1] === "#") {
+    let hashStart = end - 1;
+    while (hashStart > textStart && line[hashStart - 1] === "#") {
+      hashStart -= 1;
+    }
+    if (
+      hashStart > textStart &&
+      (line[hashStart - 1] === " " || line[hashStart - 1] === "\t")
+    ) {
+      let ws = hashStart - 1;
+      while (ws >= textStart && (line[ws] === " " || line[ws] === "\t")) {
+        ws -= 1;
+      }
+      textEnd = ws + 1;
+    }
+  }
+
+  if (textEnd <= textStart) {
+    return null;
+  }
+
+  const parsed = parseHeadingText(line.slice(textStart, textEnd));
+  return { level, ...parsed };
 }
 
 function advanceHtmlComment(
@@ -123,11 +192,9 @@ export function extractHeadings(source: string): ExtractedHeading[] {
       continue;
     }
 
-    const atx = ATX_PATTERN.exec(line);
+    const atx = parseAtxHeading(line);
     if (atx) {
-      const level = atx[1]!.length;
-      const parsed = parseHeadingText(atx[2]!);
-      headings.push({ level, ...parsed });
+      headings.push(atx);
       continue;
     }
 
