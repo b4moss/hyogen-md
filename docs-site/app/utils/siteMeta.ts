@@ -11,6 +11,7 @@ export type SiteMeta = {
   siteVersion: string
   description: string
   githubUrl: string
+  npmUrl: string
   footerText: string
   software: SiteSoftwareMeta
   /** Authored Organization properties; null disables the entity entirely. */
@@ -25,6 +26,7 @@ export const defaultSiteMeta: SiteMeta = {
   siteVersion: '',
   description: '',
   githubUrl: 'https://github.com/b4moss/git-template',
+  npmUrl: '',
   footerText: 'MIT License · 2026 Bicycle for Mind LLC.',
   software: {
     name: 'Doc Site',
@@ -48,6 +50,7 @@ export function normalizeSiteMeta(raw: RawSiteMeta | null | undefined): SiteMeta
   const base = { ...defaultSiteMeta, ...(raw || {}) }
   const siteName = String(base.siteName || defaultSiteMeta.siteName)
   const githubUrl = String(base.githubUrl || defaultSiteMeta.githubUrl)
+  const npmUrl = String(base.npmUrl ?? defaultSiteMeta.npmUrl)
   const softwareRaw = raw?.software || {}
 
   return {
@@ -56,6 +59,7 @@ export function normalizeSiteMeta(raw: RawSiteMeta | null | undefined): SiteMeta
     siteVersion: String(base.siteVersion ?? ''),
     description: String(base.description ?? ''),
     githubUrl,
+    npmUrl,
     footerText: String(base.footerText || defaultSiteMeta.footerText),
     software: {
       name: String(softwareRaw.name || siteName),
