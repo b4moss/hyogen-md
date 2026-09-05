@@ -42,8 +42,12 @@ type RenderOptions = {
 ## ServerRenderOptions
 
 ```ts
+type DataSourcesMap = Record<string, string>
+
 type ServerRenderOptions = RenderOptions & {
   serverContext?: HyogenContext
+  /** variable name → root-relative data file path (YAML / JSON / CSV) */
+  dataSources?: DataSourcesMap
 }
 ```
 
@@ -58,6 +62,7 @@ type BuildOptions = RenderOptions & {
   includeUnderscoreEntries?: boolean
   context?: HyogenContext
   serverContext?: HyogenContext
+  dataSources?: DataSourcesMap
 }
 ```
 

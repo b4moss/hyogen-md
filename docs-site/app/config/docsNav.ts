@@ -20,6 +20,7 @@ export const docsNavItems: DocsNavItem[] = [
   { key: 'apiRenderServer', path: '/api/render-server', labelKey: 'apiRenderServer', parent: 'api' },
   { key: 'apiRenderClient', path: '/api/render-client', labelKey: 'apiRenderClient', parent: 'api' },
   { key: 'apiBuild', path: '/api/build', labelKey: 'apiBuild', parent: 'api' },
+  { key: 'apiDataSources', path: '/api/data-sources', labelKey: 'apiDataSources', parent: 'api' },
   { key: 'apiLoader', path: '/api/loader', labelKey: 'apiLoader', parent: 'api' },
   { key: 'apiDiagnostics', path: '/api/diagnostics', labelKey: 'apiDiagnostics', parent: 'api' },
   { key: 'apiTypes', path: '/api/types-and-options', labelKey: 'apiTypes', parent: 'api' },

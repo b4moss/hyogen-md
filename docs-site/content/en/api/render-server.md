@@ -37,6 +37,18 @@ await renderServer('./page.md', { title: 'Docs' }, {
 
 `renderClient` rejects `serverContext` with error `server_context_on_client`.
 
+## dataSources
+
+Pass external YAML / JSON / CSV files through `options.dataSources`. Values are merged into the template context before `context` and `serverContext`. See [dataSources](/en/api/data-sources).
+
+```ts
+await renderServer('./page.md', {}, {
+  dataSources: { site: './data/site.yaml' },
+})
+```
+
+`renderClient` rejects `dataSources` with error `data_sources_on_client`.
+
 ## Default loader
 
 When `options.loader` is omitted, `createNodeLoader()` is used — local file reads plus remote `https://` URLs on Node.

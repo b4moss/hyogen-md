@@ -6,6 +6,7 @@ export default {
     apiRenderServer: 'renderServer',
     apiRenderClient: 'renderClient',
     apiBuild: 'build',
+    apiDataSources: 'dataSources',
     apiLoader: 'loader',
     apiDiagnostics: 'diagnostics',
     apiTypes: '型とオプション',
