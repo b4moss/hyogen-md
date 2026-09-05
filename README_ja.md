@@ -123,7 +123,7 @@ make dev-docs
 
 Playground UX は **v0.10.0** マイルストーンに含まれますが、**npm の tarball には入りません**。
 
-coverage バッジはライブラリ（`app/`）の Vitest **statement カバレッジ概算（約 84%）**です。初期リリース目標は 50% 以上。CI / Codecov 連携はまだありません。
+coverage バッジはライブラリ（`app/`）の Vitest **statement カバレッジ概算（約 84%）**です。初期リリース目標は 50% 以上。カバレッジは `main` への push 時に `.github/workflows/quality.yml` から Codecov へアップロードされます。
 
 ---
 

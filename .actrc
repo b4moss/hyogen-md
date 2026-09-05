@@ -1,0 +1,3 @@
+# Medium image: closer to GHA than the default node slim image.
+# See https://nektosact.com/usage/runners.html
+-P ubuntu-latest=catthehacker/ubuntu:act-latest

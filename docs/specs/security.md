@@ -18,7 +18,7 @@
 
 | 項目 | 方針 |
 |------|------|
-| 式の範囲 | `{{ }}` は式のみ。関数はユーザー登録（component `as`）のみ。メソッドは `.toLocaleString` のみ。詳細は [dsl.md](./dsl.md) |
+| 式の範囲 | `{{ }}` は式のみ。関数はユーザー登録（component `as`）のみ。メソッドは `.toLocaleString` のみ。許可プロパティは `.length`。詳細は [dsl.md](./dsl.md) |
 | 危険キー | `__proto__` / `prototype` / `constructor` / `__defineGetter__` |
 | 危険キーアクセス時 | **エラー**（`forbidden_property_access`） |
 | 変数パス深さ・文字種 | 明示制限なし（識別子は JS Unicode 相当） |
@@ -64,7 +64,8 @@
 | `if` / `each` 構造ネスト | 合計最大 20。超過はスキップ + 警告 |
 | 一般のファイルネスト・展開サイズ | 上限なし |
 | front matter ソース | 最大 64KB（超過はエラー） |
-| props / API context | 無制限 |
+| `dataSources` 各ファイル | 最大 **5MB**（超過は `data_source_too_large`）。リモート URL は不可（[api.md](./api.md)） |
+| props / API context（メモリ上の値） | 無制限 |
 
 ## 秘密情報
 

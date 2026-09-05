@@ -90,10 +90,22 @@ make build         # app/dist（minify あり）
 make size          # dist / gzip / npm pack 容量
 make pack          # npm pack --dry-run
 make check         # 公開前: typecheck + build + test + pack
+make act           # ローカルで app CI（nektos/act）を再現
 make dev-docs      # docs-site 開発サーバ（/playground 含む）
 make build-docs    # docs-site 静的生成
 make check-docs    # docs-site 静的生成の確認
 ```
+
+### ローカル CI（`make act`）
+
+`feat/*` → `dev-v*` 向け PR を出す前に、主要ジョブをローカルで通す。
+
+- 前提: [nektos/act](https://nektosact.com/) と Docker
+- 実行: リポジトリルートで `make act`
+- 対象: [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) の **app** ジョブ（`make check` 相当）
+- 対象外: Pages デプロイ、Codecov upload、`ci-docs.yml`（docs-site）
+- Secrets は不要（Codecov は `quality.yml` 側）
+- ランナー画像はルート [`.actrc`](../../.actrc) で指定。完璧な GHA 再現ではないが、PR 前の予防として使う
 
 `app/` 直下でも同様:
 

@@ -35,8 +35,8 @@ Japanese: [changelog_ja.md](./changelog_ja.md)
 ### 0.10.0-docs.1 — Repository ops
 
 - Long-lived branches **`main`** / **`release`** (from `develop` at `v0.10.0`); `develop` unchanged
-- GitHub Actions CI on PRs to `develop` / `dev-v*` (`.github/workflows/ci.yml`)
-- Spec: [`docs/repository.md`](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/repository.md) (Netlify deploys from **`main`**)
+- GitHub Actions CI on PRs to `dev-v*` / `hotfix/*`→`main` (`.github/workflows/ci.yml`); docs CI on `doc-site` (`.github/workflows/ci-docs.yml`)
+- Spec: [`docs/specs/repository.md`](https://github.com/b4moss/hyogen-md/blob/main/docs/specs/repository.md) (Pages deploys from **`doc-site`**)
 
 ### 0.10.0 — Playground UX + first npm publish
 

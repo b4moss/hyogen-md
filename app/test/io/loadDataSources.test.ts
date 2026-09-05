@@ -101,4 +101,71 @@ describe("loadDataSources (v0.11)", () => {
       },
     );
   });
+
+  it("throws load_failed for https remote data source paths", async () => {
+    await assert.rejects(
+      () =>
+        loadDataSources(
+          { site: "https://example.com/data/site.yaml" },
+          { root: fixtureDir },
+        ),
+      (error: unknown) => {
+        assertHyogenError(error, "load_failed");
+        assert.match(String((error as { details?: { reason?: string } }).details?.reason), /remote/i);
+        return true;
+      },
+    );
+  });
+
+  it("throws load_failed for http remote data source paths", async () => {
+    await assert.rejects(
+      () =>
+        loadDataSources(
+          { meta: "http://example.com/meta.json" },
+          { root: fixtureDir },
+        ),
+      (error: unknown) => {
+        assertHyogenError(error, "load_failed");
+        return true;
+      },
+    );
+  });
+
+  it("throws data_source_too_large when source exceeds 5MB", async () => {
+    const limit = 5 * 1024 * 1024;
+    const oversized = "x".repeat(limit + 1);
+    const loader: Loader = async () => oversized;
+
+    await assert.rejects(
+      () =>
+        loadDataSources({ big: "./big.json" }, {
+          root: fixtureDir,
+          loader,
+        }),
+      (error: unknown) => {
+        assertHyogenError(error, "data_source_too_large");
+        const details = (error as { details?: { size?: number; limit?: number } }).details;
+        assert.equal(details?.size, limit + 1);
+        assert.equal(details?.limit, limit);
+        return true;
+      },
+    );
+  });
+
+  it("allows a data source that is exactly 5MB", async () => {
+    const limit = 5 * 1024 * 1024;
+    // Valid JSON string of exact byte length via loader bypassing parse size of quotes —
+    // use a YAML scalar that parses cleanly: pad after a short prefix.
+    const prefix = "title: ";
+    const value = "y".repeat(limit - prefix.length);
+    const source = `${prefix}${value}`;
+    assert.equal(Buffer.byteLength(source, "utf8"), limit);
+
+    const loader: Loader = async () => source;
+    const result = await loadDataSources(
+      { site: "./exact.yaml" },
+      { root: fixtureDir, loader },
+    );
+    assert.equal(typeof (result.site as { title?: string }).title, "string");
+  });
 });

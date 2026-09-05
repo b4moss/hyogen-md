@@ -7,6 +7,8 @@ export type ExecuteStatementOptions = {
   path?: string;
   constBindings?: Set<string>;
   onUpdate?: (name: string) => void;
+  /** Accumulates stringified `echo` outputs in document order. */
+  echoChunks?: string[];
 };
 
 function isFalsy(value: unknown): boolean {
@@ -18,7 +20,7 @@ export async function executeStatement(
   context: HyogenContext,
   options: ExecuteStatementOptions = {},
 ): Promise<void> {
-  const { path, constBindings = new Set(), onUpdate } = options;
+  const { path, constBindings = new Set(), onUpdate, echoChunks } = options;
 
   switch (statement.kind) {
     case "const":
@@ -93,6 +95,16 @@ export async function executeStatement(
       }
       context[statement.name] = next;
       onUpdate?.(statement.name);
+      return;
+    }
+    case "echo": {
+      const value = await evaluateExpression(statement.expr, {
+        context,
+        path,
+      });
+      const text =
+        value === null || value === undefined ? "" : String(value);
+      echoChunks?.push(text);
       return;
     }
     case "for": {
