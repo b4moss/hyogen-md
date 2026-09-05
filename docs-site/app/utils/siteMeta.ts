@@ -11,6 +11,7 @@ export type SiteMeta = {
   siteVersion: string
   description: string
   githubUrl: string
+  /** Optional npm package page URL; empty hides the header npm icon. */
   npmUrl: string
   footerText: string
   software: SiteSoftwareMeta
@@ -50,7 +51,7 @@ export function normalizeSiteMeta(raw: RawSiteMeta | null | undefined): SiteMeta
   const base = { ...defaultSiteMeta, ...(raw || {}) }
   const siteName = String(base.siteName || defaultSiteMeta.siteName)
   const githubUrl = String(base.githubUrl || defaultSiteMeta.githubUrl)
-  const npmUrl = String(base.npmUrl ?? defaultSiteMeta.npmUrl)
+  const npmUrl = String(raw?.npmUrl ?? base.npmUrl ?? "")
   const softwareRaw = raw?.software || {}
 
   return {
