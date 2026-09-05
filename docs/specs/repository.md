@@ -128,7 +128,8 @@ flowchart LR
 
 1. リポジトリ **Settings → Pages** で Source を **GitHub Actions** にする
 2. 独自ドメイン **`hyogenmd.oss.b4m.jp`** を設定し、DNS で Pages へ向ける（CNAME ファイルはリポジトリ側に同梱）
-3. 以降 **`doc-site`** への push（または `workflow_dispatch`）で自動デプロイ
+3. **Settings → Environments → `github-pages`** の **Deployment branches** に **`doc-site`** を許可する（Custom ポリシー）。`main` のみだと Deploy job が環境保護で拒否される
+4. 以降 **`doc-site`** への push（または `workflow_dispatch`）で自動デプロイ
 
 ---
 
