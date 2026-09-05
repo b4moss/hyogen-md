@@ -1,0 +1,50 @@
+# Docs-site CI — gate on PRs into doc-site only.
+# Spec: #69 / #86 / docs/specs/repository.md
+
+name: CI docs
+
+on:
+  pull_request:
+    branches:
+      - doc-site
+  workflow_dispatch:
+
+concurrency:
+  group: ci-docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    name: docs-site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            docs-site/package-lock.json
+
+      - name: Install app dependencies
+        # Playground aliases ../app — install app deps first
+        run: npm ci
+        working-directory: app
+
+      - name: Install docs-site dependencies
+        # npm ci rejects cross-platform optional native deps (esbuild, lightningcss, …)
+        # when lockfile is generated on macOS. Makefile uses npm install for docs-site.
+        run: npm install --no-audit --no-fund
+        working-directory: docs-site
+
+      - name: playground test
+        run: make test-pg
+
+      - name: docs-site generate
+        run: make build-docs
