@@ -1,7 +1,7 @@
 import path from "node:path";
 import { buildDependencyGraph } from "../../build/buildDependencyGraph.js";
 import { collectEntryPaths } from "../../build/collectEntryPaths.js";
-import { createNodeLoader } from "../../io/createNodeLoader.js";
+import { createFsLoader } from "../../io/createFsLoader.js";
 import type { Loader } from "../../types.js";
 
 export type DependencyIndex = {
@@ -25,7 +25,7 @@ export async function buildDependencyIndex(options: {
   includeUnderscoreEntries?: boolean;
   loader?: Loader;
 }): Promise<DependencyIndex> {
-  const loader = options.loader ?? createNodeLoader();
+  const loader = options.loader ?? createFsLoader();
   const entries = (
     await collectEntryPaths(options.input, {
       root: options.root,

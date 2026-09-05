@@ -15,6 +15,7 @@ import { createHmrHub, type HmrHub } from "../dev/hmrHub.js";
 import { PREVIEW_CSS } from "../dev/previewHtml.js";
 import { DEV_CLIENT_JS, renderIndexHtml } from "../dev/staticAssets.js";
 import { buildFileTree } from "../dev/treeIndex.js";
+import { isRemotePath } from "../../io/isRemotePath.js";
 
 export type DevServerOptions = {
   config: ResolvedHyogenConfig;
@@ -56,6 +57,24 @@ function sendText(
     "content-length": Buffer.byteLength(body),
   });
   res.end(body);
+}
+
+
+/**
+ * Resolve a preview path to a local file under the project root.
+ * Rejects remote URLs and path traversal (CodeQL js/request-forgery).
+ */
+function resolvePreviewPath(requestPath: string, rootDir: string): string {
+  if (isRemotePath(requestPath)) {
+    throw new Error("remote path not allowed");
+  }
+  const root = path.resolve(rootDir);
+  const resolved = path.resolve(root, requestPath);
+  const relative = path.relative(root, resolved);
+  if (relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error("path outside project root");
+  }
+  return resolved;
 }
 
 /**
@@ -145,22 +164,28 @@ export async function startDevServer(
             sendJson(res, 400, { error: "missing path" });
             return;
           }
+          let safePath: string;
           try {
-            const preview = await session.renderEntry(filePath);
+            const rootDir = options.config.root ?? options.config.configDir;
+            safePath = resolvePreviewPath(filePath, rootDir);
+          } catch {
+            sendJson(res, 400, { error: "invalid path" });
+            return;
+          }
+          try {
+            const preview = await session.renderEntry(safePath);
             sendJson(res, 200, preview);
           } catch (error) {
-            sendJson(res, 500, {
-              error: error instanceof Error ? error.message : String(error),
-            });
+            errorLog(error instanceof Error ? error.message : String(error));
+            sendJson(res, 500, { error: "preview failed" });
           }
           return;
         }
 
         sendJson(res, 404, { error: "not found" });
       } catch (error) {
-        sendJson(res, 500, {
-          error: error instanceof Error ? error.message : String(error),
-        });
+        errorLog(error instanceof Error ? error.message : String(error));
+        sendJson(res, 500, { error: "internal error" });
       }
     })();
   });

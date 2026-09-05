@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { ResolvedHyogenConfig } from "../../config/types.js";
 import { formatDiagnosticLog } from "../../errors/formatDiagnosticLog.js";
-import { createNodeLoader } from "../../io/createNodeLoader.js";
+import { createFsLoader } from "../../io/createFsLoader.js";
 import { renderServer } from "../../renderServer.js";
 import type { HyogenWarning, Loader, RenderResult } from "../../types.js";
 import { markdownToPreviewHtml } from "./previewHtml.js";
@@ -24,7 +24,7 @@ export function createDevSession(options: {
   loader?: Loader;
   errorLog?: (message: string) => void;
 }): DevSession {
-  const loader = options.loader ?? createNodeLoader();
+  const loader = options.loader ?? createFsLoader();
   const errorLog = options.errorLog ?? ((message) => console.error(message));
   const outDir = path.resolve(options.config.outDir);
 
