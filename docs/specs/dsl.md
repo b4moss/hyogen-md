@@ -286,7 +286,7 @@ output:
 
 識別子として使えない:
 
-`if` `else` `else if` `endif` `const` `let` `for` `do` `while` `each` `endeach` `block` `endblock` `extend` `include` `component` `as`
+`if` `else` `else if` `endif` `const` `let` `for` `do` `while` `each` `endeach` `block` `endblock` `extend` `include` `component` `as` `echo`
 
 - 今後増やしうる
 
@@ -296,6 +296,7 @@ output:
 
 - hyogen.md で許可された **式**のみ
 - `.toLocaleString` は **可**
+- 許可プロパティ `.length` は **可**
 - **component 呼び出しは不可**
 
 ## トークン規則
@@ -431,6 +432,8 @@ JS と同じ。あってもなくても可。
 | テンプレーティング | `include` / `extend` / `block` / `endblock` / `component ... as ...` 等（[templating.md](./templating.md)） |
 | 関数呼び出し | **ユーザー登録関数のみ**（現状は `component ... as name` で登録した `name(...)`） |
 | メソッド呼び出し | **`.toLocaleString(...)` のみ許容** |
+| 許可プロパティ | **`.length`**（配列の要素数・文字列の文字数。メソッド呼び出し `length()` は不可） |
+| 出力 | **`echo <式>`**（当該 `@hg` / `@@` ブロックを評価結果文字列で置換。複数・ループ内は連結。`null` / `undefined` → `""`） |
 
 ### 禁止（代表）
 
@@ -440,9 +443,21 @@ JS と同じ。あってもなくても可。
 | ループ | `for…of` / `for…in` |
 | 関数 | 関数定義（`function` / `=>`） |
 | 関数 | ユーザー未登録・ビルトイン未提供の呼び出し（一般の `foo()` 等） |
-| メソッド | `.toLocaleString` 以外（例: `.map` / `.trim` 等） |
+| メソッド | `.toLocaleString` 以外（例: `.map` / `.trim` / `.slice` 等） |
 | モジュール | `import` / `require` |
 | その他 | `try` / `catch`、`new`、分割代入 |
+
+---
+
+## 後続で詰める項目
+
+- 許可メソッドの追加（都度 spec 更新。現行の許可メソッドは **`.toLocaleString(...)` のみ**。許可プロパティ **`.length`** は実装済み）
+  - **候補メモ（未実装）**: `.slice` など配列操作系（[v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4)）
+- ビルトイン関数（**当面なし**。必要なら別マイルストーンで spec 追加）
+- mixin（保留。必要時に再検討）
+- データソース読込は **API 側のみ**（DSL の `import` / `require` は引き続き禁止）。詳細は [api.md](./api.md)
+- `@hg` / `@@` 内の **`echo <式>`** による本文展開は **実装済み**（許可表・[logic.md](./logic.md) / [pipeline.md](./pipeline.md)）
+- TOC 専用ヘルパは **実装済み** → [toc.md](./toc.md)（v0.12.0）
 
 ---
 

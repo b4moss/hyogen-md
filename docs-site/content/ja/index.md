@@ -34,6 +34,7 @@ description: @b4moss/hyogen-md の公式ドキュメント — Markdown 向け�
 - [宣言と代入](/ja/syntax/declarations) — `const` / `let`
 - [include と component](/ja/syntax/includes) — ファイルの取り込みと再利用
 - [制御構造](/ja/syntax/control-flow) — `if` / `each` / `extend`
+- [TOC ヘルパ](/ja/syntax/toc) — `toc` / `toc(N)` で目次を生成
 - [許可メソッド](/ja/syntax/methods) — `.toLocaleString` など
 - [パスとセキュリティ](/ja/syntax/paths-and-security) — パス解決と注意点
 

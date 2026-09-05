@@ -14,6 +14,7 @@ import type {
   HyogenError,
   HyogenWarning,
   Loader,
+  DataSourcesMap,
   RenderOptions,
   RenderResult,
   ServerRenderOptions,
@@ -51,12 +52,16 @@ type RenderOptions = {
 ## ServerRenderOptions
 
 ```ts
+type DataSourcesMap = Record<string, string>
+
 type ServerRenderOptions = RenderOptions & {
   serverContext?: HyogenContext
+  /** 変数名 → ルート相対のデータファイルパス（YAML / JSON / CSV） */
+  dataSources?: DataSourcesMap
 }
 ```
 
-`renderServer` と `build` のみ `serverContext` を受け取れます。
+`renderServer` と `build` のみ `serverContext` / `dataSources` を受け取れます。詳細は [dataSources](/ja/api/data-sources)。
 
 ## BuildOptions
 
@@ -67,6 +72,7 @@ type BuildOptions = RenderOptions & {
   includeUnderscoreEntries?: boolean
   context?: HyogenContext
   serverContext?: HyogenContext
+  dataSources?: DataSourcesMap
 }
 ```
 
@@ -112,9 +118,11 @@ type HyogenError = Error & HyogenDiagnostic
 | hyogen コメントを出力に残す | OFF |
 | Node でのリモート include / component | 許可 |
 | front matter ソースの上限 | 64 KB |
+| dataSources 各ファイルの上限 | 5 MB |
 
 ## 関連
 
 - [renderServer](/ja/api/render-server)
 - [build](/ja/api/build)
+- [dataSources](/ja/api/data-sources)
 - [エラーコード](/ja/api/error-codes)

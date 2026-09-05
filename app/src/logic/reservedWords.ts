@@ -15,6 +15,7 @@ export const RESERVED_WORDS = new Set([
   "include",
   "component",
   "as",
+  "echo",
 ]);
 
 export function isReservedWord(name: string): boolean {

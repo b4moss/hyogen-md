@@ -53,7 +53,7 @@ See [Includes and components](/en/syntax/includes).
 
 - Statements (`const`, `if`, loops)
 - Arbitrary function calls (only registered components)
-- Most method calls (only [`.toLocaleString`](/en/syntax/methods))
+- Most method calls (only [`.toLocaleString`](/en/syntax/methods); property [`.length`](/en/syntax/methods) is allowed)
 
 Logic belongs in `@hg` blocks. See [Hyogen blocks](/en/syntax/hg-blocks).
 
