@@ -33,6 +33,34 @@
   --header-h: var(--pg-toolbar-h);
   --diag-h: var(--pg-diag-h);
 
+  --pg-hl-default: var(--pg-ink);
+  --pg-hl-comment: var(--pg-ink-muted);
+  --pg-hl-keyword: #7b4f9e;
+  --pg-hl-string: #a11;
+  --pg-hl-number: #164;
+  --pg-hl-variable: #0550ae;
+  --pg-hl-type: #0a6e6e;
+  --pg-hl-class: #0550ae;
+  --pg-hl-property: #0550ae;
+  --pg-hl-operator: #5a6b76;
+  --pg-hl-punctuation: #5a6b76;
+  --pg-hl-meta: #6b3d7a;
+  --pg-hl-regexp: #a11;
+  --pg-hl-link: #0a5f8c;
+  --pg-hl-code: #6b3d7a;
+  --pg-hl-heading: var(--pg-accent);
+  --pg-hg-directive: #c45c5c;
+  --pg-hg-mustache: #0b6e4f;
+  --pg-surface-tint: white;
+  --pg-out-bg: #d8e0e6;
+  --pg-out-ink: color-mix(in srgb, var(--pg-ink) 88%, var(--pg-ink-muted));
+  --pg-tabs-bg: color-mix(in srgb, var(--pg-bg-deep) 70%, var(--pg-surface-tint));
+  --pg-filer-bg: color-mix(in srgb, var(--pg-bg-panel) 88%, var(--pg-surface-tint));
+  --pg-diag-bg: color-mix(in srgb, var(--pg-bg-panel) 90%, var(--pg-surface-tint));
+  --pg-path-bg: color-mix(in srgb, var(--pg-bg-deep) 55%, var(--pg-surface-tint));
+  --pg-gutter-ink: var(--pg-ink-muted);
+  --pg-gutter-bg: color-mix(in srgb, var(--pg-bg-panel) 92%, var(--pg-surface-tint));
+
   height: 100%;
   min-height: 0;
   display: flex;
@@ -58,6 +86,26 @@ html[data-theme='dark'] .playground-root {
   --pg-danger-soft: #450a0a;
   --pg-warn: #fcd34d;
   --pg-warn-soft: #422006;
+
+  --pg-hl-keyword: #c792ea;
+  --pg-hl-string: #c3e88d;
+  --pg-hl-number: #f78c6c;
+  --pg-hl-variable: #82aaff;
+  --pg-hl-type: #ffcb6b;
+  --pg-hl-class: #ffcb6b;
+  --pg-hl-property: #82aaff;
+  --pg-hl-operator: #89ddff;
+  --pg-hl-punctuation: #94a3b8;
+  --pg-hl-meta: #c792ea;
+  --pg-hl-regexp: #c3e88d;
+  --pg-hl-link: #7dcfff;
+  --pg-hl-code: #f07178;
+  --pg-hg-directive: #f07178;
+  --pg-hg-mustache: #89ddff;
+  --pg-surface-tint: black;
+  --pg-out-bg: #1a2836;
+  --pg-out-ink: var(--pg-ink);
+  --pg-gutter-bg: color-mix(in srgb, var(--pg-bg-panel) 85%, black);
 
   background:
     radial-gradient(1200px 600px at 10% -10%, #1e293b 0%, transparent 55%),
@@ -92,4 +140,23 @@ html[data-theme='dark'] .playground-root {
 .playground-separator:hover,
 .playground-separator.is-active {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* CodeMirror — theme via CSS variables on .playground-root */
+.playground-root .cm-editor .cm-content {
+  color: var(--pg-hl-default);
+}
+
+.playground-root .cm-editor .cm-gutters {
+  background: var(--pg-gutter-bg);
+  color: var(--pg-gutter-ink);
+  border-right: 1px solid var(--line);
+}
+
+.playground-root .cm-editor .cm-activeLineGutter {
+  background: color-mix(in srgb, var(--accent-soft) 45%, transparent);
+}
+
+.playground-root .cm-editor .cm-activeLine {
+  background: color-mix(in srgb, var(--accent-soft) 25%, transparent);
 }

@@ -51,8 +51,9 @@ npx hyogen-md build
 
 ---
 
-## 4. `create`（関連: #35）
 <a id="create"></a>
+
+## 4. `create`（関連: #35）
 
 ### 起動
 
@@ -80,8 +81,9 @@ README は任意（最小構成では必須としない）。
 
 ---
 
-## 5. `hyogen.config.(js|ts)`（関連: #35）
 <a id="hyogen-config"></a>
+
+## 5. `hyogen.config.(js|ts)`（関連: #35）
 
 ### 記法
 
@@ -122,8 +124,9 @@ CLI 設定用に例えば `@b4moss/hyogen-md/config` を追加する（実装時
 
 ---
 
-## 7. 執筆用 `dev`（関連: #30）
 <a id="dev-server"></a>
+
+## 7. 執筆用 `dev`（関連: #30）
 
 ### 役割
 

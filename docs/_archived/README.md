@@ -4,7 +4,7 @@
 
 | パス | 内容 |
 |------|------|
-| [roadmap/](./roadmap/) | 完了ロードマップ `v0.1.0`〜`v0.10.x` |
+| [roadmap/](./roadmap/) | 完了ロードマップ `v0.1.0`〜`v0.12.0` |
 
 現行: [roadmap.md](../roadmap.md) / [specs/](../specs/)
 

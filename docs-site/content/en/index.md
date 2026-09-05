@@ -25,7 +25,7 @@ Install the package and run your first `renderServer` or `renderClient` example.
 ### [Template syntax](/en/syntax)
 
 - [Front matter](/en/syntax/front-matter), [Expressions](/en/syntax/expressions), [Hyogen blocks](/en/syntax/hg-blocks)
-- [Includes & components](/en/syntax/includes), [Control flow](/en/syntax/control-flow)
+- [Includes & components](/en/syntax/includes), [Control flow](/en/syntax/control-flow), [TOC helper](/en/syntax/toc)
 - [Paths & security](/en/syntax/paths-and-security)
 
 ### [Playground](/playground)

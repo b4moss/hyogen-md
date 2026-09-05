@@ -14,10 +14,10 @@ export type {
   HyogenError,
   HyogenWarning,
   Loader,
+  DataSourcesMap,
   RenderOptions,
   RenderResult,
   ServerRenderOptions,
   BuildOptions,
   BuildResult,
-  DataSourcesMap,
 } from "./types.js";

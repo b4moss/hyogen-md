@@ -19,7 +19,9 @@ All codes use English message templates. Use [`formatDiagnosticLog`](/en/api/dia
 | `parse_error` | Syntax outside the whitelist, malformed DSL, or missing client loader |
 | `component_multiline_output` | Component rendered more than one line (components must be single-line) |
 | `server_context_on_client` | `serverContext` passed to `renderClient` |
-| `load_failed` | Loader failed for a reason other than not found |
+| `data_sources_on_client` | `dataSources` passed to `renderClient` |
+| `data_source_too_large` | Data source file exceeds 5MB |
+| `load_failed` | Other loader failure (including rejected remote data-source URLs) |
 
 Example error log:
 

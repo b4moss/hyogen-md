@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parse as parseYaml } from 'yaml'
 import inject from '@rollup/plugin-inject'
+import { escapeMdcMustaches } from './app/utils/escapeMdcMustaches'
 import { normalizeSiteMeta, type SiteMeta } from './app/utils/siteMeta'
 import { resolveSiteVersion } from './scripts/resolveSiteVersion'
 
@@ -51,6 +52,7 @@ const docRoutes = [
   '/syntax/declarations',
   '/syntax/includes',
   '/syntax/control-flow',
+  '/syntax/toc',
   '/syntax/paths-and-security',
 ]
 
@@ -78,6 +80,7 @@ export default defineNuxtConfig({
       siteVersion: resolveSiteVersion(rootDir),
       description: siteMeta.description,
       githubUrl: siteMeta.githubUrl,
+      npmUrl: siteMeta.npmUrl,
       footerText: siteMeta.footerText,
       software: siteMeta.software,
       organization: siteMeta.organization,
@@ -144,18 +147,11 @@ export default defineNuxtConfig({
   },
   hooks: {
     // Keep literal {{ }} in docs (hyogen syntax) from being parsed as MDC bindings.
+    // Fenced/inline code and front matter are left intact so entities do not show literally.
     'content:file:beforeParse'(ctx) {
       const file = ctx.file
       if (!file?.body || !String(file.id || file.path || '').endsWith('.md')) return
-      const parts = String(file.body).split(/(```[\s\S]*?```)/g)
-      file.body = parts
-        .map((part, i) => {
-          if (i % 2 === 1) return part
-          return part
-            .replaceAll('{{', '&#123;&#123;')
-            .replaceAll('}}', '&#125;&#125;')
-        })
-        .join('')
+      file.body = escapeMdcMustaches(String(file.body))
     },
     'nitro:build:public-assets'(nitro) {
       copyFileSync(
