@@ -451,13 +451,13 @@ JS と同じ。あってもなくても可。
 
 ## 後続で詰める項目
 
-- 許可メソッドの追加（都度 spec 更新。実装は当面 `.toLocaleString` のみ）
-  - **候補メモ（未実装）**: `.length` / `.slice` など配列操作系
-- ビルトイン関数（**当面なし**。必要なら v0.9+ で spec 追加）
+- 許可メソッドの追加（都度 spec 更新。現行の許可メソッドは **`.toLocaleString(...)` のみ**。許可プロパティ **`.length`** は実装済み）
+  - **候補メモ（未実装）**: `.slice` など配列操作系（[v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4)）
+- ビルトイン関数（**当面なし**。必要なら別マイルストーンで spec 追加）
 - mixin（保留。必要時に再検討）
 - データソース読込は **API 側のみ**（DSL の `import` / `require` は引き続き禁止）。詳細は [api.md](./api.md)
-- `@hg` 内の `echo` による本文展開は **採用時期未定**（現状は `{{ }}`）
-- TOC 専用ヘルパ → [toc.md](./toc.md)（v0.12.0）
+- `@hg` / `@@` 内の **`echo <式>`** による本文展開は **実装済み**（許可表・[logic.md](./logic.md) / [pipeline.md](./pipeline.md)）
+- TOC 専用ヘルパは **実装済み** → [toc.md](./toc.md)（v0.12.0）
 
 ---
 

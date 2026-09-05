@@ -19,7 +19,7 @@
 #   各ページの WebPage / TechArticle は about: { "@id": "…/#software" } で参照する。
 #
 # フィールド:
-#   siteName / siteUrl / githubUrl … UI・URL 生成・フォールバックにも使う
+#   siteName / siteUrl / githubUrl / npmUrl … UI・URL 生成・フォールバックにも使う
 #   software.name                 → SoftwareSourceCode.name（省略時は siteName）
 #   software.codeRepository       → codeRepository（省略時は githubUrl）
 #   software.license              → license（例: MIT）
@@ -33,6 +33,7 @@ siteName: hyogen-md
 siteUrl: https://hyogenmd.oss.b4m.jp
 description: Extended Markdown template engine for TypeScript / JavaScript
 githubUrl: https://github.com/b4moss/hyogen-md
+npmUrl: https://www.npmjs.com/package/@b4moss/hyogen-md
 footerText: "MIT License · 2026 Bicycle for Mind LLC."
 
 software:

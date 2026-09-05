@@ -114,9 +114,9 @@ await renderServer("./page.md", { title: "public" }, {
 });
 ```
 
-## データソースのインポート（v0.11.0）
+## データソースのインポート
 
-外部データ（**YAML / JSON / CSV** を同版で対応）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。
+外部データ（**YAML / JSON / CSV**）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。`renderServer` / `build` への配線は **v0.12.0** で完了。
 
 ### オプション `dataSources`
 
@@ -236,7 +236,6 @@ CSV（厳格）:
 | `alias_collision` | `as` 名の衝突（変数・親子再登録含む） |
 | `forbidden_property_access` | 危険キーへのアクセス |
 | `parse_error` | ホワイトリスト外構文・不正 DSL |
-| `component_multiline_output` | component 結果が複数行 |
 | `server_context_on_client` | `renderClient` に `serverContext` 相当 |
 | `data_sources_on_client` | `renderClient` に `dataSources` |
 | `data_source_too_large` | データソースファイルが 5MB 超 |
