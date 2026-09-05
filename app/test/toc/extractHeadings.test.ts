@@ -46,6 +46,19 @@ Section
     ]);
   });
 
+  it("parses ATX closing hashes and spaced explicit ids", () => {
+    assert.deepEqual(extractHeadings("## Title ##"), [
+      { level: 2, text: "Title" },
+    ]);
+    assert.deepEqual(extractHeadings("## Title\t\t{#spaced-id}  "), [
+      { level: 2, text: "Title", explicitId: "spaced-id" },
+    ]);
+  });
+
+  it("rejects seven-hash lines as ATX headings", () => {
+    assert.deepEqual(extractHeadings("####### Not a heading"), []);
+  });
+
   it("skips fenced code headings", () => {
     const source = `# Real
 \`\`\`
