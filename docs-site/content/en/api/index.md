@@ -5,7 +5,7 @@ description: Public API for @b4moss/hyogen-md — rendering, build, loaders, and
 
 # API Reference
 
-All public APIs for **@b4moss/hyogen-md@0.10.0**.
+Public APIs for **@b4moss/hyogen-md**. Data-source APIs are available in **0.11.0**.
 
 ## Rendering
 
@@ -14,6 +14,12 @@ All public APIs for **@b4moss/hyogen-md@0.10.0**.
 | [`renderServer`](/en/api/render-server) | `@b4moss/hyogen-md` | Server-side render (SSR / SSG). Accepts `serverContext`. |
 | [`renderClient`](/en/api/render-client) | `@b4moss/hyogen-md/client` | Client-side render (CSR). Requires a custom `loader`. |
 | [`build`](/en/api/build) | `@b4moss/hyogen-md` | Batch SSG — glob input, walk dependencies, write `outDir`. |
+
+## Data sources
+
+| Export | Description |
+|--------|-------------|
+| [`dataSources` / `loadDataSources`](/en/api/data-sources) | Load YAML / JSON / CSV and bind them as template variables |
 
 ## Loaders
 
@@ -44,6 +50,7 @@ import {
   renderServer,
   renderClient,
   build,
+  loadDataSources,
   createNodeLoader,
   createFsLoader,
   formatDiagnosticLog,

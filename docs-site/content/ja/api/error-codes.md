@@ -20,7 +20,9 @@ description: hyogen-md のエラー・警告コード一覧
 | `forbidden_property_access` | `__proto__` など危険キーへのアクセス |
 | `parse_error` | ホワイトリスト外の構文・不正な DSL |
 | `server_context_on_client` | `renderClient` に `serverContext` を渡した |
-| `load_failed` | loader のその他の失敗 |
+| `data_sources_on_client` | `renderClient` に `dataSources` を渡した |
+| `data_source_too_large` | データソースファイルが 5MB を超える |
+| `load_failed` | loader のその他の失敗（データソースのリモート URL 拒否を含む） |
 
 ### 例: file_not_found
 

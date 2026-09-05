@@ -84,9 +84,10 @@ Multiple `echo` statements (including inside `for` / `do…while`) concatenate w
 | Output | `echo <expr>` — replace the block with the evaluated string |
 | Includes | `include`, `component … as`, `extend` |
 | Control flow | `if` / `else` / `each` (structural — wrap Markdown body) |
+| Helpers | `toc` / `toc(N)` — see [TOC helper](/en/syntax/toc) |
 | Loops | `for (…)`, `do … while` |
 
-See [Declarations](/en/syntax/declarations) and [Control flow](/en/syntax/control-flow).
+See [Declarations](/en/syntax/declarations), [Control flow](/en/syntax/control-flow), and [TOC helper](/en/syntax/toc).
 
 ## Code fences are ignored
 

@@ -6,7 +6,8 @@ dist/
 .env
 .env.local
 vendor/
-.cursor/
+.cursor/*
+!.cursor/environment.json
 docs-site/site.meta.yaml
 app/coverage/
 .vscode/

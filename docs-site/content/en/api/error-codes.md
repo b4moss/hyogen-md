@@ -18,7 +18,9 @@ All codes use English message templates. Use [`formatDiagnosticLog`](/en/api/dia
 | `forbidden_property_access` | Access to a dangerous key (`__proto__`, `prototype`, `constructor`, `__defineGetter__`) |
 | `parse_error` | Syntax outside the whitelist, malformed DSL, or missing client loader |
 | `server_context_on_client` | `serverContext` passed to `renderClient` |
-| `load_failed` | Loader failed for a reason other than not found |
+| `data_sources_on_client` | `dataSources` passed to `renderClient` |
+| `data_source_too_large` | Data source file exceeds 5MB |
+| `load_failed` | Other loader failure (including rejected remote data-source URLs) |
 
 Example error log:
 

@@ -17,6 +17,7 @@ import { applyFrontMatterOutputOption } from "./applyFrontMatterOutputOption.js"
 import { stripHgComments } from "./stripHgComments.js";
 import { expandExtendsAndBlocks } from "../layout/expandExtendsAndBlocks.js";
 import { scanSuspiciousContext } from "../security/scanSuspiciousContext.js";
+import { expandToc } from "../toc/expandToc.js";
 
 export type RenderDocumentOptions = RenderOptions & {
   path?: string;
@@ -120,6 +121,8 @@ export async function renderDocumentBody(
     preserveHgComments: options.preserveHgComments,
     constrainToRoot: options.constrainToRoot,
   });
+
+  markdown = expandToc(markdown, { path });
 
   markdown = stripHgComments(markdown, options.preserveHgComments);
   return markdown;

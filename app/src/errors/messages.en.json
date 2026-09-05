@@ -7,7 +7,9 @@
     "forbidden_property_access": "Forbidden property access \"{property}\" in {path}",
     "parse_error": "Parse error in {path}: {message}",
     "server_context_on_client": "serverContext is not allowed with renderClient",
-    "load_failed": "Failed to load {path}: {reason}"
+    "load_failed": "Failed to load {path}: {reason}",
+    "data_sources_on_client": "dataSources is not allowed with renderClient",
+    "data_source_too_large": "Data source exceeds size limit in {path} ({size} bytes, limit {limit})"
   },
   "warnings": {
     "circular_include": "Circular reference detected; skipped {path} (referenced from {from} via {via})",

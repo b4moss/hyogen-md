@@ -114,9 +114,9 @@ await renderServer("./page.md", { title: "public" }, {
 });
 ```
 
-## データソースのインポート（v0.11.0）
+## データソースのインポート
 
-外部データ（YAML / JSON / CSV）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。
+外部データ（**YAML / JSON / CSV**）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。`renderServer` / `build` への配線は **v0.12.0** で完了。
 
 ### オプション `dataSources`
 
@@ -134,8 +134,10 @@ await renderServer("./page.md", {}, {
 ```
 
 - パスは `options.root`（省略時は `.doc_root` 探索結果または cwd）からの **相対パス**
-- **リモート URL** は v0.11.0 では **非対応**（`file_not_found` または `load_failed`）
-- `renderClient` に `dataSources` を渡した場合は **`data_sources_on_client`** で中断
+- **リモート URL**（`http://` / `https://`）は **非対応**。検出したら **`load_failed`**（`details.reason` にリモート非対応である旨を入れる）。`file_not_found` にはしない
+- `renderClient` に `dataSources` を渡した場合は **`data_sources_on_client`** で中断（空オブジェクト `{}` は未指定と同義で許容）
+- マップの **キー名に制約はない**（任意の文字列。危険キーへの式アクセスは既存の [security.md](./security.md) / DSL 規則に任せる）
+- 各データファイルのソース上限は **5MB（5 × 1024 × 1024 バイト）/ ファイル**。超過は **`data_source_too_large`**
 
 ### 関数 `loadDataSources`
 
@@ -150,6 +152,8 @@ await renderServer("./page.md", { ...fromFiles, extra: 1 });
 ```
 
 `@b4moss/hyogen-md`（サーバ向け）のみ export。`@b4moss/hyogen-md/client` には **載せない**。
+
+`renderServer` / `build` の `dataSources` と同じパース・上限・リモート拒否規則を適用する。
 
 ### context へのマージ順
 
@@ -167,11 +171,28 @@ await renderServer("./page.md", { ...fromFiles, extra: 1 });
 |--------|--------------------------------|
 | `.json` | `JSON.parse` の結果（オブジェクト / 配列 / プリミティブ） |
 | `.yaml` / `.yml` | `yaml` パッケージでパースした結果 |
-| `.csv` | **ヘッダー行あり**の CSV → **オブジェクト配列**（1 行 = 1 レコード） |
+| `.csv` | **ヘッダー行あり**の CSV → **オブジェクト配列**（1 行 = 1 レコード。フィールドはすべて文字列） |
+
+共通:
 
 - 空ファイル → **`parse_error`**
 - 未対応拡張子 → **`parse_error`**（`details.format` に拡張子）
-- CSV: **`csv-parser`**（npm）を `Readable.from` 経由の薄いラッパで利用。RFC 4180 簡易（カンマ区切り、ダブルクォートでフィールド囲み・エスケープ、`\r\n` / `\n` 改行）
+- 拡張子判定は path 末尾（大文字小文字は区別しない）
+
+YAML（厳格・ライブラリ既定に従う）:
+
+- 日付・数値・真偽・`null` 等の型は **`yaml` パッケージの既定**のまま束縛する（追加の型正規化はしない）
+- alias / anchor は **許可**（パーサが解決した結果を使う）
+- 重複キーは **パーサ既定**（後勝ち）
+- 不正 YAML → **`parse_error`**
+
+CSV（厳格）:
+
+- **`csv-parser`**（npm）を `Readable.from` 経由の薄いラッパで利用。RFC 4180 簡易（カンマ区切り、ダブルクォートでフィールド囲み・エスケープ、`\r\n` / `\n` 改行）
+- 空行は **スキップ**
+- データ行の列数がヘッダーと不一致 → **`parse_error`**
+- **BOM 非対応**（先頭 BOM は除去しない。ヘッダー名に混入しうる）
+- TSV・セミコロン区切り等は **非対応**（未対応形式と同様 `parse_error`）
 
 ### build での扱い
 
@@ -217,7 +238,8 @@ await renderServer("./page.md", { ...fromFiles, extra: 1 });
 | `parse_error` | ホワイトリスト外構文・不正 DSL |
 | `server_context_on_client` | `renderClient` に `serverContext` 相当 |
 | `data_sources_on_client` | `renderClient` に `dataSources` |
-| `load_failed` | loader のその他失敗 |
+| `data_source_too_large` | データソースファイルが 5MB 超 |
+| `load_failed` | loader のその他失敗（データソースのリモート URL 拒否を含む） |
 
 ### 中断しない警告
 
@@ -240,8 +262,17 @@ await renderServer("./page.md", { ...fromFiles, extra: 1 });
   via: include
 ```
 
+## TOC 専用ヘルパ（v0.12.0）
+
+構文・見出し抽出・出力形式は [toc.md](./toc.md) が正。レンダリング API（`renderServer` / `renderClient` / `build`）のシグネチャ変更は不要（パイプライン内で自動処理）。
+
+## 後続候補（未実装）
+
+（現時点なし）
+
 ## 関連
 
+- TOC: [toc.md](./toc.md)
 - パイプライン: [pipeline.md](./pipeline.md)
 - パス: [paths.md](./paths.md)
 - セキュリティ: [security.md](./security.md)
