@@ -68,7 +68,7 @@ provide(NODE_ACTION_MENU_OPEN_ID, ref<string | null>(null));
   height: 100%;
   padding: 0.75rem;
   overflow: auto;
-  background: color-mix(in srgb, var(--bg-panel) 88%, white);
+  background: var(--pg-filer-bg);
   border-right: 1px solid var(--line);
 }
 
@@ -99,8 +99,8 @@ provide(NODE_ACTION_MENU_OPEN_ID, ref<string | null>(null));
   overflow: visible;
   padding: 0.5rem 0.55rem;
   margin-inline: 0.2rem;
-  background: #d8e0e6;
-  color: color-mix(in srgb, var(--ink) 88%, var(--ink-muted));
+  background: var(--pg-out-bg);
+  color: var(--pg-out-ink);
   font-size: 0.95em;
 }
 
