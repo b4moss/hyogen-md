@@ -40,6 +40,27 @@ npm install @b4moss/hyogen-md
 
 ## クイックスタート
 
+### CLI（`hyogen-md`）
+
+```bash
+npx hyogen-md create my-site
+cd my-site
+npm install
+npm run dev    # ファイルツリー + HMR プレビュー（既定 http://127.0.0.1:4173）
+npm run build  # Markdown を outDir へ出力（既定 ./out）
+```
+
+`hyogen.config.js`（または `.ts`）:
+
+```js
+import { defineConfig } from "@b4moss/hyogen-md/config";
+
+export default defineConfig({
+  input: "./src/**/*.md",
+  // outDir: "./out",
+});
+```
+
 ### クライアント / CSR（`@b4moss/hyogen-md/client`）
 
 ```ts

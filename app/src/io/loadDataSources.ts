@@ -1,5 +1,5 @@
 import path from "node:path";
-import { createNodeLoader } from "./createNodeLoader.js";
+import { createFsLoader } from "./createFsLoader.js";
 import { isRemotePath } from "./isRemotePath.js";
 import { parseDataFile } from "./parseDataFile.js";
 import { createHyogenError } from "../errors/createError.js";
@@ -36,7 +36,10 @@ export async function loadDataSources(
   options?: LoadDataSourcesOptions,
 ): Promise<HyogenContext> {
   const rootDir = resolveDataRoot(options);
-  const loader = options?.loader ?? createNodeLoader();
+  // Remote data sources are rejected below; default to FS-only (no fetch).
+  // Using createNodeLoader here reintroduced CodeQL js/request-forgery via
+  // writing-preview paths that only ever need local files.
+  const loader = options?.loader ?? createFsLoader();
   const context: HyogenContext = {};
 
   for (const [name, relativePath] of Object.entries(sources)) {

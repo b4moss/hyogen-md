@@ -23,8 +23,33 @@ export function createNodeLoader(options: NodeLoaderOptions = {}): Loader {
       return fsLoader(filePath);
     }
 
+    let remoteUrl: URL;
     try {
-      const response = await fetch(filePath);
+      remoteUrl = new URL(filePath);
+    } catch {
+      throw createHyogenError({
+        code: "load_failed",
+        path: from,
+        details: {
+          path: filePath,
+          reason: "invalid remote URL",
+        },
+      });
+    }
+    if (remoteUrl.protocol !== "http:" && remoteUrl.protocol !== "https:") {
+      throw createHyogenError({
+        code: "load_failed",
+        path: from,
+        details: {
+          path: filePath,
+          reason: `unsupported protocol: ${remoteUrl.protocol}`,
+        },
+      });
+    }
+
+    try {
+      // Fetch only the parsed http(s) URL — never a raw request-controlled string.
+      const response = await fetch(remoteUrl);
       if (!response.ok) {
         if (response.status === 404) {
           throw createHyogenError({
