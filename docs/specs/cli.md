@@ -2,12 +2,12 @@
 
 | 項目 | 値 |
 |------|-----|
-| **状態** | 仕様詳細 |
+| **状態** | 実装済み（v0.13.0 CLI） |
 | **マイルストーン** | [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) |
 | **関連 Issue** | [#35](https://github.com/b4moss/hyogen-md/issues/35)（config / create）、[#30](https://github.com/b4moss/hyogen-md/issues/30)（執筆用 dev server） |
 | **方針** | #30 と #35 は **一体** の CLI 体験として設計・実装する |
 
-実装完了後は本ファイルを `docs/specs/` へ移す（[doc-rule.md](../../charter/doc-rule.md)）。
+旧 `docs/plans/v0.13.0/cli-dev-server.md` から昇格。テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)。
 
 ---
 
@@ -189,8 +189,8 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 
 ## 9. 実装時のメモ
 
-- 既存 API 正本: [specs/api.md](../../specs/api.md)
-- Playground は VirtualFS＋ブラウザ編集であり、本 `dev`（実ディスク＋外部エディタ）とは役割を分ける: [specs/playground.md](../../specs/playground.md)
+- 既存 API 正本: [specs/api.md](./api.md)
+- Playground は VirtualFS＋ブラウザ編集であり、本 `dev`（実ディスク＋外部エディタ）とは役割を分ける: [specs/playground.md](./playground.md)
 - 憲章上、CLI は薄い DDD で CRUD Trait 必須ではない: [override-charter.md](../../override-charter.md)
 - 実装開始時に [charter/tdd.md](../../charter/tdd.md) に従い `docs/tests/` または `app/test/specs/` へテスト仕様を追加する
 

@@ -4,6 +4,10 @@
 
 English: [changelog.md](./changelog.md)
 
+### Unreleased — ライブラリ
+
+- **CLI** — `hyogen-md create` / `dev` / `build`。`hyogen.config.(js|ts)` と `defineConfig`（`@b4moss/hyogen-md/config`）。ファイルツリー + HMR の執筆プレビュー。`dev` は `outDir` に書き出さない（Issue #30 / #35）
+
 ### 0.12.0 — ライブラリ
 
 - **TOC ヘルパ** — `toc` / `toc(N)` を include / 制御構造 / `{{ }}` の後に Markdown 目次へ展開（Issue #42）

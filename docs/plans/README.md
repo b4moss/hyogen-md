@@ -9,9 +9,7 @@
 
 ## 版フォルダ
 
-| パス | 内容 |
-|------|------|
-| [v0.13.0/cli-dev-server.md](./v0.13.0/cli-dev-server.md) | CLI（`create` / `hyogen.config` / `dev` / `build`）。関連 [#30](https://github.com/b4moss/hyogen-md/issues/30) [#35](https://github.com/b4moss/hyogen-md/issues/35) |
+（空）— CLI 計画は実装済みのため [specs/cli.md](../specs/cli.md) へ移動済み。
 
 ----
 
