@@ -1,5 +1,5 @@
-# Docs site on GitHub Pages — production branch: main
-# Spec: #7 / docs/repository.md
+# Docs site on GitHub Pages — production branch: doc-site
+# Spec: #7 / #69 / docs/specs/repository.md
 # Playground aliases ../app/src — install app deps first
 # Custom domain: hyogenmd.oss.b4m.jp (docs-site/public/CNAME)
 
@@ -8,7 +8,7 @@ name: Deploy docs site
 on:
   push:
     branches:
-      - main
+      - doc-site
   workflow_dispatch:
 
 permissions:
