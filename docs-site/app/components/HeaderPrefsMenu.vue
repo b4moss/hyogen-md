@@ -23,9 +23,9 @@ const languageOptions = computed(() => {
 });
 
 const themeOptions = computed(() => [
-  { value: "system", label: t("theme.system"), compact: "Sys" },
-  { value: "light", label: t("theme.light"), compact: "Lt" },
-  { value: "dark", label: t("theme.dark"), compact: "Dk" },
+  { value: "system", label: t("theme.system") },
+  { value: "light", label: t("theme.light") },
+  { value: "dark", label: t("theme.dark") },
 ]);
 
 const currentLanguage = computed(() => {
@@ -39,80 +39,120 @@ const currentTheme = computed(
     themeOptions.value[0],
 );
 
-const triggerText = computed(
-  () => `${currentLanguage.value} · ${currentTheme.value.label}`,
-);
-
-const compactText = computed(() => {
-  const lang =
-    locale.value === "ja" ? "JA" : locale.value === "en" ? "EN" : locale.value.toUpperCase();
-  return `${lang} · ${currentTheme.value.compact}`;
-});
-
-async function chooseLanguage(code: string, close: () => void) {
+async function chooseLanguage(code: string, closeOuter: () => void) {
   if (code !== locale.value) {
     await setLocale(code);
   }
-  close();
+  closeOuter();
 }
 
-function chooseTheme(value: string, close: () => void) {
+function chooseTheme(value: string, closeOuter: () => void) {
   colorMode.preference = value;
-  close();
+  closeOuter();
 }
 </script>
 
 <template>
-  <HeaderDropdown
-    :label="t('nav.prefs')"
-    :trigger-text="triggerText"
-    :compact-text="compactText"
-  >
+  <HeaderDropdown :label="t('nav.prefs')" icon-only>
+    <template #trigger>
+      <svg
+        class="gear-icon"
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        aria-hidden="true"
+      >
+        <path
+          fill="currentColor"
+          d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.86 14.5a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.3.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.03-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"
+        />
+      </svg>
+    </template>
+
     <template #default="{ close }">
-      <div class="section" role="group" :aria-label="t('nav.language')">
-        <p class="section-label">{{ t("nav.language") }}</p>
-        <button
-          v-for="item in languageOptions"
-          :key="item.code"
-          type="button"
-          class="option"
-          role="option"
-          :aria-selected="item.code === locale"
-          :data-active="item.code === locale ? 'true' : 'false'"
-          @click="chooseLanguage(item.code, close)"
-        >
-          {{ item.name }}
-        </button>
-      </div>
-      <div class="section" role="group" :aria-label="t('theme.label')">
-        <p class="section-label">{{ t("theme.label") }}</p>
-        <button
-          v-for="item in themeOptions"
-          :key="item.value"
-          type="button"
-          class="option"
-          role="option"
-          :aria-selected="item.value === colorMode.preference"
-          :data-active="item.value === colorMode.preference ? 'true' : 'false'"
-          @click="chooseTheme(item.value, close)"
-        >
-          {{ item.label }}
-        </button>
+      <div class="prefs-stack">
+        <div class="section" role="group" :aria-label="t('nav.language')">
+          <p class="section-label">{{ t("nav.language") }}</p>
+          <HeaderDropdown
+            nested
+            :label="t('nav.language')"
+            :trigger-text="currentLanguage"
+          >
+            <template #default="{ close: closeLang }">
+              <button
+                v-for="item in languageOptions"
+                :key="item.code"
+                type="button"
+                class="option"
+                role="option"
+                :aria-selected="item.code === locale"
+                :data-active="item.code === locale ? 'true' : 'false'"
+                @click="
+                  chooseLanguage(item.code, () => {
+                    closeLang();
+                    close();
+                  })
+                "
+              >
+                {{ item.name }}
+              </button>
+            </template>
+          </HeaderDropdown>
+        </div>
+
+        <div class="section" role="group" :aria-label="t('theme.label')">
+          <p class="section-label">{{ t("theme.label") }}</p>
+          <HeaderDropdown
+            nested
+            :label="t('theme.label')"
+            :trigger-text="currentTheme.label"
+          >
+            <template #default="{ close: closeTheme }">
+              <button
+                v-for="item in themeOptions"
+                :key="item.value"
+                type="button"
+                class="option"
+                role="option"
+                :aria-selected="item.value === colorMode.preference"
+                :data-active="item.value === colorMode.preference ? 'true' : 'false'"
+                @click="
+                  chooseTheme(item.value, () => {
+                    closeTheme();
+                    close();
+                  })
+                "
+              >
+                {{ item.label }}
+              </button>
+            </template>
+          </HeaderDropdown>
+        </div>
       </div>
     </template>
   </HeaderDropdown>
 </template>
 
 <style scoped>
+.gear-icon {
+  display: block;
+}
+
+.prefs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 12rem;
+}
+
 .section + .section {
-  margin-top: 0.35rem;
   padding-top: 0.35rem;
   border-top: 1px solid var(--color-border);
 }
 
 .section-label {
   margin: 0;
-  padding: 0.25rem 0.65rem 0.15rem;
+  padding: 0.25rem 0.35rem 0.2rem;
   color: var(--color-muted);
   font-size: 0.7rem;
   font-weight: 600;
