@@ -34,6 +34,11 @@ jobs:
         run: npm ci
         working-directory: app
 
+      # client.bundle tests import dist/client.js — build before coverage
+      - name: Build app
+        run: npm run build
+        working-directory: app
+
       - name: app coverage
         run: npm run test:coverage
         working-directory: app
