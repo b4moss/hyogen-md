@@ -60,7 +60,7 @@ cli
   );
 
 cli.help();
-cli.version("0.12.0");
+cli.version("0.13.0");
 
 async function main(): Promise<void> {
   try {

@@ -31,7 +31,7 @@ function packageJsonContents(packageName: string): string {
         build: "hyogen-md build",
       },
       dependencies: {
-        "@b4moss/hyogen-md": "^0.12.0",
+        "@b4moss/hyogen-md": "^0.13.0",
       },
     },
     null,
