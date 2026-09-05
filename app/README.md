@@ -40,6 +40,27 @@ Requires **Node.js >= 24**.
 
 ## Quick start
 
+### CLI (`hyogen-md`)
+
+```bash
+npx hyogen-md create my-site
+cd my-site
+npm install
+npm run dev    # preview with file tree + HMR (default http://127.0.0.1:4173)
+npm run build  # write Markdown to outDir (default ./out)
+```
+
+`hyogen.config.js` (or `.ts`):
+
+```js
+import { defineConfig } from "@b4moss/hyogen-md/config";
+
+export default defineConfig({
+  input: "./src/**/*.md",
+  // outDir: "./out",
+});
+```
+
 ### Client / CSR (`@b4moss/hyogen-md/client`)
 
 ```ts
@@ -119,9 +140,9 @@ Open `http://localhost:3000` (docs) and `/playground`. Uses `../app` via Vite al
 ## Status
 
 This is **0.x**. APIs and output may change until `1.0.0`.  
-Published: **`@b4moss/hyogen-md@0.10.0`** (git tag `v0.10.0`).
+Published: **`@b4moss/hyogen-md@0.13.0`** (git tag `v0.13.0`).
 
-Playground UX is part of the **v0.10.0** product milestone but is **not** included in the npm tarball.
+Playground UX ships with the documentation site and is **not** included in the npm tarball.
 
 The coverage badge reflects approximate **statement coverage for `app/`** (library) from Vitest (~84%). Initial release goal is ≥50%. Coverage is uploaded to Codecov from `.github/workflows/quality.yml` on pushes to `main`.
 

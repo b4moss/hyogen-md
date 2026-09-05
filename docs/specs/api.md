@@ -114,9 +114,9 @@ await renderServer("./page.md", { title: "public" }, {
 });
 ```
 
-## データソースのインポート（v0.11.0）
+## データソースのインポート
 
-外部データ（**YAML / JSON / CSV** を同版で対応）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。
+外部データ（**YAML / JSON / CSV**）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。`renderServer` / `build` への配線は **v0.12.0** で完了。
 
 ### オプション `dataSources`
 
@@ -236,7 +236,6 @@ CSV（厳格）:
 | `alias_collision` | `as` 名の衝突（変数・親子再登録含む） |
 | `forbidden_property_access` | 危険キーへのアクセス |
 | `parse_error` | ホワイトリスト外構文・不正 DSL |
-| `component_multiline_output` | component 結果が複数行 |
 | `server_context_on_client` | `renderClient` に `serverContext` 相当 |
 | `data_sources_on_client` | `renderClient` に `dataSources` |
 | `data_source_too_large` | データソースファイルが 5MB 超 |
@@ -267,12 +266,32 @@ CSV（厳格）:
 
 構文・見出し抽出・出力形式は [toc.md](./toc.md) が正。レンダリング API（`renderServer` / `renderClient` / `build`）のシグネチャ変更は不要（パイプライン内で自動処理）。
 
+## CLI / 設定（v0.13.0）
+
+バイナリ `hyogen-md`（`create` / `dev` / `build`）と設定ファイルの正本は [cli.md](./cli.md)。
+
+パッケージ export:
+
+```ts
+// @b4moss/hyogen-md/config
+import { defineConfig } from "@b4moss/hyogen-md/config";
+import type { HyogenConfig } from "@b4moss/hyogen-md/config";
+
+export default defineConfig({
+  input: "./src/**/*.md",
+  // outDir: "./out",
+});
+```
+
+`defineConfig` は型付きの恒等関数。設定の読み込み・正規化は CLI 内部（`loadConfig`）が担う。
+
 ## 後続候補（未実装）
 
 （現時点なし）
 
 ## 関連
 
+- CLI: [cli.md](./cli.md)
 - TOC: [toc.md](./toc.md)
 - パイプライン: [pipeline.md](./pipeline.md)
 - パス: [paths.md](./paths.md)

@@ -33,7 +33,7 @@ Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う�
 | npm | **docs タグだけでは publish しない**。npm 公開は後述の **`release` ブランチへのマージ**（および tag ↔ version 一致）に限定 |
 | ライブラリ `package.json` | docs 作業のみでは **上げない**（機能／パッケージリリース時に SemVer を上げる） |
 
-機能開発の SemVer（`v0.n.0` / PATCH）は従来どおり [roadmap.md](./roadmap.md)「バージョン運用メモ」に従う。
+機能開発の SemVer（`v0.n.0` / PATCH）は従来どおり [roadmap.md](../roadmap.md) に従う。
 
 ---
 
@@ -77,7 +77,7 @@ flowchart LR
 1. **`feat/*` → `dev-vX.Y.Z`**（**PR 必須・app CI**）  
    機能ごとにブランチを切り、マイルストーン開発ブランチへ統合する。**`dev-v*` への直接 push は禁止**（PR 経由のみ。Ruleset での強制は PO が管理画面で後日）。
 2. **`dev-vX.Y.Z` → `develop`**（**CI なし**）  
-   [roadmap.md](./roadmap.md) 上、当該版の受け入れ条件を満たしたら `develop` へマージする。
+   [roadmap.md](../roadmap.md) 上、当該版の受け入れ条件を満たしたら `develop` へマージする。
 3. **`develop` → `main`**（**CI なし**）  
    リリース候補を安定ブランチへ載せる。
 4. **`main` → `release`**（**CI なし**）  
@@ -120,7 +120,7 @@ flowchart LR
 |------|------|
 | サイト | **`docs-site/`**（Nuxt Content）。Playground は **`/playground`** に統合済み |
 | テーマ | dark / light / system をサイトと Playground で共有 |
-| デプロイ | **`doc-site`** への push（マージ含む）。Workflow [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
+| デプロイ | **`doc-site`** への push（マージ含む）。Workflow [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
 | URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。独自ドメインは `docs-site/public/CNAME` |
 | npm | サイト・Playground とも **含めない** |
 
@@ -128,7 +128,8 @@ flowchart LR
 
 1. リポジトリ **Settings → Pages** で Source を **GitHub Actions** にする
 2. 独自ドメイン **`hyogenmd.oss.b4m.jp`** を設定し、DNS で Pages へ向ける（CNAME ファイルはリポジトリ側に同梱）
-3. 以降 **`doc-site`** への push（または `workflow_dispatch`）で自動デプロイ
+3. **Settings → Environments → `github-pages`** の **Deployment branches** に **`doc-site`** を許可する（Custom ポリシー）。`main` のみだと Deploy job が環境保護で拒否される
+4. 以降 **`doc-site`** への push（または `workflow_dispatch`）で自動デプロイ
 
 ---
 
@@ -136,26 +137,31 @@ flowchart LR
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **PR** base **`dev-v*`** | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | app: `make check` |
-| **PR** **`hotfix/*` → `main`** | 同上 | app: `make check`（通常の `develop`→`main` では走らない） |
-| **PR** base **`doc-site`** | [`.github/workflows/ci-docs.yml`](../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
-| **`develop` / `main` / `release` への通常昇格 PR** | — | **CI なし**（`dev-v*` で通済みとみなす） |
+| **PR** base **`dev-v*`**（`app/**` 等） | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) | app: `make check` |
+| **PR** **`hotfix/*` → `main`**（同上 paths） | 同上 | app: `make check`（通常の `develop`→`main` では job を skip） |
+| **PR** base **`doc-site`**（`docs-site/**` / `app/**` 等） | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
+| **`develop` / `main` / `release` への通常昇格 PR** | — | **機能 CI なし**（`dev-v*` で通済みとみなす） |
 
-ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
+`paths` フィルタで docs / specs のみの変更では app / docs CI を起動しない。ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
 
-### Quality（Codecov / Scorecard）
+### Quality（Codecov / Scorecard / CodeQL）
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **`main` への push** | [`.github/workflows/quality.yml`](../.github/workflows/quality.yml) | app coverage → Codecov upload |
-| **`main` push + cron** | [`.github/workflows/scorecard.yml`](../.github/workflows/scorecard.yml) | OpenSSF Scorecard |
+| **`main` への push**（`app/**` 等） | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | app coverage → Codecov upload |
+| **週次 cron**（+ `workflow_dispatch` / branch protection） | [`.github/workflows/scorecard.yml`](../../.github/workflows/scorecard.yml) | OpenSSF Scorecard（毎 push では走らない） |
+| **`main` push**（`app/**` / workflows）**+ 週次 cron** | [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) | CodeQL SAST（`javascript-typescript` / `actions`）。昇格 PR では走らない |
+
+依存インストールは Scorecard **Pinned-Dependencies** 向けに **`npm ci`**（lockfile の integrity）を使う。docs-site も同様（lockfile は Linux CI で再生成可能な状態を維持）。
+
+**必須:** GitHub Code scanning の **default setup は無効**にし、advanced workflow（`codeql.yml`）のみにする。両方有効だと同一コミットで CodeQL が二重起動する。Settings → Code security → Code scanning → Default setup → Disable。
 
 ### CD（docs site）
 
 | 項目 | 方針 |
 |------|------|
-| トリガ | **`doc-site` への push**（および手動 `workflow_dispatch`） |
-| Workflow | [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) |
+| トリガ | **`doc-site` への push**（`docs-site/**` / `app/**` 等。および手動 `workflow_dispatch`） |
+| Workflow | [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) |
 | 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
 
 ---
@@ -165,7 +171,7 @@ flowchart LR
 | 項目 | 方針 |
 |------|------|
 | トリガ | **`release` への push**（マージ含む） |
-| Workflow | [`.github/workflows/publish.yml`](../.github/workflows/publish.yml) |
+| Workflow | [`.github/workflows/publish.yml`](../../.github/workflows/publish.yml) |
 | 動作 | `app/` で build のあと `npm publish --access public --provenance`（Trusted Publishing / OIDC） |
 | 既存版 | registry に **同じ `name@version` がある場合は publish をスキップ**（成功終了）。初期 `release` = `0.10.0` でも再公開しない |
 | 版 | git tag と `app/package.json` の version を **一致**させてから `release` へ載せる |
@@ -204,7 +210,7 @@ flowchart LR
 - [x] hotfix は `hotfix/*` → `main`（CI）→ `release` 可（方針確定）
 - [x] app CI: PR → `dev-v*` / `hotfix/*`→`main`（`.github/workflows/ci.yml`）
 - [x] docs CI: PR → `doc-site`（`.github/workflows/ci-docs.yml`）
-- [x] Quality: `main` push → Codecov（`.github/workflows/quality.yml`）+ Scorecard
+- [x] Quality: `main` push（app paths）→ Codecov（`.github/workflows/quality.yml`）；Scorecard は週次；CodeQL は advanced のみ（default setup 無効）+ `main` paths / 週次
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
 - [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [x] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)

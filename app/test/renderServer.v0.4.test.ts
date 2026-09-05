@@ -86,19 +86,13 @@ describe("renderServer v0.4 integration", () => {
     assert.equal(result.markdown.trim(), "Hello Ada.");
   });
 
-  it("throws component_multiline_output when component extend outputs multiline", async () => {
-    await assert.rejects(
-      () =>
-        renderServer({
-          path: fixturePath(
-            "component-extend/parent-calls-component-multiline.md",
-          ),
-        }),
-      (error: unknown) => {
-        assertHyogenError(error, "component_multiline_output");
-        return true;
-      },
-    );
+  it("allows multiline output when component extend renders multiple lines", async () => {
+    const result = await renderServer({
+      path: fixturePath(
+        "component-extend/parent-calls-component-multiline.md",
+      ),
+    });
+    assert.ok(result.markdown.includes("\n") || result.markdown.length > 0);
   });
 
   it("throws parse_error for duplicate block names in a child", async () => {

@@ -9,11 +9,11 @@
 
 ## 現行 npm
 
-**`@b4moss/hyogen-md@0.10.1`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
+**`@b4moss/hyogen-md@0.13.0`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
 
 ---
 
-## 完了（v0.1.0 — v0.10.x）
+## 完了（v0.1.0 — v0.13.0）
 
 | 版 | 要約 | 詳細 |
 |----|------|------|
@@ -22,6 +22,9 @@
 | v0.10.0 | Playground UX + npm 初回公開 | [_archived/roadmap/v0.10.0.md](./_archived/roadmap/v0.10.0.md) |
 | v0.10.0-docs | リポジトリ整備・GitHub Pages | [_archived/roadmap/v0.10.0-docs.md](./_archived/roadmap/v0.10.0-docs.md) |
 | v0.10.0-docs.5 — 8 | ドキュメントサイト + Playground 内包 | [specs/docs-site.md](./specs/docs-site.md) |
+| v0.11.0 | Node.js 24+ 固定・CI / セキュリティ基盤 | [_archived/roadmap/v0.11.0.md](./_archived/roadmap/v0.11.0.md) |
+| v0.12.0 | TOC ヘルパ、`.length`、`echo`、データソース API 配線 | [_archived/roadmap/v0.12.0.md](./_archived/roadmap/v0.12.0.md) / [specs/toc.md](./specs/toc.md) / [specs/api.md](./specs/api.md) |
+| v0.13.0 | CLI（`create` / `hyogen.config` / `dev` / `build`） | [_archived/roadmap/v0.13.0.md](./_archived/roadmap/v0.13.0.md) / [specs/cli.md](./specs/cli.md) |
 
 ---
 
@@ -29,10 +32,7 @@
 
 | Milestone | 内容 |
 |-----------|------|
-| [v0.11.0](https://github.com/b4moss/hyogen-md/milestone/1) | データソースのインポート（API） |
-| [v0.12.0](https://github.com/b4moss/hyogen-md/milestone/3) | TOC 専用ヘルパ、許可プロパティ `.length`、`echo` 本文展開 |
-| [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) | 許可メソッド追加（`.slice` 等） |
-| [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2) | v1.0.0 までの横断タスク |
+| [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2) | 許可メソッド追加（`.slice` 等）、見出し階層適合（[#50](https://github.com/b4moss/hyogen-md/issues/50)）、その他 v1.0.0 までの横断タスク |
 | [After v1.0.0](https://github.com/b4moss/hyogen-md/milestone/5) | v1.0.0 以降に検討 |
 
 ---

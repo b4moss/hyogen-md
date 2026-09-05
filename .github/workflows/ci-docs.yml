@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - doc-site
+    paths:
+      - "docs-site/**"
+      - "app/**"
+      - "Makefile"
+      - ".github/workflows/ci-docs.yml"
   workflow_dispatch:
 
 concurrency:
@@ -38,9 +43,9 @@ jobs:
         working-directory: app
 
       - name: Install docs-site dependencies
-        # npm ci rejects cross-platform optional native deps (esbuild, lightningcss, …)
-        # when lockfile is generated on macOS. Makefile uses npm install for docs-site.
-        run: npm install --no-audit --no-fund
+        # Prefer npm ci so Scorecard Pinned-Dependencies treats the install as hash-pinned
+        # via package-lock.json integrity. Lockfile must include optional platform packages.
+        run: npm ci --no-audit --no-fund
         working-directory: docs-site
 
       - name: playground test
