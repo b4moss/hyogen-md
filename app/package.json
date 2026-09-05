@@ -1,6 +1,6 @@
 {
   "name": "@b4moss/hyogen-md",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Extended Markdown template engine (hyogen.md)",
   "type": "module",
   "license": "MIT",
