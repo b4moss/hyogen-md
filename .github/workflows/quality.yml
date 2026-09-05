@@ -1,4 +1,4 @@
-# Quality signals on main only (Codecov).
+# Quality signals on main only (Codecov) — app changes only.
 # Spec: #69 / docs/specs/repository.md
 
 name: Quality
@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "app/**"
+      - "Makefile"
   workflow_dispatch:
 
 concurrency:
