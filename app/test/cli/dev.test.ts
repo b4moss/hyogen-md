@@ -126,6 +126,64 @@ describe("startDevServer", () => {
       await server.close();
     }
   });
+  it("rejects remote preview paths", async () => {
+    const dir = await makeTemp();
+    await mkdir(path.join(dir, "src"), { recursive: true });
+    await writeFile(path.join(dir, "src", "index.md"), "# Dev\n");
+    const config: ResolvedHyogenConfig = {
+      input: path.join(dir, "src/**/*.md"),
+      outDir: path.join(dir, "out"),
+      configDir: dir,
+    };
+    const server = await startDevServer({
+      config,
+      host: "127.0.0.1",
+      port: 0,
+      log: () => undefined,
+      errorLog: () => undefined,
+    });
+    try {
+      const base = server.url.replace(/\/$/, "");
+      const res = await fetch(
+        `${base}/api/preview?path=${encodeURIComponent("https://example.com/x.md")}`,
+      );
+      expect(res.status).toBe(400);
+      const body = (await res.json()) as { error: string };
+      expect(body.error).toBe("invalid path");
+    } finally {
+      await server.close();
+    }
+  });
+
+  it("rejects path traversal outside project root", async () => {
+    const dir = await makeTemp();
+    await mkdir(path.join(dir, "src"), { recursive: true });
+    await writeFile(path.join(dir, "src", "index.md"), "# Dev\n");
+    const config: ResolvedHyogenConfig = {
+      input: path.join(dir, "src/**/*.md"),
+      outDir: path.join(dir, "out"),
+      configDir: dir,
+    };
+    const server = await startDevServer({
+      config,
+      host: "127.0.0.1",
+      port: 0,
+      log: () => undefined,
+      errorLog: () => undefined,
+    });
+    try {
+      const base = server.url.replace(/\/$/, "");
+      const res = await fetch(
+        `${base}/api/preview?path=${encodeURIComponent("../../etc/passwd")}`,
+      );
+      expect(res.status).toBe(400);
+      const body = (await res.json()) as { error: string };
+      expect(body.error).toBe("invalid path");
+    } finally {
+      await server.close();
+    }
+  });
+
 });
 
 async function readdirSafe(dir: string): Promise<string[] | null> {
