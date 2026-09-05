@@ -9,7 +9,7 @@ SHELL := /bin/bash
 .PHONY: help install install-docs install-all \
 	build typecheck test test-watch test-pg test-all \
 	dev dev-docs clean clean-docs clean-all \
-	pack size check build-docs check-docs \
+	pack size check build-docs check-docs act \
 	ruleset-help ruleset-create ruleset-apply ruleset-check
 
 help: ## Show available targets
@@ -70,6 +70,16 @@ check: typecheck build test pack ## Pre-publish: typecheck + build + test + pack
 
 check-docs: build-docs ## Verify docs-site static generation
 	@echo "check-docs OK"
+
+act: ## Run app CI locally with nektos/act (simulates PR → dev-v*)
+	@command -v act >/dev/null 2>&1 || { \
+		echo "error: act is not installed (https://nektosact.com)" >&2; \
+		exit 1; \
+	}
+	act pull_request \
+		-W .github/workflows/ci.yml \
+		-j app \
+		-e .github/act/event-pull_request-dev-v.json
 
 # GitHub repository ruleset helpers.
 # Real work lives in scripts/; this Makefile is a thin wrapper.
