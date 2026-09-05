@@ -57,4 +57,28 @@ describe("evaluateExpression", () => {
       },
     );
   });
+
+  it("returns array length via member access", async () => {
+    const node = parseExpression("items.length");
+    assert.equal(
+      await evaluateExpression(node, { context: { items: [1, 2, 3] } }),
+      3,
+    );
+  });
+
+  it("returns string length via member access", async () => {
+    const node = parseExpression("s.length");
+    assert.equal(
+      await evaluateExpression(node, { context: { s: "abc" } }),
+      3,
+    );
+  });
+
+  it("returns undefined for null.length", async () => {
+    const node = parseExpression("x.length");
+    assert.equal(
+      await evaluateExpression(node, { context: { x: null } }),
+      undefined,
+    );
+  });
 });

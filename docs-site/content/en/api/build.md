@@ -22,6 +22,7 @@ type BuildOptions = RenderOptions & {
   includeUnderscoreEntries?: boolean
   context?: HyogenContext
   serverContext?: HyogenContext
+  dataSources?: DataSourcesMap
 }
 ```
 
@@ -31,6 +32,7 @@ type BuildOptions = RenderOptions & {
 | `outDir` | — | Directory for rendered `.md` files |
 | `context` | `{}` | Shared template context for all entries |
 | `serverContext` | — | Server-only context merged per entry |
+| `dataSources` | — | YAML / JSON / CSV bound as variables (loaded once before entries; [details](/en/api/data-sources)) |
 | `includeUnderscoreEntries` | `false` | Include `_` partial files as build entries |
 | `loader` | `createNodeLoader()` | Custom loader |
 | `root` | auto | Project root (`.doc_root` marker) |

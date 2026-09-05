@@ -66,4 +66,24 @@ describe("parseExpression", () => {
       assertHyogenError(error, "parse_error");
     }
   });
+
+  it("rejects length() as unsupported method", () => {
+    assert.throws(
+      () => parseExpression("items.length()"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("rejects slice() as unsupported method", () => {
+    assert.throws(
+      () => parseExpression("items.slice(0)"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
 });

@@ -59,6 +59,7 @@
 | [variables.md](./specs/variables.md) | 変数・front matter |
 | [logic.md](./specs/logic.md) | if / each / 三項 |
 | [dsl.md](./specs/dsl.md) | `@hg` / `@@` DSL |
+| [toc.md](./specs/toc.md) | TOC 専用ヘルパ（v0.12.0） |
 | [paths.md](./specs/paths.md) | パス解決 |
 | [security.md](./specs/security.md) | セキュリティ |
 | [playground.md](./specs/playground.md) | Playground |

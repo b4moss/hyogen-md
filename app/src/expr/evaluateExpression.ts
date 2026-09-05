@@ -11,6 +11,9 @@ function getPropertyValue(object: unknown, property: string): unknown {
   if (object === null || object === undefined) {
     return undefined;
   }
+  if (typeof object === "string") {
+    return property === "length" ? object.length : undefined;
+  }
   if (typeof object !== "object") {
     return undefined;
   }

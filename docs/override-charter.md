@@ -9,8 +9,10 @@
 | 項目 | 憲章 | hyogen-md |
 |------|------|-----------|
 | フィーチャーブランチ | `feat-*` | **`feat/*`**（スラッシュ区切り） |
-| `staging` / `production` | 必要に応じて用意 | **採用しない**。npm は **`release`**、サイトは **`main`** push で CD |
-| `main` への直接マージ | 原則禁止 | **docs・README・導線のみ**例外可 → [specs/repository.md](./specs/repository.md) |
+| `staging` / `production` | 必要に応じて用意 | **採用しない**。npm は **`release`**、サイトは **`doc-site`** push で CD |
+| CI ゲート | 昇格 PR でも CI | **`dev-v*` 向け PR**（および **`hotfix/*` → `main`**）のみ。`develop` / `main` / `release` への通常昇格では CI を再実行しない |
+| `dev-v*` への直接 push | （憲章に明記なし） | **禁止**（PR 経由のみ。Ruleset 強制は PO が管理画面で後日） |
+| `main` への直接マージ | 原則禁止 | **npm 同梱 README・配布導線のみ**例外可。サイト公開は **`doc-site`** → [specs/repository.md](./specs/repository.md) |
 | force push 許可 | PO | **`@kohki-shikata`**（`main` のみ） |
 
 ---

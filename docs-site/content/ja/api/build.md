@@ -26,6 +26,7 @@ type BuildOptions = RenderOptions & {
   includeUnderscoreEntries?: boolean
   context?: HyogenContext
   serverContext?: HyogenContext
+  dataSources?: DataSourcesMap
 }
 ```
 
@@ -35,6 +36,7 @@ type BuildOptions = RenderOptions & {
 | `outDir` | 出力ディレクトリのパス（ライブラリはファイルを書き込まない。戻り値の `files` を利用） |
 | `context` | 全エントリに渡すテンプレート変数 |
 | `serverContext` | サーバー専用のテンプレート変数 |
+| `dataSources` | YAML / JSON / CSV を読み変数へバインド（エントリ前に 1 回。[詳細](/ja/api/data-sources)） |
 | `loader` | 省略時は `createNodeLoader()` |
 | `includeUnderscoreEntries` | `_` 始まりの partial をエントリに含めるか |
 | `preserveFrontMatter` | 出力に front matter を残す |
@@ -77,4 +79,5 @@ for (const file of files) {
 ## 関連
 
 - [renderServer](/ja/api/render-server)
+- [dataSources](/ja/api/data-sources)
 - [パスとセキュリティ](/ja/syntax/paths-and-security) — `_` partial と `.doc_root`

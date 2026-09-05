@@ -49,6 +49,7 @@ export function isExecutableBlockSource(source: string): boolean {
   return (
     /^const\s+/.test(trimmed) ||
     /^let\s+/.test(trimmed) ||
+    /^echo\b/.test(trimmed) ||
     /^for\s*\(/.test(trimmed) ||
     /^do\b/.test(trimmed) ||
     /^(\+\+|--)/.test(trimmed) ||
@@ -106,6 +107,9 @@ class StatementParser {
         "bare while loops are not allowed (use do…while)",
       );
     }
+    if (this.matchWord("echo")) {
+      return this.parseEcho();
+    }
 
     return this.parseSimpleStatement();
   }
@@ -161,6 +165,15 @@ class StatementParser {
     }
 
     throw parseError(this.path, `invalid statement starting with: ${name}`);
+  }
+
+  private parseEcho(): Statement {
+    this.skipWhitespace();
+    const exprSource = this.readExpressionSourceUntilTerminator();
+    return {
+      kind: "echo",
+      expr: parseExpression(exprSource, this.path),
+    };
   }
 
   private readPrefixUpdate(): Statement | null {

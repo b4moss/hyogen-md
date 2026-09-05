@@ -56,7 +56,7 @@ Accessing these keys throws `forbidden_property_access`:
 
 ### No arbitrary code
 
-Expressions are parsed and evaluated against a whitelist — no `eval`, `import`, or host JS execution.
+Expressions are parsed and evaluated against a whitelist — no `eval`, `import`, or host JS execution. The only allowed method is `.toLocaleString`; `.length` is an allowed property.
 
 ## XSS and output
 

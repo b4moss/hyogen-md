@@ -16,6 +16,7 @@ import {
   joinRemovalSeam,
   removalSeamNewlineDelta,
 } from "../pipeline/joinRemovalSeam.js";
+import { isTocDirectiveLine } from "../toc/parseTocDirective.js";
 
 export type ExecuteDeclarationsOptions = {
   path?: string;
@@ -57,6 +58,10 @@ export async function executeDeclarations(
   for (const block of blocks) {
     const lines = extractHgBlockLines(block.inner);
     if (lines.length === 1 && isControlDirectiveLine(lines[0]!)) {
+      continue;
+    }
+
+    if (lines.length === 1 && isTocDirectiveLine(lines[0]!)) {
       continue;
     }
 
@@ -104,18 +109,26 @@ export async function executeDeclarations(
     }
 
     const statements = parseStatementList(body, path);
+    const echoChunks: string[] = [];
     await executeStatementList(statements, context, {
       path,
       constBindings,
       onUpdate,
+      echoChunks,
     });
 
     const start = block.start - offset;
     const end = block.end - offset;
     const left = result.slice(0, start);
     const right = result.slice(end);
-    result = joinRemovalSeam(left, right);
-    offset += block.raw.length + removalSeamNewlineDelta(left, right);
+    if (echoChunks.length > 0) {
+      const replacement = echoChunks.join("");
+      result = left + replacement + right;
+      offset += block.raw.length - replacement.length;
+    } else {
+      result = joinRemovalSeam(left, right);
+      offset += block.raw.length + removalSeamNewlineDelta(left, right);
+    }
   }
 
   return { source: result, context, declarationUpdates };

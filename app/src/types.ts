@@ -141,7 +141,8 @@ export type Statement =
       name: string;
       op: CompoundAssignOp;
       expr: ExprNode;
-    };
+    }
+  | { kind: "echo"; expr: ExprNode };
 
 export type ControlOpener =
   | { kind: "if"; expr: ExprNode }

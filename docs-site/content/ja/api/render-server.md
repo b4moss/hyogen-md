@@ -39,6 +39,7 @@ function renderServer(
 | オプション | 型 | デフォルト | 説明 |
 |-----------|-----|----------|------|
 | `serverContext` | `HyogenContext` | — | サーバー専用の変数。テンプレートから参照可能 |
+| `dataSources` | `DataSourcesMap` | — | YAML / JSON / CSV を読み変数へバインド（[詳細](/ja/api/data-sources)） |
 | `loader` | `Loader` | `createNodeLoader()` | ファイル読み込み関数 |
 | `root` | `string` | — | ドキュメントルートの上書き |
 | `preserveFrontMatter` | `boolean` | `false` | 出力に front matter を残す |
@@ -83,6 +84,7 @@ const result = await renderServer(
 
 ## 関連
 
-- [renderClient](/ja/api/render-client) — ブラウザ向け（`serverContext` 不可）
+- [renderClient](/ja/api/render-client) — ブラウザ向け（`serverContext` / `dataSources` 不可）
+- [dataSources](/ja/api/data-sources) — 外部データファイルの読み込み
 - [loader](/ja/api/loader) — カスタム loader の書き方
 - [型とオプション](/ja/api/types-and-options)

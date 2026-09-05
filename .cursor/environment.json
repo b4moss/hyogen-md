@@ -1,0 +1,5 @@
+{
+  "name": "hyogen-md",
+  "install": "npm --prefix app ci\nnpm --prefix app run build\nnpm --prefix docs-site ci",
+  "start": "npm --prefix docs-site run dev"
+}

@@ -23,8 +23,8 @@ English: [changelog.md](/changelog)
 ### 0.10.0-docs.1 — リポジトリ運用
 
 - 長期ブランチ **`main`** / **`release`**（`v0.10.0` 時点の `develop` から）。`develop` は維持
-- GitHub Actions CI（PR base: `develop` / `dev-v*`）。`.github/workflows/ci.yml`
-- 仕様: [docs/repository.md](https://github.com/b4m-oss/hyogen-md/blob/develop/docs/repository.md)（Netlify の production は **`main`**）
+- GitHub Actions CI（PR base: `dev-v*` / `hotfix/*`→`main`）。`.github/workflows/ci.yml`。docs CI は `doc-site`（`.github/workflows/ci-docs.yml`）
+- 仕様: [docs/specs/repository.md](https://github.com/b4moss/hyogen-md/blob/main/docs/specs/repository.md)（Pages の production は **`doc-site`**）
 
 ### 0.10.0 — Playground UX + npm 初回公開
 

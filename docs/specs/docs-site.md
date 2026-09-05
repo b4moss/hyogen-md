@@ -23,7 +23,7 @@
 
 正は [specs/](./) と [api.md](./api.md)。サイトは利用者向けの説明・例・索引。
 
-- **API**: `renderServer` / `renderClient` / `build` / loader / 診断・型・エラーコード
+- **API**: `renderServer` / `renderClient` / `build` / `dataSources`・`loadDataSources` / loader / 診断・型・エラーコード
 - **構文**: front matter、変数、`@hg` / `@@`、制御構造、include / component / extend、許可メソッド、パス・セキュリティ注意
 - **その他**: Install、Changelog 導線、GitHub / npm リンク
 

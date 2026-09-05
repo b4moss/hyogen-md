@@ -71,14 +71,46 @@ const title = "Hello"
 
 デフォルトでは、レンダリング後の Markdown から hyogen コメントは **除去**されます。デバッグ用に残す場合は `preserveHgComments: true` を指定します。
 
+
+## echo
+
+`echo <式>` は、囲んでいる `@hg` / `@@` コメントを **評価結果の文字列で置換**して本文へ出力します。
+
+```markdown
+<!--
+@hg
+const greet = "Hello world!"
+echo greet
+@endhg
+-->
+```
+
+出力:
+
+```markdown
+Hello world!
+```
+
+宣言と `echo` を分けて書くこともできます:
+
+```markdown
+<!--@hg
+const greet = "Hello world!"
+@endhg-->
+<!--@@ echo greet @@-->
+```
+
+同一ブロック内の複数 `echo`（`for` / `do…while` 内を含む）は区切りなしで連結します。`null` / `undefined` は空文字になります（`{{ }}` と同じ）。
+
 ## 二層モデル
 
 | 領域 | 内容 |
 |------|------|
-| hyogen ブロック内 | 宣言・代入・`include`・`if` / `each` の構造ディレクティブなど |
+| hyogen ブロック内 | 宣言・代入・`echo`・`include`・`if` / `each` の構造ディレクティブなど |
 | `{{ }}` 内 | 式のみ |
 
 ## 関連
 
 - [宣言と代入](/ja/syntax/declarations)
 - [制御構造](/ja/syntax/control-flow)
+- [TOC ヘルパ](/ja/syntax/toc)

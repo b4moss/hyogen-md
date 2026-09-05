@@ -1,14 +1,13 @@
+# App CI — gate on feat/* → dev-v* and hotfix/* → main only.
+# Spec: #69 / docs/specs/repository.md
+
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - "dev-v*"
   pull_request:
     branches:
-      - develop
       - "dev-v*"
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -19,8 +18,13 @@ permissions:
   contents: read
 
 jobs:
-  check:
-    name: app + docs-site
+  app:
+    name: app
+    # Skip develop→main and other non-hotfix PRs into main.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.base_ref, 'dev-v') ||
+      (github.base_ref == 'main' && startsWith(github.head_ref, 'hotfix/'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -30,37 +34,11 @@ jobs:
         with:
           node-version: "24"
           cache: npm
-          cache-dependency-path: |
-            app/package-lock.json
-            docs-site/package-lock.json
+          cache-dependency-path: app/package-lock.json
 
       - name: Install app dependencies
         run: npm ci
         working-directory: app
 
-      - name: Install docs-site dependencies
-        # npm ci rejects cross-platform optional native deps (esbuild, lightningcss, …)
-        # when lockfile is generated on macOS. Makefile uses npm install for docs-site.
-        run: npm install --no-audit --no-fund
-        working-directory: docs-site
-
       - name: make check
         run: make check
-
-      - name: app coverage
-        run: npm run test:coverage
-        working-directory: app
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@1f60566a86da84c4b4b64c17662a90de97fbb8d7 # v5.4.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: app/coverage/lcov.info
-          fail_ci_if_error: false
-          verbose: true
-
-      - name: playground test
-        run: make test-pg
-
-      - name: docs-site generate
-        run: make build-docs
