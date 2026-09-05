@@ -72,8 +72,8 @@
 
 ## 現行版
 
-- npm: **`@b4moss/hyogen-md@0.10.1`**（`app/package.json`）
-- 次 Milestone: [v0.11.0](https://github.com/b4moss/hyogen-md/milestone/1)（[roadmap.md](./roadmap.md)）
+- npm: **`@b4moss/hyogen-md@0.12.0`**（`app/package.json`）
+- 次 Milestone: [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4)（[roadmap.md](./roadmap.md)）
 
 ---
 

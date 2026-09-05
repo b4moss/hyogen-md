@@ -33,7 +33,7 @@ Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う�
 | npm | **docs タグだけでは publish しない**。npm 公開は後述の **`release` ブランチへのマージ**（および tag ↔ version 一致）に限定 |
 | ライブラリ `package.json` | docs 作業のみでは **上げない**（機能／パッケージリリース時に SemVer を上げる） |
 
-機能開発の SemVer（`v0.n.0` / PATCH）は従来どおり [roadmap.md](./roadmap.md)「バージョン運用メモ」に従う。
+機能開発の SemVer（`v0.n.0` / PATCH）は従来どおり [roadmap.md](../roadmap.md) に従う。
 
 ---
 
@@ -77,7 +77,7 @@ flowchart LR
 1. **`feat/*` → `dev-vX.Y.Z`**（**PR 必須・app CI**）  
    機能ごとにブランチを切り、マイルストーン開発ブランチへ統合する。**`dev-v*` への直接 push は禁止**（PR 経由のみ。Ruleset での強制は PO が管理画面で後日）。
 2. **`dev-vX.Y.Z` → `develop`**（**CI なし**）  
-   [roadmap.md](./roadmap.md) 上、当該版の受け入れ条件を満たしたら `develop` へマージする。
+   [roadmap.md](../roadmap.md) 上、当該版の受け入れ条件を満たしたら `develop` へマージする。
 3. **`develop` → `main`**（**CI なし**）  
    リリース候補を安定ブランチへ載せる。
 4. **`main` → `release`**（**CI なし**）  
@@ -120,7 +120,7 @@ flowchart LR
 |------|------|
 | サイト | **`docs-site/`**（Nuxt Content）。Playground は **`/playground`** に統合済み |
 | テーマ | dark / light / system をサイトと Playground で共有 |
-| デプロイ | **`doc-site`** への push（マージ含む）。Workflow [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
+| デプロイ | **`doc-site`** への push（マージ含む）。Workflow [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) で `app/` + `docs-site/` をビルドし Pages へ |
 | URL | **https://hyogenmd.oss.b4m.jp**（Playground: `/playground`）。独自ドメインは `docs-site/public/CNAME` |
 | npm | サイト・Playground とも **含めない** |
 
@@ -136,9 +136,9 @@ flowchart LR
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **PR** base **`dev-v*`** | [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | app: `make check` |
+| **PR** base **`dev-v*`** | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) | app: `make check` |
 | **PR** **`hotfix/*` → `main`** | 同上 | app: `make check`（通常の `develop`→`main` では走らない） |
-| **PR** base **`doc-site`** | [`.github/workflows/ci-docs.yml`](../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
+| **PR** base **`doc-site`** | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
 | **`develop` / `main` / `release` への通常昇格 PR** | — | **CI なし**（`dev-v*` で通済みとみなす） |
 
 ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
@@ -147,15 +147,15 @@ flowchart LR
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **`main` への push** | [`.github/workflows/quality.yml`](../.github/workflows/quality.yml) | app coverage → Codecov upload |
-| **`main` push + cron** | [`.github/workflows/scorecard.yml`](../.github/workflows/scorecard.yml) | OpenSSF Scorecard |
+| **`main` への push** | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | app coverage → Codecov upload |
+| **`main` push + cron** | [`.github/workflows/scorecard.yml`](../../.github/workflows/scorecard.yml) | OpenSSF Scorecard |
 
 ### CD（docs site）
 
 | 項目 | 方針 |
 |------|------|
 | トリガ | **`doc-site` への push**（および手動 `workflow_dispatch`） |
-| Workflow | [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) |
+| Workflow | [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) |
 | 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
 
 ---
@@ -165,7 +165,7 @@ flowchart LR
 | 項目 | 方針 |
 |------|------|
 | トリガ | **`release` への push**（マージ含む） |
-| Workflow | [`.github/workflows/publish.yml`](../.github/workflows/publish.yml) |
+| Workflow | [`.github/workflows/publish.yml`](../../.github/workflows/publish.yml) |
 | 動作 | `app/` で build のあと `npm publish --access public --provenance`（Trusted Publishing / OIDC） |
 | 既存版 | registry に **同じ `name@version` がある場合は publish をスキップ**（成功終了）。初期 `release` = `0.10.0` でも再公開しない |
 | 版 | git tag と `app/package.json` の version を **一致**させてから `release` へ載せる |
