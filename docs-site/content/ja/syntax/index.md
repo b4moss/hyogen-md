@@ -25,7 +25,7 @@ hyogen-md のテンプレート構文の索引です。制御構文は HTML コ�
 | [宣言と代入](/ja/syntax/declarations) | `const` / `let` と再代入 |
 | [include と component](/ja/syntax/includes) | ファイルの取り込みと再利用 |
 | [制御構造](/ja/syntax/control-flow) | `if` / `each` / `extend` / `block` |
-| [許可メソッド](/ja/syntax/methods) | `.toLocaleString` |
+| [許可メソッド](/ja/syntax/methods) | `.toLocaleString`、許可プロパティ `.length` |
 | [パスとセキュリティ](/ja/syntax/paths-and-security) | パス解決、`_` partial、注意点 |
 
 ## 二層モデル
