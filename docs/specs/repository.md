@@ -144,12 +144,15 @@ flowchart LR
 
 ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
 
-### Quality（Codecov / Scorecard）
+### Quality（Codecov / Scorecard / CodeQL）
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
 | **`main` への push** | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | app coverage → Codecov upload |
 | **`main` push + cron** | [`.github/workflows/scorecard.yml`](../../.github/workflows/scorecard.yml) | OpenSSF Scorecard |
+| **push / PR（長期ブランチ）+ cron** | [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) | CodeQL SAST（`javascript-typescript` / `actions`） |
+
+依存インストールは Scorecard **Pinned-Dependencies** 向けに **`npm ci`**（lockfile の integrity）を使う。docs-site も同様（lockfile は Linux CI で再生成可能な状態を維持）。GitHub の Code scanning **default setup** と dual 実行になる場合は default setup を無効化する。
 
 ### CD（docs site）
 
@@ -205,7 +208,7 @@ flowchart LR
 - [x] hotfix は `hotfix/*` → `main`（CI）→ `release` 可（方針確定）
 - [x] app CI: PR → `dev-v*` / `hotfix/*`→`main`（`.github/workflows/ci.yml`）
 - [x] docs CI: PR → `doc-site`（`.github/workflows/ci-docs.yml`）
-- [x] Quality: `main` push → Codecov（`.github/workflows/quality.yml`）+ Scorecard
+- [x] Quality: `main` push → Codecov（`.github/workflows/quality.yml`）+ Scorecard + CodeQL SAST（`.github/workflows/codeql.yml`）
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
 - [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [x] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
