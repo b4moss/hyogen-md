@@ -13,6 +13,7 @@
 - 親スコープのテンプレート変数は **見える**（[variables.md](./variables.md)）
 - パス規則は [paths.md](./paths.md)（リモート URL も Node では許可）
 - 欠落時は **エラー**（[api.md](./api.md)）
+- **見出し階層**: 挿入による見出しレベルの自動シフトは **未実装**（現状は著者レベルまま。計画: [heading-hierarchy.md](../plans/v0.13.0/heading-hierarchy.md) / [#50](https://github.com/b4moss/hyogen-md/issues/50)）
 
 ## component
 
@@ -32,7 +33,7 @@
 | `as` のスコープ | 定義したファイルだけでなく、**include 先からも見える** |
 | `as` 名の衝突 | **エラー**（後勝ちにしない。別名にすべき） |
 | 戻り値 | レンダリング結果文字列を `{{ }}` に埋め込む |
-| 出力行数 | **単一行に制限**（改行を含む結果は **エラー** `component_multiline_output`） |
+| 出力行数 | **単一行に制限**（改行を含む結果は **エラー** `component_multiline_output`）。**廃止予定**（多行許可 + 見出しシフト: [heading-hierarchy.md](../plans/v0.13.0/heading-hierarchy.md) / [#50](https://github.com/b4moss/hyogen-md/issues/50)） |
 | ネスト | component 内でさらに `component ... as` **可** |
 | include | component 内で **可** |
 | extend | component 内では **不可**。書いた場合は **スキップ + 警告** |

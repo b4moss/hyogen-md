@@ -31,7 +31,7 @@
 |-----------|------|
 | [v0.11.0](https://github.com/b4moss/hyogen-md/milestone/1) | データソースのインポート（API） |
 | [v0.12.0](https://github.com/b4moss/hyogen-md/milestone/3) | TOC 専用ヘルパ、許可プロパティ `.length`、`echo` 本文展開 |
-| [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) | 許可メソッド追加（`.slice` 等） |
+| [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) | 許可メソッド追加（`.slice` 等）、[見出し階層適合](./plans/v0.13.0/heading-hierarchy.md)（[#50](https://github.com/b4moss/hyogen-md/issues/50)） |
 | [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2) | v1.0.0 までの横断タスク |
 | [After v1.0.0](https://github.com/b4moss/hyogen-md/milestone/5) | v1.0.0 以降に検討 |
 

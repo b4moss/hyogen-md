@@ -50,6 +50,7 @@ TypeScript で実装し、npm パッケージとして配布する。
 - 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行。step 5 の `if` / `each` 展開とは別）
 - **`if` / `each` が先**、その本体中および分岐外の `{{ }}` が後。**`{{ }}` の中で `if` / `each` は書けない**
 - 未展開ソースに `{{ }}` が残るプレビューは許容する（Markdown 互換の範囲）
+- **include / component 挿入による見出し階層の崩れは現状許容**（改善候補。計画: [heading-hierarchy.md](../plans/v0.13.0/heading-hierarchy.md) / [#50](https://github.com/b4moss/hyogen-md/issues/50)）
 
 ## 出力
 
