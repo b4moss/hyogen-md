@@ -31,7 +31,7 @@
 
 | Milestone | 内容 |
 |-----------|------|
-| [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) | 許可メソッド追加（`.slice` 等）。CLI（create / config / 執筆用 dev）: [specs/cli.md](./specs/cli.md) |
+| [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4) | 許可メソッド追加（`.slice` 等）、見出し階層適合（[#50](https://github.com/b4moss/hyogen-md/issues/50)）。CLI（create / config / 執筆用 dev）: [specs/cli.md](./specs/cli.md) |
 | [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2) | v1.0.0 までの横断タスク |
 | [After v1.0.0](https://github.com/b4moss/hyogen-md/milestone/5) | v1.0.0 以降に検討 |
 

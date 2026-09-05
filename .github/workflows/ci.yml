@@ -21,10 +21,9 @@ jobs:
   app:
     name: app
     # Skip develop→main and other non-hotfix PRs into main.
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      startsWith(github.base_ref, 'dev-v') ||
-      (github.base_ref == 'main' && startsWith(github.head_ref, 'hotfix/'))
+    # Run on workflow_dispatch, any non-main base (incl. dev-v*), and hotfix/* → main.
+    # Single-line if: multiline `if: >` was evaluating false for feat→dev-v* PRs.
+    if: github.event_name != 'pull_request' || github.base_ref != 'main' || startsWith(github.head_ref, 'hotfix/')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
