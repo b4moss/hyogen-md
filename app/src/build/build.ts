@@ -1,7 +1,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { mergeContext } from "../context/mergeContext.js";
 import { createHyogenError } from "../errors/createError.js";
 import { createNodeLoader } from "../io/createNodeLoader.js";
+import { loadDataSources } from "../io/loadDataSources.js";
 import { findDocRoot } from "../paths/findDocRoot.js";
 import { renderServer } from "../renderServer.js";
 import type { BuildOptions, BuildResult, HyogenError } from "../types.js";
@@ -53,6 +55,15 @@ export async function build(options: BuildOptions): Promise<BuildResult> {
     });
   }
 
+  const dataSources = options.dataSources;
+  const fromFiles =
+    dataSources && Object.keys(dataSources).length > 0
+      ? await loadDataSources(dataSources, { root: rootDir, loader })
+      : {};
+  // Merge once before the entry loop so every page shares the same values
+  // without re-reading dataSources per entry.
+  const sharedContext = mergeContext(fromFiles, options.context);
+
   const files: BuildResult["files"] = [];
   const warnings: BuildResult["warnings"] = [];
 
@@ -64,7 +75,7 @@ export async function build(options: BuildOptions): Promise<BuildResult> {
 
     const result = await renderServer(
       { path: absoluteEntry },
-      options.context,
+      sharedContext,
       {
         loader,
         root: rootDir,
