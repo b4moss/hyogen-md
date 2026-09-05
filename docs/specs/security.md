@@ -18,7 +18,7 @@
 
 | 項目 | 方針 |
 |------|------|
-| 式の範囲 | `{{ }}` は式のみ。関数はユーザー登録（component `as`）のみ。メソッドは `.toLocaleString` のみ。詳細は [dsl.md](./dsl.md) |
+| 式の範囲 | `{{ }}` は式のみ。関数はユーザー登録（component `as`）のみ。メソッドは `.toLocaleString` のみ。許可プロパティは `.length`。詳細は [dsl.md](./dsl.md) |
 | 危険キー | `__proto__` / `prototype` / `constructor` / `__defineGetter__` |
 | 危険キーアクセス時 | **エラー**（`forbidden_property_access`） |
 | 変数パス深さ・文字種 | 明示制限なし（識別子は JS Unicode 相当） |
