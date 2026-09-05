@@ -5,7 +5,7 @@ description: @b4moss/hyogen-md の公開 API 一覧
 
 # API リファレンス
 
-`@b4moss/hyogen-md` が公開する API の索引です。対象バージョンは **0.10.0** です。
+`@b4moss/hyogen-md` が公開する API の索引です。データソース API は **0.11.0** です。
 
 ## レンダリング
 
@@ -14,6 +14,12 @@ description: @b4moss/hyogen-md の公開 API 一覧
 | [renderServer](/ja/api/render-server) | SSR / SSG 向け | `@b4moss/hyogen-md` |
 | [renderClient](/ja/api/render-client) | CSR 向け | `@b4moss/hyogen-md/client` |
 | [build](/ja/api/build) | 一括ビルド（SSG） | `@b4moss/hyogen-md` |
+
+## データソース
+
+| API | 用途 |
+|-----|------|
+| [dataSources / loadDataSources](/ja/api/data-sources) | YAML / JSON / CSV を読みテンプレート変数へバインド |
 
 ## ファイル読み込み
 
