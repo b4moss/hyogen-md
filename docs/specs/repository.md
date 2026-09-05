@@ -137,28 +137,30 @@ flowchart LR
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **PR** base **`dev-v*`** | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) | app: `make check` |
-| **PR** **`hotfix/*` → `main`** | 同上 | app: `make check`（通常の `develop`→`main` では走らない） |
-| **PR** base **`doc-site`** | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
-| **`develop` / `main` / `release` への通常昇格 PR** | — | **CI なし**（`dev-v*` で通済みとみなす） |
+| **PR** base **`dev-v*`**（`app/**` 等） | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) | app: `make check` |
+| **PR** **`hotfix/*` → `main`**（同上 paths） | 同上 | app: `make check`（通常の `develop`→`main` では job を skip） |
+| **PR** base **`doc-site`**（`docs-site/**` / `app/**` 等） | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
+| **`develop` / `main` / `release` への通常昇格 PR** | — | **機能 CI なし**（`dev-v*` で通済みとみなす） |
 
-ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
+`paths` フィルタで docs / specs のみの変更では app / docs CI を起動しない。ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
 
 ### Quality（Codecov / Scorecard / CodeQL）
 
 | トリガ | Workflow | 内容 |
 |--------|----------|------|
-| **`main` への push** | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | app coverage → Codecov upload |
-| **`main` push + cron** | [`.github/workflows/scorecard.yml`](../../.github/workflows/scorecard.yml) | OpenSSF Scorecard |
-| **push / PR（長期ブランチ）+ cron** | [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) | CodeQL SAST（`javascript-typescript` / `actions`） |
+| **`main` への push**（`app/**` 等） | [`.github/workflows/quality.yml`](../../.github/workflows/quality.yml) | app coverage → Codecov upload |
+| **週次 cron**（+ `workflow_dispatch` / branch protection） | [`.github/workflows/scorecard.yml`](../../.github/workflows/scorecard.yml) | OpenSSF Scorecard（毎 push では走らない） |
+| **`main` push**（`app/**` / workflows）**+ 週次 cron** | [`.github/workflows/codeql.yml`](../../.github/workflows/codeql.yml) | CodeQL SAST（`javascript-typescript` / `actions`）。昇格 PR では走らない |
 
-依存インストールは Scorecard **Pinned-Dependencies** 向けに **`npm ci`**（lockfile の integrity）を使う。docs-site も同様（lockfile は Linux CI で再生成可能な状態を維持）。GitHub の Code scanning **default setup** と dual 実行になる場合は default setup を無効化する。
+依存インストールは Scorecard **Pinned-Dependencies** 向けに **`npm ci`**（lockfile の integrity）を使う。docs-site も同様（lockfile は Linux CI で再生成可能な状態を維持）。
+
+**必須:** GitHub Code scanning の **default setup は無効**にし、advanced workflow（`codeql.yml`）のみにする。両方有効だと同一コミットで CodeQL が二重起動する。Settings → Code security → Code scanning → Default setup → Disable。
 
 ### CD（docs site）
 
 | 項目 | 方針 |
 |------|------|
-| トリガ | **`doc-site` への push**（および手動 `workflow_dispatch`） |
+| トリガ | **`doc-site` への push**（`docs-site/**` / `app/**` 等。および手動 `workflow_dispatch`） |
 | Workflow | [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) |
 | 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
 
@@ -208,7 +210,7 @@ flowchart LR
 - [x] hotfix は `hotfix/*` → `main`（CI）→ `release` 可（方針確定）
 - [x] app CI: PR → `dev-v*` / `hotfix/*`→`main`（`.github/workflows/ci.yml`）
 - [x] docs CI: PR → `doc-site`（`.github/workflows/ci-docs.yml`）
-- [x] Quality: `main` push → Codecov（`.github/workflows/quality.yml`）+ Scorecard + CodeQL SAST（`.github/workflows/codeql.yml`）
+- [x] Quality: `main` push（app paths）→ Codecov（`.github/workflows/quality.yml`）；Scorecard は週次；CodeQL は advanced のみ（default setup 無効）+ `main` paths / 週次
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
 - [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [x] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
