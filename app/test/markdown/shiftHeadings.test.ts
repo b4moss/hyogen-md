@@ -41,6 +41,14 @@ describe("findPrecedingHeadingLevel", () => {
   it("ignores headings in an unclosed fence", () => {
     assert.equal(findPrecedingHeadingLevel("~~~\n# Hidden\n"), 0);
   });
+
+  it("accepts up to 3 spaces of ATX indent", () => {
+    assert.equal(findPrecedingHeadingLevel("   ## Indented\n"), 2);
+  });
+
+  it("rejects #foo without a space after hashes", () => {
+    assert.equal(findPrecedingHeadingLevel("#foo\n"), 0);
+  });
 });
 
 describe("shiftMarkdownHeadings", () => {
@@ -80,5 +88,14 @@ describe("shiftMarkdownHeadings", () => {
 
   it("returns empty string for empty input", () => {
     assert.equal(shiftMarkdownHeadings("", 2), "");
+  });
+
+  it("preserves ATX indent and strips closing hash sequences", () => {
+    assert.equal(shiftMarkdownHeadings("  ## Title ##", 1), "  ### Title");
+  });
+
+  it("shifts bare and empty ATX headings", () => {
+    assert.equal(shiftMarkdownHeadings("#", 2), "###");
+    assert.equal(shiftMarkdownHeadings("## ", 1), "###");
   });
 });

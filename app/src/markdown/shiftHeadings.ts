@@ -9,9 +9,74 @@ export type FenceState = {
   length: number;
 };
 
-const ATX_HEADING = /^( {0,3})(#{1,6})(?:[ \t]+(.*))?$/;
 const SETEXT_UNDERLINE = /^( {0,3})(=+|-+)[ \t]*$/;
 const FENCE_OPEN = /^( {0,3})(`{3,}|~{3,})(.*)$/;
+
+function isSpaceOrTab(ch: string | undefined): boolean {
+  return ch === " " || ch === "\t";
+}
+
+/**
+ * Parse an ATX heading line without nested quantifiers (CodeQL js/polynomial-redos).
+ * Supports optional 0–3 space indent, bare hashes, and optional closing `#` sequence.
+ */
+function parseAtxHeadingLine(
+  line: string,
+): { indent: string; level: number; text: string } | null {
+  let i = 0;
+  while (i < line.length && i < 3 && line[i] === " ") {
+    i += 1;
+  }
+  const indent = line.slice(0, i);
+
+  let level = 0;
+  while (i < line.length && level < 6 && line[i] === "#") {
+    level += 1;
+    i += 1;
+  }
+  if (level === 0) {
+    return null;
+  }
+  // More than 6 leading `#` is not an ATX heading (CommonMark).
+  if (level === 6 && i < line.length && line[i] === "#") {
+    return null;
+  }
+
+  if (i >= line.length) {
+    return { indent, level, text: "" };
+  }
+  // e.g. `#foo` without space — not a heading in CommonMark
+  if (!isSpaceOrTab(line[i])) {
+    return null;
+  }
+
+  while (i < line.length && isSpaceOrTab(line[i])) {
+    i += 1;
+  }
+
+  let end = line.length;
+  while (end > i && isSpaceOrTab(line[end - 1])) {
+    end -= 1;
+  }
+
+  // Optional closing sequence: [ \t]+#+
+  let textEnd = end;
+  if (end > i && line[end - 1] === "#") {
+    let hashStart = end - 1;
+    while (hashStart > i && line[hashStart - 1] === "#") {
+      hashStart -= 1;
+    }
+    if (hashStart > i && isSpaceOrTab(line[hashStart - 1])) {
+      let ws = hashStart - 1;
+      while (ws >= i && isSpaceOrTab(line[ws])) {
+        ws -= 1;
+      }
+      textEnd = ws + 1;
+    }
+  }
+
+  return { indent, level, text: line.slice(i, textEnd) };
+}
 
 export function createFenceState(): FenceState {
   return { active: false, marker: null, length: 0 };
@@ -49,25 +114,8 @@ export function consumeFenceLine(state: FenceState, line: string): boolean {
 }
 
 export function parseAtxHeadingLevel(line: string): number | null {
-  const match = ATX_HEADING.exec(line);
-  if (!match) {
-    return null;
-  }
-  // Require space after hashes unless empty heading (`#` alone / `# ##` close style with trailing hashes handled loosely)
-  const rest = match[3];
-  const hashes = match[2]!;
-  // CommonMark: opening sequence must be followed by space or EOL
-  if (rest === undefined) {
-    // line was just hashes — `#` alone is heading; `##` alone too. Pattern with optional group:
-    // Our regex: (#{1,6})(?:[ \t]+(.*))?$ — if no space/rest, match[3] undefined means bare hashes only if nothing after
-    const afterHashes = line.slice(match[1]!.length + hashes.length);
-    if (afterHashes.length === 0) {
-      return hashes.length;
-    }
-    // e.g. `#foo` without space — not a heading in CommonMark
-    return null;
-  }
-  return hashes.length;
+  const parsed = parseAtxHeadingLine(line);
+  return parsed ? parsed.level : null;
 }
 
 export function parseSetextUnderlineLevel(line: string): number | null {
@@ -79,7 +127,12 @@ export function parseSetextUnderlineLevel(line: string): number | null {
 }
 
 function isBlankLine(line: string): boolean {
-  return /^[ \t]*$/.test(line);
+  for (let i = 0; i < line.length; i++) {
+    if (!isSpaceOrTab(line[i])) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function looksLikeSetextContent(line: string): boolean {
@@ -93,7 +146,7 @@ function looksLikeSetextContent(line: string): boolean {
     return false;
   }
   // Indented code (4 spaces) — skip as setext content
-  if (/^ {4,}/.test(line) || /^\t/.test(line)) {
+  if (line.startsWith("    ") || line.startsWith("\t")) {
     return false;
   }
   return true;
@@ -145,7 +198,7 @@ function clampHeadingLevel(level: number): number {
 }
 
 function toAtxHeading(level: number, text: string): string {
-  const trimmed = text.replace(/^[ \t]+|[ \t]+$/g, "");
+  const trimmed = text.trim();
   const marks = "#".repeat(clampHeadingLevel(level));
   return trimmed.length === 0 ? marks : `${marks} ${trimmed}`;
 }
@@ -183,12 +236,9 @@ export function shiftMarkdownHeadings(markdown: string, shift: number): string {
       }
     }
 
-    const atx = parseAtxHeadingLevel(line);
+    const atx = parseAtxHeadingLine(line);
     if (atx !== null) {
-      const match = ATX_HEADING.exec(line)!;
-      const indent = match[1] ?? "";
-      const text = (match[3] ?? "").replace(/[ \t]+#+[ \t]*$/, "").trim();
-      out.push(indent + toAtxHeading(atx + shift, text));
+      out.push(atx.indent + toAtxHeading(atx.level + shift, atx.text));
       continue;
     }
 
