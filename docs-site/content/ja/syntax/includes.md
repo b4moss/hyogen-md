@@ -28,6 +28,10 @@ include ./components/description.md
 
 ファイルが見つからない場合は **`file_not_found`** エラーで中断します。
 
+## 見出し階層適合
+
+`include` / `component` 挿入時、直前見出しレベルに合わせて取り込み側見出しを `min(6, H+L)` にシフトする。ネストは累積。Setext はシフト時 ATX 化。フェンス内は除外。
+
 ## component
 
 props を持つ `.md` ファイルを関数のように呼び出せます。
@@ -73,7 +77,7 @@ Name: {{ city }} / Population: {{ population.toLocaleString('ja-JP') }}
 | `as` のスコープ | 定義したファイルだけでなく、include 先からも見える |
 | `as` 名の衝突 | **エラー**（後勝ちにしない） |
 | 戻り値 | レンダリング結果を `{{ }}` に埋め込む |
-| 出力行数 | **単一行のみ**（改行を含むと `component_multiline_output` エラー） |
+| 出力行数 | **多行可** |
 | extend | component 内では **不可**（スキップ + 警告） |
 
 ### each 内での呼び出し

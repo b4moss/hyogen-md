@@ -2,6 +2,10 @@ import { formatWarningMessage } from "../errors/formatMessage.js";
 import { resolveIncludePath } from "../io/resolveIncludePath.js";
 import { renderChildDocument } from "../pipeline/renderDocument.js";
 import { joinRemovalSeam } from "../pipeline/joinRemovalSeam.js";
+import {
+  findPrecedingHeadingLevel,
+  shiftMarkdownHeadings,
+} from "../markdown/shiftHeadings.js";
 import type { ComponentRegistry } from "../component/ComponentRegistry.js";
 import type { VisitStack } from "./VisitStack.js";
 import type { HyogenContext, HyogenWarning, IncludeDirective, Loader } from "../types.js";
@@ -88,10 +92,15 @@ export async function expandIncludes(
         registry: options.registry,
       });
 
+      const markerStart = result.indexOf(directive.marker);
+      const prefix = markerStart >= 0 ? result.slice(0, markerStart) : result;
+      const headingShift = findPrecedingHeadingLevel(prefix);
+      const shiftedMarkdown = shiftMarkdownHeadings(childMarkdown, headingShift);
+
       const replacement =
         options.preserveHgComments && directive.raw
-          ? `${directive.raw}\n${childMarkdown}`
-          : childMarkdown;
+          ? `${directive.raw}\n${shiftedMarkdown}`
+          : shiftedMarkdown;
 
       result = replaceMarker(result, directive.marker, replacement);
     } finally {
