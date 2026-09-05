@@ -114,9 +114,9 @@ await renderServer("./page.md", { title: "public" }, {
 });
 ```
 
-## データソースのインポート（v0.11.0）
+## データソースのインポート
 
-外部データ（**YAML / JSON / CSV** を同版で対応）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。
+外部データ（**YAML / JSON / CSV**）を **API 側のみ**で読み、テンプレート変数へバインドする。DSL の `import` / `require` は **引き続き禁止**（[dsl.md](./dsl.md)）。`renderServer` / `build` への配線は **v0.12.0** で完了。
 
 ### オプション `dataSources`
 
