@@ -6,9 +6,7 @@
 
 ## 索引
 
-| 版 | 計画 | Issue |
-|----|------|-------|
-| [v0.13.0](./v0.13.0/heading-hierarchy.md) | include / component 挿入時の見出し階層適合 | [#50](https://github.com/b4moss/hyogen-md/issues/50) |
+（現在、plans 配下の詳細仕様ファイルなし）
 
 ----
 

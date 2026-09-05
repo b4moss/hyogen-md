@@ -17,7 +17,6 @@ All codes use English message templates. Use [`formatDiagnosticLog`](/en/api/dia
 | `alias_collision` | Component `as` name collides with a variable or parent registration |
 | `forbidden_property_access` | Access to a dangerous key (`__proto__`, `prototype`, `constructor`, `__defineGetter__`) |
 | `parse_error` | Syntax outside the whitelist, malformed DSL, or missing client loader |
-| `component_multiline_output` | Component rendered more than one line (components must be single-line) |
 | `server_context_on_client` | `serverContext` passed to `renderClient` |
 | `load_failed` | Loader failed for a reason other than not found |
 

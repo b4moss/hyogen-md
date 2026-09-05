@@ -6,7 +6,6 @@
     "alias_collision": "Component alias \"{alias}\" collides with an existing binding in {path}",
     "forbidden_property_access": "Forbidden property access \"{property}\" in {path}",
     "parse_error": "Parse error in {path}: {message}",
-    "component_multiline_output": "Component \"{alias}\" returned multiline output (single line required)",
     "server_context_on_client": "serverContext is not allowed with renderClient",
     "load_failed": "Failed to load {path}: {reason}"
   },
