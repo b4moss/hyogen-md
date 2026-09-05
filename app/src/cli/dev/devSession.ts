@@ -24,29 +24,31 @@ export function createDevSession(options: {
   loader?: Loader;
   errorLog?: (message: string) => void;
 }): DevSession {
+  // Writing preview is local-only: never install createNodeLoader (no fetch).
   const loader = options.loader ?? createFsLoader();
   const errorLog = options.errorLog ?? ((message) => console.error(message));
   const outDir = path.resolve(options.config.outDir);
+  const root = options.config.root ?? options.config.configDir;
 
   return {
     config: options.config,
     outDir,
     async renderEntry(absolutePath: string): Promise<PreviewPayload> {
       const resolved = path.resolve(absolutePath);
+      // Load via FS first and pass source text into renderServer so request
+      // paths cannot flow into root discovery → data-source → fetch taint.
+      const source = await loader(resolved);
       let result: RenderResult;
       try {
-        result = await renderServer(
-          { path: resolved },
-          options.config.context,
-          {
-            loader,
-            root: options.config.root ?? options.config.configDir,
-            serverContext: options.config.serverContext,
-            dataSources: options.config.dataSources,
-            preserveFrontMatter: options.config.preserveFrontMatter,
-            preserveHgComments: options.config.preserveHgComments,
-          },
-        );
+        result = await renderServer(source, options.config.context, {
+          loader,
+          root,
+          path: resolved,
+          serverContext: options.config.serverContext,
+          dataSources: options.config.dataSources,
+          preserveFrontMatter: options.config.preserveFrontMatter,
+          preserveHgComments: options.config.preserveHgComments,
+        });
       } catch (error) {
         if (
           error &&
