@@ -64,7 +64,8 @@
 | `if` / `each` 構造ネスト | 合計最大 20。超過はスキップ + 警告 |
 | 一般のファイルネスト・展開サイズ | 上限なし |
 | front matter ソース | 最大 64KB（超過はエラー） |
-| props / API context | 無制限 |
+| `dataSources` 各ファイル | 最大 **5MB**（超過は `data_source_too_large`）。リモート URL は不可（[api.md](./api.md)） |
+| props / API context（メモリ上の値） | 無制限 |
 
 ## 秘密情報
 

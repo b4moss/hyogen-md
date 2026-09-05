@@ -44,9 +44,12 @@
 | 項目 | 方針 |
 |------|------|
 | 読込経路 | **API のみ**（[api.md](./api.md)）。DSL の `import` / `require` は不可 |
-| 変数名 | `dataSources` マップの **キー**（例: `{ site: "./data/site.yaml" }` → `{{ site.title }}`） |
-| 値の形 | JSON / YAML はパース結果をそのまま束縛。CSV は **オブジェクト配列** |
+| 対応形式 | **YAML / JSON / CSV**（同版） |
+| 変数名 | `dataSources` マップの **キー**（例: `{ site: "./data/site.yaml" }` → `{{ site.title }}`）。**キー文字列に制約なし** |
+| 値の形 | JSON / YAML はパース結果をそのまま束縛。CSV は **オブジェクト配列**（フィールドは文字列） |
 | トップレベル配列 | **許可**（例: JSON `[1,2,3]` → `{{ items.0 }}`）。front matter の YAML 制約とは別 |
+| ファイルサイズ | **5MB/ファイル**（超過は `data_source_too_large`） |
+| リモート URL | **非対応**（`load_failed`） |
 | マージ | `dataSources` → `context` → `serverContext` の順で浅いマージ（後勝ち） |
 | front matter との関係 | front matter は `renderDocument` 内で **さらに後**から適用され、同名キーを上書きしうる |
 
