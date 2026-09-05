@@ -1,10 +1,14 @@
 import path from "node:path";
 import { createNodeLoader } from "./createNodeLoader.js";
+import { isRemotePath } from "./isRemotePath.js";
 import { parseDataFile } from "./parseDataFile.js";
 import { createHyogenError } from "../errors/createError.js";
 import { findDocRoot } from "../paths/findDocRoot.js";
 import { resolveTemplatePath } from "../paths/resolveTemplatePath.js";
 import type { DataSourcesMap, HyogenContext, HyogenError, Loader } from "../types.js";
+
+/** Max UTF-8 byte length per data source file (5 MiB). */
+export const DATA_SOURCE_MAX_BYTES = 5 * 1024 * 1024;
 
 export type LoadDataSourcesOptions = {
   root?: string;
@@ -36,6 +40,17 @@ export async function loadDataSources(
   const context: HyogenContext = {};
 
   for (const [name, relativePath] of Object.entries(sources)) {
+    if (isRemotePath(relativePath)) {
+      throw createHyogenError({
+        code: "load_failed",
+        path: relativePath,
+        details: {
+          path: relativePath,
+          reason: "remote data sources are not supported",
+        },
+      });
+    }
+
     const resolvedPath = resolveTemplatePath(relativePath, { rootDir });
     let source: string;
     try {
@@ -53,6 +68,20 @@ export async function loadDataSources(
         },
       });
     }
+
+    const size = Buffer.byteLength(source, "utf8");
+    if (size > DATA_SOURCE_MAX_BYTES) {
+      throw createHyogenError({
+        code: "data_source_too_large",
+        path: resolvedPath,
+        details: {
+          path: resolvedPath,
+          size,
+          limit: DATA_SOURCE_MAX_BYTES,
+        },
+      });
+    }
+
     context[name] = await parseDataFile(source, resolvedPath);
   }
 
