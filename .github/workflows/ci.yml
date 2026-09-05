@@ -22,6 +22,7 @@ jobs:
     name: app
     # Skip develop→main and other non-hotfix PRs into main.
     if: >
+      github.event_name == 'workflow_dispatch' ||
       startsWith(github.base_ref, 'dev-v') ||
       (github.base_ref == 'main' && startsWith(github.head_ref, 'hotfix/'))
     runs-on: ubuntu-latest
