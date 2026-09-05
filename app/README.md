@@ -123,7 +123,7 @@ Published: **`@b4moss/hyogen-md@0.10.0`** (git tag `v0.10.0`).
 
 Playground UX is part of the **v0.10.0** product milestone but is **not** included in the npm tarball.
 
-The coverage badge reflects approximate **statement coverage for `app/`** (library) from Vitest (~84%). Initial release goal is ≥50%. It is not yet wired to CI / Codecov.
+The coverage badge reflects approximate **statement coverage for `app/`** (library) from Vitest (~84%). Initial release goal is ≥50%. Coverage is uploaded to Codecov from `.github/workflows/quality.yml` on pushes to `main`.
 
 ---
 
