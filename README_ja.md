@@ -140,9 +140,9 @@ make dev-docs
 ## ステータス
 
 **0.x** です。`1.0.0` まで API・出力は変わりえます。  
-公開済み: **`@b4moss/hyogen-md@0.10.0`**（git tag `v0.10.0`）。
+公開済み: **`@b4moss/hyogen-md@0.13.0`**（git tag `v0.13.0`）。
 
-Playground UX は **v0.10.0** マイルストーンに含まれますが、**npm の tarball には入りません**。
+Playground UX はドキュメントサイトに含まれ、**npm の tarball には入りません**。
 
 coverage バッジはライブラリ（`app/`）の Vitest **statement カバレッジ概算（約 84%）**です。初期リリース目標は 50% 以上。カバレッジは `main` への push 時に `.github/workflows/quality.yml` から Codecov へアップロードされます。
 

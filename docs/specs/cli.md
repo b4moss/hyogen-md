@@ -76,8 +76,8 @@ README は任意（最小構成では必須としない）。
 
 ### 設定ファイルの言語
 
-`create` 実行時に **`js` / `ts` を選択**させる。**既定は `js`**。  
-読み込み側は最初から `.js` / `.ts` の両方を受理する。
+`create` は **`--language js|ts`** で選択する。**既定は `js`**。  
+読み込み側は `.js` / `.ts`（および `.mjs` / `.cjs`）を受理する。
 
 ---
 
@@ -105,15 +105,23 @@ export default defineConfig({
 
 | キー | 必須 | 既定 | 意味 |
 |------|------|------|------|
-| `input` | **必須** | — | 入口 Markdown の glob / パス |
+| `input` | **必須** | — | 入口 Markdown の glob / パス（文字列または配列） |
 | `outDir` | 任意 | `./out` | `build` の出力先。`dev` は書き出さない |
-| その他（`context` / `dataSources` / loader 相当 等） | 任意 | — | 既存 `build` / `renderServer` オプションに対応する範囲で後日詳細可。v1 の必須は `input` のみ |
+| `context` | 任意 | — | テンプレート共通 context |
+| `serverContext` | 任意 | — | サーバ専用 context（`build` / `dev` の render に渡す） |
+| `dataSources` | 任意 | — | YAML / JSON / CSV のデータソース（[api.md](./api.md)） |
+| `root` | 任意 | — | プロジェクトルート |
+| `includeUnderscoreEntries` | 任意 | — | `_` 始まりをエントリに含めるか |
+| `preserveFrontMatter` | 任意 | — | front matter を出力に残すか |
+| `preserveHgComments` | 任意 | — | `@hg` コメントを出力に残すか |
 
-`dev` / `build` 共通の土台として同一設定ファイルを読む。モード専用ブロック（`dev: { … }`）は v1 では必須としない。
+探索順（cwd）: `hyogen.config.ts` → `.mjs` → `.js` → `.cjs`。`--config` で明示可。
+
+`dev` / `build` 共通の土台として同一設定ファイルを読む。モード専用ブロック（`dev: { … }`）は v1 では置かない。
 
 ### パッケージ export
 
-CLI 設定用に例えば `@b4moss/hyogen-md/config` を追加する（実装時に `exports` を更新）。
+**`@b4moss/hyogen-md/config`** から `defineConfig` と設定型を export する。
 
 ---
 
@@ -121,6 +129,7 @@ CLI 設定用に例えば `@b4moss/hyogen-md/config` を追加する（実装時
 
 - 設定の `input` / `outDir`（と任意オプション）を既存の `build()` API に渡して実行する
 - ディスクへの Markdown 出力は **`build` の責務**
+- CLI フラグ: `--config <file>`、`--outDir <dir>`（設定の上書き）
 
 ---
 
@@ -155,7 +164,7 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 ### プレビュー用 HTML 化
 
 - ライブラリ本体は Markdown only のまま
-- **`dev` 専用**の薄い Markdown→HTML（marked / markdown-it 等）と最小 CSS
+- **`dev` 専用**の薄い Markdown→HTML（marked）と最小 CSS
 - 本体の公開 API / npm の主 export には載せない
 - docs-site / Playground の見た目の完全流用はしない（必要なら後続で段階追加）
 
@@ -165,34 +174,40 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 - レンダー結果はメモリ／dev サーバ内のみ保持
 - ディスク出力が必要なら `build` を使う
 
+### CLI フラグ
+
+- `--config <file>`
+- `--host`（既定 `127.0.0.1`）
+- `--port`（既定 `4173`）
+
 ---
 
-## 8. 受け入れ条件（案）
+## 8. 受け入れ条件
 
 ### create / config（#35）
 
-- [ ] `npx @b4moss/hyogen-md create` で最小構成が生成される
-- [ ] create 時に `hyogen.config.js` / `.ts` を選択でき、既定は `.js`
-- [ ] `defineConfig` で `input` 必須の設定を読める
-- [ ] `hyogen-md build` が設定に従い `outDir`（既定 `./out`）へ出力する
+- [x] `npx @b4moss/hyogen-md create` で最小構成が生成される
+- [x] create 時に `hyogen.config.js` / `.ts` を選択でき、既定は `.js`（`--language`）
+- [x] `defineConfig` で `input` 必須の設定を読める
+- [x] `hyogen-md build` が設定に従い `outDir`（既定 `./out`）へ出力する
 
 ### dev（#30）
 
-- [ ] `hyogen-md dev` がプレビュー用 HTTP サーバを起動する
-- [ ] ファイルツリーから Markdown を選べる
-- [ ] 外部エディタで保存すると、該当ファイル（と依存）が HMR 更新される
-- [ ] ブラウザ上では編集できない
-- [ ] `dev` 実行中に `outDir` へ成果物が書き出されない
-- [ ] レンダーエラー／warning がターミナルに出る
+- [x] `hyogen-md dev` がプレビュー用 HTTP サーバを起動する
+- [x] ファイルツリーから Markdown を選べる
+- [x] 外部エディタで保存すると、該当ファイル（と依存）が HMR 更新される
+- [x] ブラウザ上では編集できない
+- [x] `dev` 実行中に `outDir` へ成果物が書き出されない
+- [x] レンダーエラー／warning がターミナルに出る
 
 ---
 
-## 9. 実装時のメモ
+## 9. 実装メモ
 
 - 既存 API 正本: [specs/api.md](./api.md)
 - Playground は VirtualFS＋ブラウザ編集であり、本 `dev`（実ディスク＋外部エディタ）とは役割を分ける: [specs/playground.md](./playground.md)
-- 憲章上、CLI は薄い DDD で CRUD Trait 必須ではない: [override-charter.md](../../override-charter.md)
-- 実装開始時に [charter/tdd.md](../../charter/tdd.md) に従い `docs/tests/` または `app/test/specs/` へテスト仕様を追加する
+- 憲章上、CLI は薄い DDD で CRUD Trait 必須ではない: [override-charter.md](../override-charter.md)
+- テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)
 
 ---
 
@@ -202,7 +217,7 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 |------|-----|
 | Issue #30 | https://github.com/b4moss/hyogen-md/issues/30 |
 | Issue #35 | https://github.com/b4moss/hyogen-md/issues/35 |
-| Milestone v0.13.0 | https://github.com/b4moss/hyogen-md/milestone/4 |
+| Milestone v0.13.0（完了） | https://github.com/b4moss/hyogen-md/milestone/4 |
 
 ----
 

@@ -19,11 +19,12 @@
 
 ---
 
-## コンテンツ（v0.12.0 時点）
+## コンテンツ（v0.13.0 時点）
 
-正は [specs/](./) と [api.md](./api.md)。サイトは利用者向けの説明・例・索引。
+正は [specs/](./) と [api.md](./api.md) / [cli.md](./cli.md)。サイトは利用者向けの説明・例・索引。
 
-- **API**: `renderServer` / `renderClient` / `build` / `dataSources`・`loadDataSources` / loader / 診断・型・エラーコード
+- **CLI**: `create` / `hyogen.config`（`defineConfig`） / `dev` / `build`
+- **API**: `renderServer` / `renderClient` / `build` / `dataSources`・`loadDataSources` / loader / 診断・型・エラーコード / `@b4moss/hyogen-md/config`
 - **構文**: front matter、変数、`@hg` / `@@`、制御構造、include / component / extend、許可メソッド（`.toLocaleString`）・許可プロパティ（`.length`）、`echo`、TOC ヘルパ（`toc` / `toc(N)`）、パス・セキュリティ注意
 - **その他**: Install、Changelog 導線、GitHub / npm リンク
 

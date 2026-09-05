@@ -5,7 +5,7 @@ description: @b4moss/hyogen-md の公開 API 一覧
 
 # API リファレンス
 
-`@b4moss/hyogen-md` が公開する API の索引です。データソース API は **0.11.0** です。
+`@b4moss/hyogen-md` が公開する API の索引です。データソースは **0.12.0**、CLI / `defineConfig` は **0.13.0** から。
 
 ## レンダリング
 
@@ -14,6 +14,12 @@ description: @b4moss/hyogen-md の公開 API 一覧
 | [renderServer](/ja/api/render-server) | SSR / SSG 向け | `@b4moss/hyogen-md` |
 | [renderClient](/ja/api/render-client) | CSR 向け | `@b4moss/hyogen-md/client` |
 | [build](/ja/api/build) | 一括ビルド（SSG） | `@b4moss/hyogen-md` |
+
+## 設定（CLI）
+
+| API | パッケージ | 用途 |
+|-----|-----------|------|
+| `defineConfig` | `@b4moss/hyogen-md/config` | `hyogen.config.(js|ts)` 用 — [CLI 設定](/ja/cli/config) |
 
 ## データソース
 
