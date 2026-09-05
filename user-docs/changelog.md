@@ -4,6 +4,10 @@ Library vs Playground-only changes are labeled. Latest formal release: **`v0.12.
 
 Japanese: [changelog_ja.md](./changelog_ja.md)
 
+### Unreleased — Library
+
+- **CLI** — `hyogen-md create` / `dev` / `build` with `hyogen.config.(js|ts)` and `defineConfig` (`@b4moss/hyogen-md/config`). Writing preview server with file tree + HMR; `dev` does not write `outDir` (Issues #30 / #35)
+
 ### 0.12.0 — Library
 
 - **TOC helper** — `toc` / `toc(N)` expands to a Markdown table of contents after includes / control flow / `{{ }}` (Issue #42)
