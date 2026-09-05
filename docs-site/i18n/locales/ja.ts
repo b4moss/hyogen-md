@@ -19,6 +19,7 @@ export default {
     syntaxDeclarations: '宣言',
     syntaxIncludes: 'include / component',
     syntaxControlFlow: '制御構造',
+    syntaxToc: 'TOC ヘルパ',
     syntaxPaths: 'パスとセキュリティ',
     playground: 'Playground',
     changelog: 'Changelog',

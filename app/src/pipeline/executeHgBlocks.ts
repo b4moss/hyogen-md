@@ -14,6 +14,7 @@ import {
 } from "../logic/hgBlockUtils.js";
 import { isExecutableBlockSource } from "../logic/parseStatement.js";
 import { isDeclarationSource } from "../logic/parseDeclaration.js";
+import { isTocDirectiveLine } from "../toc/parseTocDirective.js";
 import {
   joinRemovalSeam,
   removalSeamNewlineDelta,
@@ -43,6 +44,11 @@ function parseHgBlockDirective(
 
   if (lines.length === 1 && isControlDirectiveLine(lines[0]!)) {
     return { kind: "control" };
+  }
+
+  // v0.12: `toc` / `toc(N)` are expanded later in the pipeline (expandToc).
+  if (lines.length === 1 && isTocDirectiveLine(lines[0]!)) {
+    return null;
   }
 
   if (

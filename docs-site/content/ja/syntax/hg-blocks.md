@@ -113,3 +113,4 @@ const greet = "Hello world!"
 
 - [宣言と代入](/ja/syntax/declarations)
 - [制御構造](/ja/syntax/control-flow)
+- [TOC ヘルパ](/ja/syntax/toc)

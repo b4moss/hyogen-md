@@ -19,6 +19,7 @@ export default {
     syntaxDeclarations: 'Declarations',
     syntaxIncludes: 'Includes & components',
     syntaxControlFlow: 'Control flow',
+    syntaxToc: 'TOC helper',
     syntaxPaths: 'Paths & security',
     playground: 'Playground',
     changelog: 'Changelog',
