@@ -9,6 +9,7 @@ import { mergeContext } from "../context/mergeContext.js";
 import { parseFrontMatter } from "../frontmatter/parseFrontMatter.js";
 import { expandControlStructures } from "../control/expandControlStructures.js";
 import { interpolateExpressions } from "../expr/interpolateExpressions.js";
+import { interpolateFenceExpressions } from "../expr/interpolateFenceExpressions.js";
 import { expandIncludes } from "../include/expandIncludes.js";
 import { VisitStack } from "../include/VisitStack.js";
 import { executeDeclarations } from "../logic/executeDeclarations.js";
@@ -110,7 +111,7 @@ export async function renderDocumentBody(
     constrainToRoot: options.constrainToRoot,
   });
 
-  markdown = await interpolateExpressions(markdown, mergedContext, {
+  const interpolateOpts = {
     path,
     registry,
     loader,
@@ -120,7 +121,13 @@ export async function renderDocumentBody(
     parentContext: mergedContext,
     preserveHgComments: options.preserveHgComments,
     constrainToRoot: options.constrainToRoot,
-  });
+  };
+  markdown = await interpolateExpressions(markdown, mergedContext, interpolateOpts);
+  markdown = await interpolateFenceExpressions(
+    markdown,
+    mergedContext,
+    interpolateOpts,
+  );
 
   markdown = expandToc(markdown, { path });
 
