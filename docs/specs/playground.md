@@ -11,10 +11,11 @@
 
 | 項目 | 方針 |
 |------|------|
-| コード | `docs-site/components/playground/`（Nuxt ページ `/playground`） |
+| コード | `docs-site/app/components/playground/`（Nuxt ページ `/playground`） |
 | テスト | `docs-site/test/playground/` |
 | フレームワーク | Vue + TypeScript、CodeMirror 6 |
 | hyogen-md | 開発時 alias で `app/` ソースを参照 |
+| ハイライト定義 | `highlighter/` 生成物＋`classifyHyogenTokens`（[highlighter.md](./highlighter.md)） |
 | 単独 `playground/` | **削除済み**（v0.10.0-docs.6 でサイト内統合） |
 
 ---
@@ -52,7 +53,7 @@
 
 ## 初期シード
 
-extend / if / each / component 等を触れる小さなデモプロジェクト。
+extend / if / each / component に加え、**コードフェンス内 `${}`**（フェンス外はリテラル対比）を触れる小さなデモプロジェクト。
 
 ---
 
@@ -60,7 +61,7 @@ extend / if / each / component 等を触れる小さなデモプロジェクト�
 
 - 純ロジック（仮想 FS、loader、写像、永続化／Reset）: 単体テスト
 - UI: 手動確認
-- テスト仕様: [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)
+- テスト仕様: [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)、[v0.14.0.md](../../app/test/specs/v0.14.0.md)
 
 ----
 

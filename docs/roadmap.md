@@ -9,11 +9,11 @@
 
 ## 現行 npm
 
-**`@b4moss/hyogen-md@0.13.0`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
+**`@b4moss/hyogen-md@0.14.0`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
 
 ---
 
-## 完了（v0.1.0 — v0.13.0）
+## 完了（v0.1.0 — v0.14.0）
 
 | 版 | 要約 | 詳細 |
 |----|------|------|
@@ -25,6 +25,7 @@
 | v0.11.0 | Node.js 24+ 固定・CI / セキュリティ基盤 | [_archived/roadmap/v0.11.0.md](./_archived/roadmap/v0.11.0.md) |
 | v0.12.0 | TOC ヘルパ、`.length`、`echo`、データソース API 配線 | [_archived/roadmap/v0.12.0.md](./_archived/roadmap/v0.12.0.md) / [specs/toc.md](./specs/toc.md) / [specs/api.md](./specs/api.md) |
 | v0.13.0 | CLI（`create` / `hyogen.config` / `dev` / `build`） | [_archived/roadmap/v0.13.0.md](./_archived/roadmap/v0.13.0.md) / [specs/cli.md](./specs/cli.md) |
+| v0.14.0 | ハイライター DSL、フェンス `${}`、coverage ≥90% | [_archived/roadmap/v0.14.0.md](./_archived/roadmap/v0.14.0.md) / [specs/highlighter.md](./specs/highlighter.md) / [specs/variables.md](./specs/variables.md) |
 
 ---
 

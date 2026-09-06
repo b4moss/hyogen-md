@@ -5,13 +5,13 @@ description: hyogen.md template syntax — expressions, blocks, includes, and co
 
 # Template Syntax
 
-hyogen.md extends Markdown with HTML-comment directives and Mustache-style expressions. Everything below is available in **@b4moss/hyogen-md@0.10.0**.
+hyogen.md extends Markdown with HTML-comment directives and Mustache-style expressions. Everything below is available in **@b4moss/hyogen-md@0.14.0**.
 
 ## Two layers
 
 | Layer | Where | What you can write |
 |-------|-------|-------------------|
-| **Expressions** | `{{ }}` / `{{{ }}}` in Markdown body | Expressions only — no statements |
+| **Expressions** | `{{ }}` / `{{{ }}}` in Markdown body; `${}` inside code fences | Expressions only — no statements |
 | **Logic blocks** | `<!-- @hg … @endhg -->` or `<!--@@ … @@-->` | Declarations, includes, `if` / `each`, and more |
 
 ## Topics
@@ -19,7 +19,7 @@ hyogen.md extends Markdown with HTML-comment directives and Mustache-style expre
 ### Data and output
 
 - [Front matter](/en/syntax/front-matter) — YAML metadata and component props
-- [Expressions](/en/syntax/expressions) — `{{ }}`, defaults, ternary
+- [Expressions](/en/syntax/expressions) — `{{ }}`, defaults, ternary, fence `${}`
 - [Methods](/en/syntax/methods) — `.toLocaleString`, allowed property `.length`
 
 ### Blocks and directives

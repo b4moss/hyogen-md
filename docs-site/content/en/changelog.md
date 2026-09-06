@@ -20,11 +20,11 @@ This documentation site uses a separate **docs track** that does not bump the li
 
 | Track | Example | What changes |
 |-------|---------|--------------|
-| Library | `0.13.0` | `@b4moss/hyogen-md` on npm |
+| Library | `0.14.0` | `@b4moss/hyogen-md` on npm |
 | Docs site | `0.10.0-docs.8` | Nuxt site, Playground integration, content pages |
 
-Docs milestones (`docs.5` … `docs.8`) are recorded in the GitHub changelog under tags like `0.10.0-docs.5`. Library features after that (including **0.11.0**–**0.13.0**) ship on the same site when content is updated.
+Docs milestones (`docs.5` … `docs.8`) are recorded in the GitHub changelog under tags like `0.10.0-docs.5`. Library features after that (including **0.11.0**–**0.14.0**) ship on the same site when content is updated.
 
 ## Current library version
 
-**@b4moss/hyogen-md@0.13.0** — the API, CLI, and syntax documented here match this release.
+**@b4moss/hyogen-md@0.14.0** — the API, CLI, and syntax documented here match this release.
