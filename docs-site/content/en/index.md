@@ -33,6 +33,7 @@ Install the package and run your first CLI, `renderServer`, or `renderClient` ex
 
 - [Front matter](/en/syntax/front-matter), [Expressions](/en/syntax/expressions), [Hyogen blocks](/en/syntax/hg-blocks)
 - [Includes & components](/en/syntax/includes), [Control flow](/en/syntax/control-flow), [TOC helper](/en/syntax/toc)
+- Fence `${}` interpolation — see [Expressions](/en/syntax/expressions)
 - [Paths & security](/en/syntax/paths-and-security)
 
 ### [Playground](/playground)

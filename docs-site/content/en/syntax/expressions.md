@@ -49,6 +49,25 @@ Registered components are called inside expressions:
 
 See [Includes and components](/en/syntax/includes).
 
+## Fence `${}` interpolation
+
+Inside fenced code blocks (`` ``` `` / `~~~`), `${expr}` expands like a JavaScript template literal:
+
+````markdown
+```markdown
+# ${title}
+```
+````
+
+Rules:
+
+- Same allowed expressions as `${}` inside `@hg` backtick strings (`.toLocaleString` / `.length` OK; **no** component calls)
+- Outside fences, `${…}` stays literal
+- Escape with `\${`
+- Separate from Mustache `{{ }}` / `{{{ }}}` (those still expand inside fences)
+
+See also [Hyogen blocks](/en/syntax/hg-blocks).
+
 ## What you cannot write
 
 - Statements (`const`, `if`, loops)

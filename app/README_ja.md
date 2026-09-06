@@ -140,7 +140,7 @@ make dev-docs
 ## ステータス
 
 **0.x** です。`1.0.0` まで API・出力は変わりえます。  
-公開済み: **`@b4moss/hyogen-md@0.13.0`**（git tag `v0.13.0`）。
+公開済み: **`@b4moss/hyogen-md@0.14.0`**（git tag `v0.14.0`）。
 
 Playground UX はドキュメントサイトに含まれ、**npm の tarball には入りません**。
 
