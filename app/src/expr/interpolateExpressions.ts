@@ -2,6 +2,7 @@ import { createHyogenError } from "../errors/createError.js";
 import type { InterpolateExpressionsOptions } from "../types.js";
 import { evaluateExpression } from "./evaluateExpression.js";
 import { parseExpression } from "./parseExpression.js";
+import { findPrecedingHeadingLevel, shiftMarkdownHeadings } from "../markdown/shiftHeadings.js";
 
 export async function interpolateExpressions(
   source: string,
@@ -58,7 +59,12 @@ export async function interpolateExpressions(
       path,
       parentContext: options.parentContext ?? context,
     });
-    result += value === undefined || value === null ? "" : String(value);
+    let textValue = value === undefined || value === null ? "" : String(value);
+    if (node.type === "call" && textValue.length > 0) {
+      const headingShift = findPrecedingHeadingLevel(result);
+      textValue = shiftMarkdownHeadings(textValue, headingShift);
+    }
+    result += textValue;
     i = close + closeToken.length;
   }
 

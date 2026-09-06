@@ -86,4 +86,274 @@ describe("parseExpression", () => {
       },
     );
   });
+
+  it("parses the null and undefined literals", () => {
+    assert.deepEqual(parseExpression("null"), { type: "literal", value: null });
+    assert.deepEqual(parseExpression("undefined"), {
+      type: "literal",
+      value: undefined,
+    });
+  });
+
+  it("parses an empty object literal", () => {
+    const node = parseExpression("{}");
+    assert.deepEqual(node, { type: "literal", value: {} });
+  });
+
+  it("parses an empty array literal", () => {
+    const node = parseExpression("[]");
+    assert.deepEqual(node, { type: "literal", value: [] });
+  });
+
+  it("parses object literals with a trailing comma", () => {
+    const node = parseExpression('{ a: 1, b: 2, }');
+    assert.deepEqual(node, {
+      type: "literal",
+      value: { a: 1, b: 2 },
+    });
+  });
+
+  it("parses array literals with a trailing comma", () => {
+    const node = parseExpression("[1, 2, 3,]");
+    assert.deepEqual(node, { type: "literal", value: [1, 2, 3] });
+  });
+
+  it("parses nested object and array literals", () => {
+    const node = parseExpression('{ list: [1, "two", true, null], nested: { x: 1 } }');
+    assert.deepEqual(node, {
+      type: "literal",
+      value: { list: [1, "two", true, null], nested: { x: 1 } },
+    });
+  });
+
+  it("parses toLocaleString() with multiple literal arguments", () => {
+    const node = parseExpression(
+      "n.toLocaleString('en-US', { minimumFractionDigits: 2 })",
+    );
+    assert.equal(node.type, "method");
+    if (node.type === "method") {
+      assert.deepEqual(node.args, ["en-US", { minimumFractionDigits: 2 }]);
+    }
+  });
+
+  it("parses toLocaleString() with no arguments", () => {
+    const node = parseExpression("n.toLocaleString()");
+    assert.equal(node.type, "method");
+    if (node.type === "method") {
+      assert.deepEqual(node.args, []);
+    }
+  });
+
+  it("throws parse_error for trailing tokens after a full expression", () => {
+    assert.throws(
+      () => parseExpression("1 + 2 3"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for a member access missing the property name", () => {
+    assert.throws(
+      () => parseExpression("a."),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an object literal missing a closing brace", () => {
+    assert.throws(
+      () => parseExpression("{ a: 1"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an object literal with a missing colon", () => {
+    assert.throws(
+      () => parseExpression("{ a 1 }"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an object literal with an invalid key", () => {
+    assert.throws(
+      () => parseExpression("{ 1: 2 }"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an object literal with a non-literal value", () => {
+    assert.throws(
+      () => parseExpression("{ a: b }"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an object literal missing ',' or '}'", () => {
+    assert.throws(
+      () => parseExpression("{ a: 1 b: 2 }"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an array literal missing a closing bracket", () => {
+    assert.throws(
+      () => parseExpression("[1, 2"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an array literal missing ',' or ']'", () => {
+    assert.throws(
+      () => parseExpression("[1 2]"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an invalid number literal", () => {
+    assert.throws(
+      () => parseExpression("1.2.3"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an unterminated string literal", () => {
+    assert.throws(
+      () => parseExpression('"unterminated'),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for a string with an unterminated escape", () => {
+    assert.throws(
+      () => parseExpression('"abc\\'),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for call arguments missing '{'", () => {
+    assert.throws(
+      () => parseExpression("greet(1)"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for call arguments with a missing property name", () => {
+    assert.throws(
+      () => parseExpression("greet({ : 1 })"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for call arguments with a missing colon", () => {
+    assert.throws(
+      () => parseExpression("greet({ name 1 })"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for call arguments missing ',' or '}'", () => {
+    assert.throws(
+      () => parseExpression("greet({ a: 1 b: 2 })"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for call arguments missing a closing ')'", () => {
+    assert.throws(
+      () => parseExpression("greet({}"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("parses call with empty argument list", () => {
+    const node = parseExpression("greet()");
+    assert.equal(node.type, "call");
+    if (node.type === "call") {
+      assert.deepEqual(node.args, {});
+    }
+  });
+
+  it("throws parse_error for an unterminated template literal escape", () => {
+    assert.throws(
+      () => parseExpression('`abc\\'),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an unterminated template expression", () => {
+    assert.throws(
+      () => parseExpression("`${a"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("parses template literals containing a nested string with braces", () => {
+    const node = parseExpression('`${a === "}"}`');
+    assert.equal(node.type, "template");
+  });
+
+  it("throws parse_error for a negative number missing digits", () => {
+    assert.throws(
+      () => parseExpression("1 - -"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
 });

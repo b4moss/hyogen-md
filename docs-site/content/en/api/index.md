@@ -5,7 +5,7 @@ description: Public API for @b4moss/hyogen-md — rendering, build, loaders, and
 
 # API Reference
 
-Public APIs for **@b4moss/hyogen-md**. Data-source APIs are available in **0.11.0**.
+Public APIs for **@b4moss/hyogen-md**. Data-source APIs are available since **0.12.0**. CLI / `defineConfig` since **0.13.0**.
 
 ## Rendering
 
@@ -14,6 +14,12 @@ Public APIs for **@b4moss/hyogen-md**. Data-source APIs are available in **0.11.
 | [`renderServer`](/en/api/render-server) | `@b4moss/hyogen-md` | Server-side render (SSR / SSG). Accepts `serverContext`. |
 | [`renderClient`](/en/api/render-client) | `@b4moss/hyogen-md/client` | Client-side render (CSR). Requires a custom `loader`. |
 | [`build`](/en/api/build) | `@b4moss/hyogen-md` | Batch SSG — glob input, walk dependencies, write `outDir`. |
+
+## Config (CLI)
+
+| Export | Package | Description |
+|--------|---------|-------------|
+| `defineConfig` | `@b4moss/hyogen-md/config` | Typed helper for `hyogen.config.(js|ts)` — see [CLI config](/en/cli/config) |
 
 ## Data sources
 
@@ -55,6 +61,9 @@ import {
   createFsLoader,
   formatDiagnosticLog,
 } from '@b4moss/hyogen-md'
+
+// Config (CLI)
+import { defineConfig } from '@b4moss/hyogen-md/config'
 
 // Browser (client-safe subset)
 import { renderClient, formatDiagnosticLog } from '@b4moss/hyogen-md/client'

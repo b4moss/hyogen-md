@@ -9,16 +9,32 @@ description: Install @b4moss/hyogen-md and render your first template.
 npm install @b4moss/hyogen-md
 ```
 
-The package ships two entry points:
+Requires **Node.js >= 24**.
+
+The package ships these entry points:
 
 | Entry | Use case |
 |-------|----------|
-| `@b4moss/hyogen-md` | Node — SSR, SSG, and server rendering (`renderServer`, `build`, loaders) |
-| `@b4moss/hyogen-md/client` | Browser — client-side rendering (`renderClient`) |
+| `@b4moss/hyogen-md` | Node — SSR, SSG, loaders, `build` |
+| `@b4moss/hyogen-md/client` | Browser — `renderClient` |
+| `@b4moss/hyogen-md/config` | CLI config — `defineConfig` |
+| `hyogen-md` (bin) | CLI — `create` / `dev` / `build` |
+
+## Quick start (CLI)
+
+```bash
+npx hyogen-md create my-site
+cd my-site
+npm install
+npm run dev    # http://127.0.0.1:4173
+npm run build  # write Markdown to ./out
+```
+
+See the [CLI guide](/en/cli) for `hyogen.config`, flags, and `dev` vs Playground.
 
 ## Quick start (server)
 
-Use `renderServer` when you run on Node (SSR or SSG). A default file-system loader is used when you omit `options.loader`.
+Use `renderServer` on Node (SSR or SSG). A default file-system loader is used when you omit `options.loader`.
 
 ```ts
 import { renderServer } from '@b4moss/hyogen-md'
@@ -74,6 +90,7 @@ const { markdown } = await renderClient(
 
 ## Next steps
 
+- [CLI](/en/cli) — create / config / dev / build
 - [API reference](/en/api) — `renderServer`, `renderClient`, `build`, loaders, diagnostics
 - [Template syntax](/en/syntax) — `{{ }}`, `@hg` blocks, includes, components
 - [Playground](/playground) — try templates in the browser

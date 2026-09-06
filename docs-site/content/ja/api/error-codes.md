@@ -19,7 +19,6 @@ description: hyogen-md のエラー・警告コード一覧
 | `alias_collision` | `as` 名が既存の変数・別の `as` と衝突 |
 | `forbidden_property_access` | `__proto__` など危険キーへのアクセス |
 | `parse_error` | ホワイトリスト外の構文・不正な DSL |
-| `component_multiline_output` | component の戻り値が複数行（単一行のみ許可） |
 | `server_context_on_client` | `renderClient` に `serverContext` を渡した |
 | `data_sources_on_client` | `renderClient` に `dataSources` を渡した |
 | `data_source_too_large` | データソースファイルが 5MB を超える |

@@ -79,14 +79,5 @@ export async function renderComponent(
     constrainToRoot: options.constrainToRoot,
   });
 
-  const output = markdown.trim();
-  if (output.includes("\n")) {
-    throw createHyogenError({
-      code: "component_multiline_output",
-      path: componentPath,
-      details: { alias: options.alias },
-    });
-  }
-
-  return output;
+  return markdown.trim();
 }

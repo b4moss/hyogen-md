@@ -82,9 +82,12 @@ app/test/{モジュール}/{関数・メソッド名}.integration.test.ts … �
 
 ```bash
 make help          # ターゲット一覧
+make install-all   # app + docs-site + highlighter
 make test          # app テスト (vitest run)
 make test-pg       # docs-site 内 Playground テスト
-make test-all      # app + Playground
+make test-hl       # highlighter パッケージ テスト
+make test-all      # app + Playground + highlighter
+make generate-hl   # highlighter DSL から生成物を再生成
 make test-watch    # app 監視モード
 make build         # app/dist（minify あり）
 make size          # dist / gzip / npm pack 容量

@@ -64,8 +64,8 @@ describe("createNodeLoader", () => {
     );
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string) => {
-        assert.equal(url, "https://example.com/remote-body.md");
+      vi.fn(async (url: string | URL) => {
+        assert.equal(String(url), "https://example.com/remote-body.md");
         return {
           ok: true,
           status: 200,
@@ -142,8 +142,8 @@ describe("remote path resolution bypass", () => {
     const calls: string[] = [];
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string) => {
-        calls.push(url);
+      vi.fn(async (url: string | URL) => {
+        calls.push(String(url));
         return { ok: true, status: 200, text: async () => "R" };
       }),
     );
@@ -159,8 +159,8 @@ describe("remote path resolution bypass", () => {
     const calls: string[] = [];
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string) => {
-        calls.push(url);
+      vi.fn(async (url: string | URL) => {
+        calls.push(String(url));
         return {
           ok: true,
           status: 200,
@@ -186,8 +186,8 @@ describe("remote path resolution bypass", () => {
     const calls: string[] = [];
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (url: string) => {
-        calls.push(url);
+      vi.fn(async (url: string | URL) => {
+        calls.push(String(url));
         return {
           ok: true,
           status: 200,

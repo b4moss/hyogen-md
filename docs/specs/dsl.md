@@ -95,7 +95,7 @@ Pug 風。`each` と同型。**hyogen ブロックで開閉し、間に Markdown
 - 分岐内に `each` や入れ子 `if` を書いてよい（`if` / `each` の構造ネスト合計は最大 20。詳細は [logic.md](./logic.md)）
 - 空の分岐（本文なし）も可
 - 未対の `if`・余分な `endif` 等は **構文エラー**（`parse_error`）
-- 展開後、`if` / `else if` / `else` / `endif` の hyogen コメントは strip される（step 7）
+- 展開後、`if` / `else if` / `else` / `endif` の hyogen コメントは strip される（[pipeline.md](./pipeline.md) step 9）
 
 input:
 
@@ -408,8 +408,9 @@ JS と同じ。あってもなくても可。
 
 ## コードフェンス内の HTML コメント
 
-コードフェンス（`` ``` ``）内に現れる hyogen ブロック（`@hg` / `@@` いずれも）は **無視する**。  
-フェンス内は生テキストとして扱い、実行・展開しない。
+コードフェンス（`` ``` `` / `~~~`）内に現れる hyogen ブロック（`@hg` / `@@` いずれも）は **無視する**（実行しない）。
+
+一方、フェンス本文中の **`${expr}` は展開する**（[variables.md](./variables.md)「コードフェンス内の `${}`」）。`{{ }}` / `{{{ }}}` も従来どおり展開する。フェンス外の `${…}` はリテラルのまま。
 
 ---
 
@@ -452,7 +453,7 @@ JS と同じ。あってもなくても可。
 ## 後続で詰める項目
 
 - 許可メソッドの追加（都度 spec 更新。現行の許可メソッドは **`.toLocaleString(...)` のみ**。許可プロパティ **`.length`** は実装済み）
-  - **候補メモ（未実装）**: `.slice` など配列操作系（[v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4)）
+  - **候補メモ（未実装）**: `.slice` など配列操作系（[Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2)）
 - ビルトイン関数（**当面なし**。必要なら別マイルストーンで spec 追加）
 - mixin（保留。必要時に再検討）
 - データソース読込は **API 側のみ**（DSL の `import` / `require` は引き続き禁止）。詳細は [api.md](./api.md)

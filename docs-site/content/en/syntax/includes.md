@@ -58,7 +58,7 @@ component city-item.md as cityItem
 |------|--------|
 | Registration | `component <path> as <name>` in `@hg` |
 | Call site | `{{ name({ ... }) }}` only |
-| Output | Must be **single line** — multiline output errors |
+| Output | **Multiline allowed** |
 | Alias scope | Visible in the defining file and included children |
 | Alias collision | Error — choose unique names |
 | extend inside component | Skipped with `extend_in_component` warning |

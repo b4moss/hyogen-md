@@ -96,8 +96,11 @@ describe("renderServer / TOC integration (v0.12)", () => {
       undefined,
       { root },
     );
+    // toc(3): after hierarchy shift, ##→### stays in TOC; ###→#### is excluded.
     assert.match(withInclude.markdown, /\[Included Section\]/);
-    assert.match(withInclude.markdown, /\[Included Sub\]/);
+    assert.doesNotMatch(withInclude.markdown, /\[Included Sub\]/);
+    assert.match(withInclude.markdown, /^### Included Section$/m);
+    assert.match(withInclude.markdown, /^#### Included Sub$/m);
 
     const withIf = await renderServer(
       { path: path.join(root, "pages/with-if.md") },

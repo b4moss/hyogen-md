@@ -15,7 +15,7 @@ extend ./layouts/base.md
 
 const title = "Welcome"
 const showTips = true
-const features = ["extend", "include", "component", "if", "each"]
+const features = ["extend", "include", "component", "if", "each", "fence \${}"]
 @endhg
 -->
 
@@ -62,6 +62,14 @@ each name in features
 endeach
 @endhg
 -->
+
+## Fence interpolation
+
+Outside fence (literal): \${title}
+
+\`\`\`markdown
+# \${title}
+\`\`\`
 
 <!--
 @hg

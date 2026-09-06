@@ -1,8 +1,20 @@
 # Changelog
 
-Library vs Playground-only changes are labeled. Latest formal release: **`v0.12.0`**.
+Library vs Playground-only changes are labeled. Latest formal release: **`v0.14.0`**.
 
 Japanese: [changelog_ja.md](./changelog_ja.md)
+
+### 0.14.0 — Library / Playground
+
+- **Fence `${}` interpolation** — expand `${expr}` inside `` ``` `` / `~~~` fences (same expression rules as `@hg` template literals). Outside fences, `${…}` stays literal; `\${` escapes. Mustache `{{ }}` unchanged (Issue #125)
+- **Highlighter DSL** — repo-local `highlighter/` package (not published). Common DSL → TextMate / Prism / highlight.js / CodeMirror 6 / Monaco. Playground uses strict hyogen tokens (no JS overlay) (Issue #111)
+- **Coverage ≥90%** — Vitest v8 line/statement thresholds (Issue #34)
+- **Docs site** — syntax pages for fence `${}`; Playground demo seed includes fence interpolation
+
+### 0.13.0 — Library
+
+- **CLI** — `hyogen-md create` / `dev` / `build` with `hyogen.config.(js|ts)` and `defineConfig` (`@b4moss/hyogen-md/config`). Writing preview server with file tree + HMR; `dev` does not write `outDir` (Issues #30 / #35)
+- **Docs site** — CLI pages (EN/JA); install quick start via CLI
 
 ### 0.12.0 — Library
 

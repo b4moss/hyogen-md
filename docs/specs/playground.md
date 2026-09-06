@@ -11,10 +11,11 @@
 
 | 項目 | 方針 |
 |------|------|
-| コード | `docs-site/components/playground/`（Nuxt ページ `/playground`） |
+| コード | `docs-site/app/components/playground/`（Nuxt ページ `/playground`） |
 | テスト | `docs-site/test/playground/` |
 | フレームワーク | Vue + TypeScript、CodeMirror 6 |
 | hyogen-md | 開発時 alias で `app/` ソースを参照 |
+| ハイライト定義 | `highlighter/` 生成物＋`classifyHyogenTokens`（[highlighter.md](./highlighter.md)） |
 | 単独 `playground/` | **削除済み**（v0.10.0-docs.6 でサイト内統合） |
 
 ---
@@ -38,7 +39,7 @@
 | ファイラー | 左ペイン。`src` / `outDir` を区別 |
 | ファイル操作 | アクションメニュー（⋯）で create / rename / delete |
 | ペイン幅 | ファイラー／エディタ／プレビュー間をドラッグ可変（最小幅あり。幅は `localStorage` 保存可） |
-| シンタックスハイライト | `@hg` … `@endhg` と `@@` 内（CM6 のみ。コードフェンス内は対象外 → [dsl.md](./dsl.md)） |
+| シンタックスハイライト | `@hg` … `@endhg` と `@@` 内の**厳密 hyogen トークン**（CM6。JS 近似なし。フェンス内は対象外 → [dsl.md](./dsl.md) / [highlighter.md](./highlighter.md)） |
 | テーマ | dark / light / system。サイトと共有（[docs-site.md](./docs-site.md)） |
 | プレビュー | 展開後 Markdown と HTML 見た目の両方 |
 | HTML 化 | Playground 側（hyogen-md は Markdown のみ） |
@@ -52,7 +53,7 @@
 
 ## 初期シード
 
-extend / if / each / component 等を触れる小さなデモプロジェクト。
+extend / if / each / component に加え、**コードフェンス内 `${}`**（フェンス外はリテラル対比）を触れる小さなデモプロジェクト。
 
 ---
 
@@ -60,7 +61,7 @@ extend / if / each / component 等を触れる小さなデモプロジェクト�
 
 - 純ロジック（仮想 FS、loader、写像、永続化／Reset）: 単体テスト
 - UI: 手動確認
-- テスト仕様: [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)
+- テスト仕様: [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)、[v0.14.0.md](../../app/test/specs/v0.14.0.md)
 
 ----
 

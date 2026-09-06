@@ -13,7 +13,14 @@ Write templates in extended Markdown (hyogen.md): YAML front matter, `{{ }}` exp
 
 ### [Install](/en/install)
 
-Install the package and run your first `renderServer` or `renderClient` example.
+Install the package and run your first CLI, `renderServer`, or `renderClient` example.
+
+### [CLI](/en/cli)
+
+- [`create`](/en/cli/create) — scaffold a project
+- [`hyogen.config`](/en/cli/config) — `defineConfig`
+- [`dev`](/en/cli/dev) — writing preview + HMR
+- [`build`](/en/cli/build) — write Markdown to `outDir`
 
 ### [API reference](/en/api)
 
@@ -26,6 +33,7 @@ Install the package and run your first `renderServer` or `renderClient` example.
 
 - [Front matter](/en/syntax/front-matter), [Expressions](/en/syntax/expressions), [Hyogen blocks](/en/syntax/hg-blocks)
 - [Includes & components](/en/syntax/includes), [Control flow](/en/syntax/control-flow), [TOC helper](/en/syntax/toc)
+- Fence `${}` interpolation — see [Expressions](/en/syntax/expressions)
 - [Paths & security](/en/syntax/paths-and-security)
 
 ### [Playground](/playground)

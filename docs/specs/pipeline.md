@@ -42,15 +42,18 @@ TypeScript で実装し、npm パッケージとして配布する。
 4. `include` の展開
 5. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）
 6. 本文の `{{ }}` 評価（component 呼び出し含む）
-7. **`toc` ヘルパの展開**（[toc.md](./toc.md)）
-8. hyogen コメントの strip（オプション）
-9. front matter の strip（デフォルト）
+7. **コードフェンス内の `${}` 展開**（[variables.md](./variables.md)。`each` 反復本体でも同様）
+8. **`toc` ヘルパの展開**（[toc.md](./toc.md)）
+9. hyogen コメントの strip（オプション）
+10. front matter の strip（デフォルト）
 
 補足:
 
 - 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行。step 5 の `if` / `each` 展開とは別）
 - **`if` / `each` が先**、その本体中および分岐外の `{{ }}` が後。**`{{ }}` の中で `if` / `each` は書けない**
+- フェンス内 `${}` は step 6 の直後（TOC の前）。フェンス外の `${…}` は触らない
 - 未展開ソースに `{{ }}` が残るプレビューは許容する（Markdown 互換の範囲）
+- **include / component 挿入時は直前見出しに合わせて見出しレベルをシフトする**（[templating.md](./templating.md)「見出し階層適合」）
 
 ## 出力
 

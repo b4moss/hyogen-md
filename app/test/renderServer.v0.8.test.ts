@@ -43,7 +43,7 @@ describe("renderServer v0.8 each + component", () => {
     assert.doesNotMatch(result.markdown, /\(Kansai\)/);
   });
 
-  it("throws component_multiline_output for multiline component", async () => {
+  it("allows multiline component output", async () => {
     const source = [
       "<!--",
       "@hg",
@@ -53,16 +53,11 @@ describe("renderServer v0.8 each + component", () => {
       "{{ bad({}) }}",
     ].join("\n");
 
-    await assert.rejects(
-      () =>
-        renderServer(source, undefined, {
-          root: docRootFixtureDir,
-          path: v02Path("doc-root/pages/index.md"),
-        }),
-      (error: unknown) => {
-        assertHyogenError(error, "component_multiline_output");
-        return true;
-      },
-    );
+    const result = await renderServer(source, undefined, {
+      root: docRootFixtureDir,
+      path: v02Path("doc-root/pages/index.md"),
+    });
+    assert.match(result.markdown, /Line one/);
+    assert.match(result.markdown, /Line two/);
   });
 });

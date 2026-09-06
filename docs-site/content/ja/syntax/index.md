@@ -12,7 +12,7 @@ hyogen-md のテンプレート構文の索引です。制御構文は HTML コ�
 | 領域 | 書き方 | できること |
 |------|--------|-----------|
 | hyogen ブロック | `@hg` … `@endhg` または `@@` … `@@` | 宣言、制御構造、include など |
-| 式の展開 | `{{ }}` / `{{{ }}}` | 変数参照・式の評価（文は書けない） |
+| 式の展開 | `{{ }}` / `{{{ }}}`、フェンス内 `${}` | 変数参照・式の評価（文は書けない） |
 | メタデータ | YAML front matter | ドキュメントのメタデータ、component の props 契約 |
 
 ## 構文リファレンス
@@ -20,7 +20,7 @@ hyogen-md のテンプレート構文の索引です。制御構文は HTML コ�
 | トピック | 説明 |
 |---------|------|
 | [Front matter](/ja/syntax/front-matter) | YAML メタデータと props 契約 |
-| [式と変数展開](/ja/syntax/expressions) | `{{ }}`、デフォルト値、三項演算子 |
+| [式と変数展開](/ja/syntax/expressions) | `{{ }}`、デフォルト値、三項演算子、フェンス内 `${}` |
 | [hyogen ブロック](/ja/syntax/hg-blocks) | `@hg` / `@@` の書き方 |
 | [宣言と代入](/ja/syntax/declarations) | `const` / `let` と再代入 |
 | [include と component](/ja/syntax/includes) | ファイルの取り込みと再利用 |

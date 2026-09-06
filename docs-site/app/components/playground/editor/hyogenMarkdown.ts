@@ -6,29 +6,25 @@ import {
   type ViewUpdate,
 } from "@codemirror/view";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { javascriptLanguage } from "@codemirror/lang-javascript";
-import { LRLanguage } from "@codemirror/language";
 import { playgroundSyntaxHighlighting } from "./playgroundHighlightStyle";
-import { parseMixed } from "@lezer/common";
-import type { LRParser } from "@lezer/lr";
 import type { Extension } from "@codemirror/state";
 import {
   findHyogenDirectiveMarks,
-  findHyogenRegions,
   findMustacheRegions,
 } from "./findHyogenRegions";
+import { hyogenBodyHighlight } from "./hyogenBodyHighlight";
 
 const hyogenDirectiveMark = Decoration.mark({ class: "cm-hg-directive" });
 const mustacheMark = Decoration.mark({ class: "cm-hg-mustache" });
 
-function buildHyogenDirectiveDecorations(docText: string): DecorationSet {
+function buildHyogenDirectiveDecoration(docText: string): DecorationSet {
   const ranges = findHyogenDirectiveMarks(docText).map((mark) =>
     hyogenDirectiveMark.range(mark.from, mark.to),
   );
   return Decoration.set(ranges, true);
 }
 
-function buildMustacheDecorations(docText: string): DecorationSet {
+function buildMustacheDecoration(docText: string): DecorationSet {
   const ranges = findMustacheRegions(docText).map((region) =>
     mustacheMark.range(region.from, region.to),
   );
@@ -40,14 +36,14 @@ const hyogenDirectiveHighlight = ViewPlugin.fromClass(
     decorations: DecorationSet;
 
     constructor(view: EditorView) {
-      this.decorations = buildHyogenDirectiveDecorations(
+      this.decorations = buildHyogenDirectiveDecoration(
         view.state.doc.toString(),
       );
     }
 
     update(update: ViewUpdate) {
       if (update.docChanged) {
-        this.decorations = buildHyogenDirectiveDecorations(
+        this.decorations = buildHyogenDirectiveDecoration(
           update.state.doc.toString(),
         );
       }
@@ -61,12 +57,12 @@ const mustacheHighlight = ViewPlugin.fromClass(
     decorations: DecorationSet;
 
     constructor(view: EditorView) {
-      this.decorations = buildMustacheDecorations(view.state.doc.toString());
+      this.decorations = buildMustacheDecoration(view.state.doc.toString());
     }
 
     update(update: ViewUpdate) {
       if (update.docChanged) {
-        this.decorations = buildMustacheDecorations(
+        this.decorations = buildMustacheDecoration(
           update.state.doc.toString(),
         );
       }
@@ -78,7 +74,8 @@ const mustacheHighlight = ViewPlugin.fromClass(
 const hyogenDirectiveTheme = EditorView.baseTheme({
   ".cm-hg-directive": {
     color: "var(--pg-hg-directive)",
-    backgroundColor: "color-mix(in srgb, var(--pg-hg-directive) 12%, transparent)",
+    backgroundColor:
+      "color-mix(in srgb, var(--pg-hg-directive) 12%, transparent)",
     borderRadius: "2px",
   },
 });
@@ -86,40 +83,21 @@ const hyogenDirectiveTheme = EditorView.baseTheme({
 const mustacheTheme = EditorView.baseTheme({
   ".cm-hg-mustache": {
     color: "var(--pg-hg-mustache)",
-    backgroundColor: "color-mix(in srgb, var(--pg-hg-mustache) 12%, transparent)",
+    backgroundColor:
+      "color-mix(in srgb, var(--pg-hg-mustache) 12%, transparent)",
     borderRadius: "2px",
   },
 });
 
 /**
- * Markdown + nested JS highlight for fence-outside `@hg`/`@@` regions,
- * plus light `{{ }}` decorations.
+ * Markdown + strict hyogen token highlight for fence-outside `@hg`/`@@`
+ * regions and mustache inners (no JavaScript language overlay).
  */
 export function hyogenMarkdown(): Extension {
-  const mixedParser = (markdownLanguage.parser as LRParser).configure({
-    wrap: parseMixed((node, input) => {
-      if (!node.type.isTop) return null;
-      const text = input.read(node.from, node.to);
-      const regions = findHyogenRegions(text);
-      if (!regions.length) return null;
-      return {
-        parser: javascriptLanguage.parser,
-        overlay: regions.map((r) => ({
-          from: node.from + r.from,
-          to: node.from + r.to,
-        })),
-      };
-    }),
-  });
-
-  const mixedMarkdown = LRLanguage.define({
-    name: "hyogenMarkdown",
-    parser: mixedParser,
-  });
-
   return [
-    markdown({ base: mixedMarkdown }),
+    markdown({ base: markdownLanguage }),
     playgroundSyntaxHighlighting(),
+    hyogenBodyHighlight(),
     hyogenDirectiveHighlight,
     hyogenDirectiveTheme,
     mustacheHighlight,

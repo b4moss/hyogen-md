@@ -1,8 +1,20 @@
 # Changelog
 
-ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.12.0`** です。
+ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.14.0`** です。
 
 English: [changelog.md](./changelog.md)
+
+### 0.14.0 — ライブラリ / Playground
+
+- **フェンス内 `${}`** — コードフェンス（`` ``` `` / `~~~`）内で `${expr}` を展開（`@hg` テンプレートリテラルと同規則）。フェンス外の `${…}` はリテラル。`\${` でエスケープ。`{{ }}` は従来どおり（Issue #125）
+- **ハイライター DSL** — リポジトリ内 `highlighter/`（npm 非公開）。共通 DSL → TextMate / Prism / highlight.js / CodeMirror 6 / Monaco。Playground は厳密 hyogen トークン（JS 近似廃止）（Issue #111）
+- **coverage ≥90%** — Vitest v8 の lines / statements 閾値（Issue #34）
+- **ドキュメントサイト** — フェンス `${}` の構文ページ。Playground デモシードにフェンス展開例を追加
+
+### 0.13.0 — ライブラリ
+
+- **CLI** — `hyogen-md create` / `dev` / `build`。`hyogen.config.(js|ts)` と `defineConfig`（`@b4moss/hyogen-md/config`）。ファイルツリー + HMR の執筆プレビュー。`dev` は `outDir` に書き出さない（Issue #30 / #35）
+- **ドキュメントサイト** — CLI ページ（英日）。インストールの CLI クイックスタート
 
 ### 0.12.0 — ライブラリ
 

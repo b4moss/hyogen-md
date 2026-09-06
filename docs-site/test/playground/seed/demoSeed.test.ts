@@ -9,7 +9,7 @@ import {
 import { createVirtualLoader } from "../../../components/playground/render/createVirtualLoader";
 
 describe("demoSeed", () => {
-  it("includes entry, include, component, extend/block, if/each", () => {
+  it("includes entry, include, component, extend/block, if/each, fence ${}", () => {
     const fs = new VirtualFs();
     applyDemoSeed(fs);
 
@@ -19,6 +19,9 @@ describe("demoSeed", () => {
     expect(index).toMatch(/component\s+\.\/components\/badge\.md/);
     expect(index).toMatch(/\bif\b/);
     expect(index).toMatch(/\beach\b/);
+    expect(index).toMatch(/Fence interpolation/);
+    expect(index).toContain("```markdown\n# ${title}\n```");
+    expect(index).toContain("Outside fence (literal): ${title}");
     expect(fs.exists("/src/layouts/base.md")).toBe(true);
     expect(fs.exists("/src/partials/intro.md")).toBe(true);
     expect(fs.exists("/src/components/badge.md")).toBe(true);
@@ -39,5 +42,7 @@ describe("demoSeed", () => {
     expect(result.markdown).toContain("hyogen playground** demo seed");
     expect(result.markdown).toContain("`extend`");
     expect(result.markdown).toContain("region: Kansai");
+    expect(result.markdown).toContain("Outside fence (literal): ${title}");
+    expect(result.markdown).toContain("```markdown\n# Welcome\n```");
   });
 });

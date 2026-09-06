@@ -19,12 +19,14 @@
 
 ---
 
-## コンテンツ（v0.12.0 時点）
+## コンテンツ（v0.14.0 時点）
 
-正は [specs/](./) と [api.md](./api.md)。サイトは利用者向けの説明・例・索引。
+正は [specs/](./) と [api.md](./api.md) / [cli.md](./cli.md) / [highlighter.md](./highlighter.md)。サイトは利用者向けの説明・例・索引。
 
-- **API**: `renderServer` / `renderClient` / `build` / `dataSources`・`loadDataSources` / loader / 診断・型・エラーコード
-- **構文**: front matter、変数、`@hg` / `@@`、制御構造、include / component / extend、許可メソッド（`.toLocaleString`）・許可プロパティ（`.length`）、`echo`、TOC ヘルパ（`toc` / `toc(N)`）、パス・セキュリティ注意
+- **CLI**: `create` / `hyogen.config`（`defineConfig`） / `dev` / `build`
+- **API**: `renderServer` / `renderClient` / `build` / `dataSources`・`loadDataSources` / loader / 診断・型・エラーコード / `@b4moss/hyogen-md/config`
+- **構文**: front matter、変数、`@hg` / `@@`、制御構造、include / component / extend、許可メソッド（`.toLocaleString`）・許可プロパティ（`.length`）、`echo`、TOC ヘルパ（`toc` / `toc(N)`）、コードフェンス内 `${}`、パス・セキュリティ注意
+- **Playground**: 厳密 hyogen ハイライト（[highlighter.md](./highlighter.md)）、フェンス `${}` デモシード
 - **その他**: Install、Changelog 導線、GitHub / npm リンク
 
 運用フローの正: [repository.md](./repository.md)。

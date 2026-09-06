@@ -98,7 +98,7 @@ describe("v0.2 integration scenarios", () => {
     );
   });
 
-  it("throws component_multiline_output for multiline component", async () => {
+  it("allows multiline component output", async () => {
     const source = [
       "<!--",
       "@hg",
@@ -108,17 +108,12 @@ describe("v0.2 integration scenarios", () => {
       "{{ bad({}) }}",
     ].join("\n");
 
-    await assert.rejects(
-      () =>
-        renderServer(source, undefined, {
-          root: docRootFixtureDir,
-          path: v02Path("doc-root/pages/index.md"),
-        }),
-      (error: unknown) => {
-        assertHyogenError(error, "component_multiline_output");
-        return true;
-      },
-    );
+    const result = await renderServer(source, undefined, {
+      root: docRootFixtureDir,
+      path: v02Path("doc-root/pages/index.md"),
+    });
+    assert.match(result.markdown, /Line one/);
+    assert.match(result.markdown, /Line two/);
   });
 
   it("throws duplicate_component_alias", async () => {

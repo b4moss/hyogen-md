@@ -11,6 +11,27 @@ npm install @b4moss/hyogen-md
 
 **Node.js >= 24** が必要です。
 
+次のエントリを提供します。
+
+| エントリ | 用途 |
+|----------|------|
+| `@b4moss/hyogen-md` | Node — SSR / SSG / loader / `build` |
+| `@b4moss/hyogen-md/client` | ブラウザ — `renderClient` |
+| `@b4moss/hyogen-md/config` | CLI 設定 — `defineConfig` |
+| `hyogen-md`（bin） | CLI — `create` / `dev` / `build` |
+
+## クイックスタート（CLI）
+
+```bash
+npx hyogen-md create my-site
+cd my-site
+npm install
+npm run dev    # http://127.0.0.1:4173
+npm run build  # Markdown を ./out へ
+```
+
+詳細は [CLI](/ja/cli) を参照してください。
+
 ## クイックスタート（サーバー）
 
 SSR や Node 上でのレンダリングには `renderServer` を使います。`loader` を省略すると、ファイルシステムとリモート URL を読み込むデフォルト loader が使われます。
@@ -73,6 +94,7 @@ const { files, warnings } = await build({
 
 ## 次のステップ
 
+- [CLI](/ja/cli) — create / config / dev / build
 - [API リファレンス](/ja/api) — 関数・型の詳細
 - [テンプレート構文](/ja/syntax) — `@hg` ブロックや `{{ }}` の書き方
 - [Playground](/playground) — ブラウザで試す
