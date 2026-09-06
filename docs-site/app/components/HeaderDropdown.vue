@@ -2,11 +2,18 @@
 withDefaults(
   defineProps<{
     label: string;
-    triggerText: string;
+    triggerText?: string;
     compactText?: string;
+    /** Icon-only trigger (e.g. gear). Uses #trigger slot when provided. */
+    iconOnly?: boolean;
+    /** Nested dropdowns sit inside another menu; tighten layout. */
+    nested?: boolean;
   }>(),
   {
+    triggerText: "",
     compactText: "",
+    iconOnly: false,
+    nested: false,
   },
 );
 
@@ -46,11 +53,11 @@ watch(open, (isOpen) => {
     // touch / Mobile Safari (pointerdown may still be in the same gesture).
     queueMicrotask(() => {
       if (!open.value) {
-        return
+        return;
       }
-      document.addEventListener('pointerdown', onDocumentPointerDown)
-      document.addEventListener('keydown', onKeydown)
-    })
+      document.addEventListener("pointerdown", onDocumentPointerDown);
+      document.addEventListener("keydown", onKeydown);
+    });
   } else {
     document.removeEventListener("pointerdown", onDocumentPointerDown);
     document.removeEventListener("keydown", onKeydown);
@@ -69,7 +76,12 @@ defineExpose({ close, open });
 </script>
 
 <template>
-  <div ref="root" class="dropdown" :data-open="open ? 'true' : 'false'">
+  <div
+    ref="root"
+    class="dropdown"
+    :class="{ 'dropdown--nested': nested, 'dropdown--icon': iconOnly }"
+    :data-open="open ? 'true' : 'false'"
+  >
     <button
       :id="triggerId"
       type="button"
@@ -80,11 +92,16 @@ defineExpose({ close, open });
       :aria-controls="listId"
       @click="toggle"
     >
-      <span class="trigger-text trigger-text--full">{{ triggerText }}</span>
-      <span class="trigger-text trigger-text--compact">
-        {{ compactText || triggerText }}
-      </span>
-      <span class="chevron" aria-hidden="true" />
+      <slot name="trigger">
+        <template v-if="!iconOnly">
+          <span class="trigger-text trigger-text--full">{{ triggerText }}</span>
+          <span class="trigger-text trigger-text--compact">
+            {{ compactText || triggerText }}
+          </span>
+          <span class="chevron" aria-hidden="true" />
+        </template>
+      </slot>
+      <span v-if="!iconOnly && $slots.trigger" class="chevron" aria-hidden="true" />
     </button>
     <div
       v-show="open"
@@ -119,6 +136,39 @@ defineExpose({ close, open });
   cursor: pointer;
 }
 
+.dropdown--icon .dropdown-trigger {
+  justify-content: center;
+  width: 2.25rem;
+  padding: 0;
+  color: var(--color-muted);
+}
+
+.dropdown--icon .dropdown-trigger:hover {
+  color: var(--color-ink);
+}
+
+.dropdown--nested {
+  width: 100%;
+}
+
+.dropdown--nested .dropdown-trigger {
+  width: 100%;
+  justify-content: space-between;
+  min-height: 2.1rem;
+  font-size: 0.875rem;
+}
+
+.dropdown--nested .dropdown-menu {
+  position: static;
+  top: auto;
+  right: auto;
+  margin-top: 0.25rem;
+  min-width: 0;
+  width: 100%;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--color-bg) 55%, var(--color-surface));
+}
+
 .dropdown-trigger:hover {
   background: var(--color-accent-soft);
 }
@@ -138,6 +188,7 @@ defineExpose({ close, open });
   border-bottom: 1.5px solid currentColor;
   transform: translateY(-1px) rotate(45deg);
   opacity: 0.7;
+  flex-shrink: 0;
 }
 
 .dropdown[data-open="true"] .chevron {
@@ -158,17 +209,17 @@ defineExpose({ close, open });
 }
 
 @media (max-width: 640px) {
-  .dropdown-trigger {
+  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .dropdown-trigger {
     min-width: 2.25rem;
     justify-content: center;
     padding: 0.35rem 0.45rem;
   }
 
-  .trigger-text--full {
+  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .trigger-text--full {
     display: none;
   }
 
-  .trigger-text--compact {
+  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .trigger-text--compact {
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
@@ -178,6 +229,11 @@ defineExpose({ close, open });
   .dropdown-menu {
     min-width: 11rem;
     padding: 0.4rem;
+  }
+
+  .dropdown--nested .dropdown-trigger {
+    min-height: 2.4rem;
+    font-size: 0.95rem;
   }
 }
 </style>
