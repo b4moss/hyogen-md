@@ -1,0 +1,29 @@
+{
+  "name": "hyogen-md-highlighter",
+  "version": "0.14.0",
+  "private": true,
+  "type": "module",
+  "description": "Repo-local hyogen syntax highlighter DSL and codegen (not published)",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "generate": "tsx scripts/generate.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/state": "^6.5.2",
+    "@lezer/highlight": "^1.2.1",
+    "@types/node": "^22.13.10",
+    "highlight.js": "^11.11.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,83 @@
+# hyogen highlighter DSL (source of truth for codegen)
+name: hyogen
+version: 1
+
+markers:
+  block_open: "@hg"
+  block_close: "@endhg"
+  short: "@@"
+  mustache_open: "{{"
+  mustache_close: "}}"
+  mustache_triple_open: "{{{"
+  mustache_triple_close: "}}}"
+
+# Must match app/src/logic/reservedWords.ts exactly (single-word).
+reserved_words:
+  - if
+  - else
+  - endif
+  - const
+  - let
+  - for
+  - do
+  - while
+  - each
+  - endeach
+  - block
+  - endblock
+  - extend
+  - include
+  - component
+  - as
+  - echo
+
+# Highlighter-only additions (multi-word or non-reserved helpers).
+keywords_extra:
+  - else if
+  - toc
+
+embedding:
+  exclude_fences: true
+  incomplete: drop
+
+comments:
+  line: "//"
+  block_open: "/*"
+  block_close: "*/"
+
+operators:
+  - "||"
+  - "&&"
+  - "=="
+  - "!="
+  - "<="
+  - ">="
+  - "++"
+  - "--"
+  - "+="
+  - "-="
+  - "*="
+  - "/="
+  - "|"
+  - "+"
+  - "-"
+  - "*"
+  - "/"
+  - "%"
+  - "<"
+  - ">"
+  - "!"
+  - "?"
+  - ":"
+  - "="
+  - "."
+
+punctuation:
+  - "("
+  - ")"
+  - "["
+  - "]"
+  - "{"
+  - "}"
+  - ","
+  - ";"
