@@ -1,0 +1,103 @@
+{
+  "name": "hyogen",
+  "keywords": [
+    "if",
+    "else",
+    "endif",
+    "const",
+    "let",
+    "for",
+    "do",
+    "while",
+    "each",
+    "endeach",
+    "block",
+    "endblock",
+    "extend",
+    "include",
+    "component",
+    "as",
+    "echo",
+    "else if",
+    "toc"
+  ],
+  "operators": [
+    "||",
+    "&&",
+    "==",
+    "!=",
+    "<=",
+    ">=",
+    "++",
+    "--",
+    "+=",
+    "-=",
+    "*=",
+    "/=",
+    "|",
+    "+",
+    "-",
+    "*",
+    "/",
+    "%",
+    "<",
+    ">",
+    "!",
+    "?",
+    ":",
+    "=",
+    "."
+  ],
+  "tokenizer": {
+    "root": [
+      [
+        "\\b(?:else\\s+if|if|else|endif|const|let|for|do|while|each|endeach|block|endblock|extend|include|component|as|echo|toc)\\b",
+        "keyword"
+      ],
+      [
+        "//.*$",
+        "comment"
+      ],
+      [
+        "/\\*",
+        "comment",
+        "@comment"
+      ],
+      [
+        "@(?:hg\\b|endhg\\b)|@@",
+        "marker"
+      ],
+      [
+        "\"(?:\\\\.|[^\\\\\"])*\"",
+        "string"
+      ],
+      [
+        "'(?:\\\\.|[^\\\\'])*'",
+        "string"
+      ],
+      [
+        "\\d+(?:\\.\\d+)?",
+        "number"
+      ],
+      [
+        "\\|\\||&&|==|!=|<=|>=|\\+\\+|--|\\+=|-=|\\*=|/=|\\||\\+|-|\\*|/|%|<|>|!|\\?|:|=|\\.",
+        "operator"
+      ],
+      [
+        "[a-zA-Z_$][\\w$]*",
+        "identifier"
+      ]
+    ],
+    "comment": [
+      [
+        "\\*/",
+        "comment",
+        "@pop"
+      ],
+      [
+        ".",
+        "comment"
+      ]
+    ]
+  }
+}

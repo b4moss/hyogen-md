@@ -15,6 +15,14 @@ export default defineConfig({
       },
       { find: '@b4moss/hyogen-md/client', replacement: path.join(appSrc, 'client.ts') },
       { find: '@b4moss/hyogen-md', replacement: path.join(appSrc, 'index.ts') },
+      {
+        find: '@hyogen/highlighter',
+        replacement: path.resolve(rootDir, '../highlighter/src/index.ts'),
+      },
+      {
+        find: '@hyogen/highlighter-generated',
+        replacement: path.resolve(rootDir, '../highlighter/generated'),
+      },
       { find: 'node:path', replacement: 'path-browserify' },
       { find: 'node:fs', replacement: path.join(appSrc, 'shims/fs-browser.ts') },
       { find: 'node:fs/promises', replacement: path.join(appSrc, 'shims/fs-promises-browser.ts') },

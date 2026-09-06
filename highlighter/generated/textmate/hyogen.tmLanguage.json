@@ -1,0 +1,103 @@
+{
+  "name": "Hyogen",
+  "scopeName": "source.hyogen",
+  "patterns": [
+    {
+      "include": "#hyogen"
+    }
+  ],
+  "repository": {
+    "hyogen": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#markers"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#operators"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.hyogen",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.hyogen",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "markers": {
+      "patterns": [
+        {
+          "name": "keyword.control.hyogen.marker",
+          "match": "@hg\\b|@endhg\\b|@@"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.hyogen",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.hyogen",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.hyogen",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.hyogen",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.other.hyogen",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "constant.character.escape.hyogen",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.hyogen",
+      "match": "\\b\\d+(?:\\.\\d+)?\\b"
+    },
+    "keywords": {
+      "name": "keyword.control.hyogen",
+      "match": "\\b(?:else\\s+if|if|else|endif|const|let|for|do|while|each|endeach|block|endblock|extend|include|component|as|echo|toc)\\b"
+    },
+    "operators": {
+      "name": "keyword.operator.hyogen",
+      "match": "\\|\\||&&|==|!=|<=|>=|\\+\\+|--|\\+=|-=|\\*=|/=|\\||\\+|-|\\*|/|%|<|>|!|\\?|:|=|\\."
+    }
+  }
+}
