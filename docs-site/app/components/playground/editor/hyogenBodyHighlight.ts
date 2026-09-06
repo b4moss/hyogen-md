@@ -6,13 +6,10 @@ import {
   type ViewUpdate,
 } from "@codemirror/view";
 import type { Extension } from "@codemirror/state";
-import {
-  classifyHyogenTokens,
-  findHyogenRegions,
-  findMustacheRegions,
-  irFromCodeMirrorSpec,
-  type HighlighterIr,
-} from "../../../../../highlighter/src/index.ts";
+import { classifyHyogenTokens } from "../../../../../highlighter/src/classifyHyogenTokens.ts";
+import { findHyogenRegions, findMustacheRegions } from "../../../../../highlighter/src/findHyogenRegions.ts";
+import { irFromCodeMirrorSpec } from "../../../../../highlighter/src/irFromCodeMirrorSpec.ts";
+import type { HighlighterIr } from "../../../../../highlighter/src/types.ts";
 import { hyogenCodeMirrorSpec } from "../../../../../highlighter/generated/codemirror/hyogenSpec.ts";
 
 const TOKEN_CLASS: Record<string, string> = {
