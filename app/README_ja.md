@@ -144,7 +144,7 @@ make dev-docs
 
 Playground UX はドキュメントサイトに含まれ、**npm の tarball には入りません**。
 
-coverage バッジはライブラリ（`app/`）の Vitest **statement カバレッジ概算（約 84%）**です。初期リリース目標は 50% 以上。カバレッジは `main` への push 時に `.github/workflows/quality.yml` から Codecov へアップロードされます。
+coverage バッジはライブラリ（`app/`）の Vitest **statement カバレッジ（目標 ≥90%、Vitest thresholds で強制）**です。カバレッジは `main` への push 時に `.github/workflows/quality.yml` から Codecov へアップロードされます。
 
 ---
 

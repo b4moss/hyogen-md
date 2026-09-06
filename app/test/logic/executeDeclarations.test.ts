@@ -83,6 +83,32 @@ describe("executeDeclarations", () => {
     );
   });
 
+  it("throws parse_error for const redeclaration", async () => {
+    const context: Record<string, unknown> = { x: 1 };
+    const constBindings = new Set(["x"]);
+    await assert.rejects(
+      () =>
+        executeDeclaration(parseDeclaration("const x = 2"), context, {
+          constBindings,
+        }),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for a multi-line block with an unsupported directive", async () => {
+    const source = ["<!--@hg", "foo", "bar", "@endhg-->"].join("\n");
+    await assert.rejects(
+      () => executeDeclarations(source),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
   it("throws parse_error for undeclared assignment", async () => {
     await assert.rejects(
       () =>
