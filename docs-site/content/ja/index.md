@@ -30,7 +30,7 @@ description: @b4moss/hyogen-md の公式ドキュメント — Markdown 向け�
 
 - [構文概要](/ja/syntax) — テンプレート構文の索引
 - [Front matter](/ja/syntax/front-matter) — YAML メタデータと props 契約
-- [式と変数展開](/ja/syntax/expressions) — `{{ }}` とデフォルト値
+- [式と変数展開](/ja/syntax/expressions) — `{{ }}`・フェンス内 `${}`
 - [hyogen ブロック](/ja/syntax/hg-blocks) — `@hg` / `@@` の書き方
 - [宣言と代入](/ja/syntax/declarations) — `const` / `let`
 - [include と component](/ja/syntax/includes) — ファイルの取り込みと再利用

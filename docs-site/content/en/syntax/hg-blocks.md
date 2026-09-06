@@ -89,9 +89,9 @@ Multiple `echo` statements (including inside `for` / `do…while`) concatenate w
 
 See [Declarations](/en/syntax/declarations), [Control flow](/en/syntax/control-flow), and [TOC helper](/en/syntax/toc).
 
-## Code fences are ignored
+## Code fences
 
-Hyogen blocks inside fenced code blocks are **not** executed:
+Hyogen **blocks** inside fenced code are **not** executed:
 
 ````markdown
 ```html
@@ -99,6 +99,15 @@ Hyogen blocks inside fenced code blocks are **not** executed:
 ```
 ````
 
+`${expr}` **inside** fences **is** expanded (same expression rules as `@hg` template literals). Outside fences, `${…}` stays literal. Escape with `\${`. See [Expressions](/en/syntax/expressions).
+
+````markdown
+```markdown
+# ${title}
+```
+````
+
+Mustache `{{ }}` still expands even inside fences.
 ## Output preservation
 
 By default, hyogen comment blocks are removed from output. Set `preserveHgComments: true` to keep them for debugging.

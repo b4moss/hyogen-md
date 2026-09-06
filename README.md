@@ -140,11 +140,11 @@ Open `http://localhost:3000` (docs) and `/playground`. Uses `../app` via Vite al
 ## Status
 
 This is **0.x**. APIs and output may change until `1.0.0`.  
-Published: **`@b4moss/hyogen-md@0.13.0`** (git tag `v0.13.0`).
+Published: **`@b4moss/hyogen-md@0.14.0`** (git tag `v0.14.0`).
 
 Playground UX ships with the documentation site and is **not** included in the npm tarball.
 
-The coverage badge reflects approximate **statement coverage for `app/`** (library) from Vitest (~84%). Initial release goal is ≥50%. Coverage is uploaded to Codecov from `.github/workflows/quality.yml` on pushes to `main`.
+The coverage badge reflects **statement coverage for `app/`** (library) from Vitest (**≥90%** target; enforced by Vitest thresholds). Coverage is uploaded to Codecov from `.github/workflows/quality.yml` on pushes to `main`.
 
 ---
 
