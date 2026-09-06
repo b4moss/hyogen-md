@@ -154,10 +154,38 @@ const highlightedMarkdown = computed(() => highlightMarkdown(props.markdown || "
   margin: 0.4em 0;
 }
 
-.preview__html :deep(code) {
+/* Inline code only. Never paint fence bodies with accent-soft — site-wide
+   `pre` is dark for Shiki docs, and accent-soft + inherited light ink
+   (or the reverse after theme overrides) makes interpolated fence text unreadable. */
+.preview__html :deep(:not(pre) > code) {
   font-family: var(--mono);
   font-size: 0.9em;
   background: var(--accent-soft);
+  color: var(--ink);
   padding: 0.05em 0.3em;
+  border-radius: 0.25rem;
+}
+
+/* Fenced blocks: playground theme tokens (light + dark) beat site-wide Shiki pre. */
+.preview__html :deep(pre) {
+  margin: 0.6em 0;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  border-radius: 0.4rem;
+  border: 1px solid var(--line);
+  background: var(--bg-deep);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.preview__html :deep(pre code) {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+  box-shadow: none;
 }
 </style>
