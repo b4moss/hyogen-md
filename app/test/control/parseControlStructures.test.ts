@@ -140,4 +140,65 @@ describe("parseControlStructures", () => {
       assertHyogenError(error, "parse_error");
     }
   });
+
+  it("throws parse_error for unclosed each", () => {
+    try {
+      parseControlStructures(hg("each item in data"));
+      assert.fail("expected throw");
+    } catch (error) {
+      assertHyogenError(error, "parse_error");
+    }
+  });
+
+  it("parses a nested each inside an each", () => {
+    const source = [
+      hg("each item in data"),
+      hg("each sub in item.children"),
+      "Z",
+      hg("endeach"),
+      hg("endeach"),
+    ].join("");
+    const nodes = parseControlStructures(source);
+    assert.equal(nodes[0]?.kind, "each");
+    if (nodes[0]?.kind === "each") {
+      assert.equal(nodes[0].body[0]?.kind, "each");
+    }
+  });
+
+  it("parses a nested if (with its own else) inside an outer if", () => {
+    const source = [
+      hg("if a"),
+      hg("if b"),
+      "X",
+      hg("else"),
+      "Y",
+      hg("endif"),
+      hg("endif"),
+    ].join("");
+    const nodes = parseControlStructures(source);
+    assert.equal(nodes[0]?.kind, "if");
+    if (nodes[0]?.kind === "if") {
+      assert.equal(nodes[0].branches.length, 1);
+      assert.equal(nodes[0].branches[0]!.body[0]?.kind, "if");
+      const innerIf = nodes[0].branches[0]!.body[0];
+      if (innerIf?.kind === "if") {
+        assert.equal(innerIf.branches.length, 2);
+      }
+    }
+  });
+
+  it("parses a nested each inside an if", () => {
+    const source = [
+      hg("if a"),
+      hg("each x in y"),
+      "Z",
+      hg("endeach"),
+      hg("endif"),
+    ].join("");
+    const nodes = parseControlStructures(source);
+    assert.equal(nodes[0]?.kind, "if");
+    if (nodes[0]?.kind === "if") {
+      assert.equal(nodes[0].branches[0]!.body[0]?.kind, "each");
+    }
+  });
 });
