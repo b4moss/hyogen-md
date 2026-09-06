@@ -1,6 +1,7 @@
 import { createHyogenError } from "../errors/createError.js";
 import { evaluateExpression } from "../expr/evaluateExpression.js";
 import { interpolateExpressions } from "../expr/interpolateExpressions.js";
+import { interpolateFenceExpressions } from "../expr/interpolateFenceExpressions.js";
 import type { ControlNode, EvaluateExpressionOptions, HyogenWarning } from "../types.js";
 import { parseControlStructures } from "./parseControlStructures.js";
 import { StructureNestTracker } from "./StructureNestTracker.js";
@@ -169,7 +170,7 @@ async function expandEach(
         bodyText = chompLeadingNewline(bodyText);
       }
 
-      const interpolated = await interpolateExpressions(bodyText, scopedContext, {
+      const interpolateOpts = {
         path: options.path,
         registry: options.registry,
         loader: options.loader,
@@ -179,7 +180,17 @@ async function expandEach(
         parentContext: options.parentContext ?? options.context,
         preserveHgComments: options.preserveHgComments,
         constrainToRoot: options.constrainToRoot,
-      });
+      };
+      let interpolated = await interpolateExpressions(
+        bodyText,
+        scopedContext,
+        interpolateOpts,
+      );
+      interpolated = await interpolateFenceExpressions(
+        interpolated,
+        scopedContext,
+        interpolateOpts,
+      );
 
       result += interpolated;
       if (preserve) {
