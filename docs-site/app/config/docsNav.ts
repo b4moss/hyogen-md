@@ -16,6 +16,11 @@ export type DocsNavItem = {
 export const docsNavItems: DocsNavItem[] = [
   { key: 'home', path: '/', labelKey: 'home' },
   { key: 'install', path: '/install', labelKey: 'install' },
+  { key: 'cli', path: '/cli', labelKey: 'cli' },
+  { key: 'cliCreate', path: '/cli/create', labelKey: 'cliCreate', parent: 'cli' },
+  { key: 'cliConfig', path: '/cli/config', labelKey: 'cliConfig', parent: 'cli' },
+  { key: 'cliDev', path: '/cli/dev', labelKey: 'cliDev', parent: 'cli' },
+  { key: 'cliBuild', path: '/cli/build', labelKey: 'cliBuild', parent: 'cli' },
   { key: 'api', path: '/api', labelKey: 'api' },
   { key: 'apiRenderServer', path: '/api/render-server', labelKey: 'apiRenderServer', parent: 'api' },
   { key: 'apiRenderClient', path: '/api/render-client', labelKey: 'apiRenderClient', parent: 'api' },

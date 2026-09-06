@@ -60,6 +60,7 @@
 | [logic.md](./specs/logic.md) | if / each / 三項 |
 | [dsl.md](./specs/dsl.md) | `@hg` / `@@` DSL |
 | [toc.md](./specs/toc.md) | TOC 専用ヘルパ（v0.12.0） |
+| [cli.md](./specs/cli.md) | CLI（create / config / dev / build、v0.13.0） |
 | [paths.md](./specs/paths.md) | パス解決 |
 | [security.md](./specs/security.md) | セキュリティ |
 | [playground.md](./specs/playground.md) | Playground |
@@ -72,8 +73,8 @@
 
 ## 現行版
 
-- npm: **`@b4moss/hyogen-md@0.12.0`**（`app/package.json`）
-- 次 Milestone: [v0.13.0](https://github.com/b4moss/hyogen-md/milestone/4)（[roadmap.md](./roadmap.md)）
+- npm: **`@b4moss/hyogen-md@0.13.0`**（`app/package.json`）
+- 次 Milestone: [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2)（[roadmap.md](./roadmap.md)）
 
 ---
 

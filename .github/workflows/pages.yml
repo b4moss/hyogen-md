@@ -9,6 +9,11 @@ on:
   push:
     branches:
       - doc-site
+    paths:
+      - "docs-site/**"
+      - "app/**"
+      - "Makefile"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:

@@ -1,5 +1,8 @@
 # App CI — gate on feat/* → dev-v* and hotfix/* → main only.
 # Spec: #69 / docs/specs/repository.md
+#
+# Promotion PRs (develop→main, etc.) still match `branches: main` when they touch
+# app/**; the job `if` skips them so required-check noise stays minimal.
 
 name: CI
 
@@ -8,6 +11,10 @@ on:
     branches:
       - "dev-v*"
       - main
+    paths:
+      - "app/**"
+      - "Makefile"
+      - ".github/workflows/ci.yml"
   workflow_dispatch:
 
 concurrency:
@@ -21,9 +28,10 @@ jobs:
   app:
     name: app
     # Skip develop→main and other non-hotfix PRs into main.
-    # Run on workflow_dispatch, any non-main base (incl. dev-v*), and hotfix/* → main.
-    # Single-line if: multiline `if: >` was evaluating false for feat→dev-v* PRs.
-    if: github.event_name != 'pull_request' || github.base_ref != 'main' || startsWith(github.head_ref, 'hotfix/')
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.base_ref, 'dev-v') ||
+      (github.base_ref == 'main' && startsWith(github.head_ref, 'hotfix/'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

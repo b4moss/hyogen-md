@@ -79,6 +79,46 @@ describe("collectDependencies", () => {
       },
     );
   });
+
+  it("throws parse_error for an unclosed hyogen block", () => {
+    assert.throws(
+      () => collectDependencies("<!--@hg\ninclude ./a.md\n-->"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("throws parse_error for an empty hyogen block", () => {
+    assert.throws(
+      () => collectDependencies("<!--@hg\n\n@endhg-->"),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
+
+  it("returns empty for a multi-line executable statement block", () => {
+    const source = ["<!--@hg", "let x = 1", "let y = 2", "@endhg-->"].join(
+      "\n",
+    );
+    assert.deepEqual(collectDependencies(source), []);
+  });
+
+  it("throws parse_error for a multi-line block with an unsupported directive", () => {
+    assert.throws(
+      () =>
+        collectDependencies(
+          ["<!--@hg", "foo", "bar", "@endhg-->"].join("\n"),
+        ),
+      (error: unknown) => {
+        assertHyogenError(error, "parse_error");
+        return true;
+      },
+    );
+  });
 });
 
 describe("buildDependencyGraph", () => {

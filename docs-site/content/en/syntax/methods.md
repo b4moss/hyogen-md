@@ -77,7 +77,7 @@ The only callable functions are **registered components** (`component … as nam
 {{ cityItem({ city: "Osaka", population: 2825000 }) }}
 ```
 
-There are no built-in functions in v0.12.0.
+There are no built-in functions beyond registered components.
 
 ## Not allowed
 

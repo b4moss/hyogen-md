@@ -266,12 +266,32 @@ CSV（厳格）:
 
 構文・見出し抽出・出力形式は [toc.md](./toc.md) が正。レンダリング API（`renderServer` / `renderClient` / `build`）のシグネチャ変更は不要（パイプライン内で自動処理）。
 
+## CLI / 設定（v0.13.0）
+
+バイナリ `hyogen-md`（`create` / `dev` / `build`）と設定ファイルの正本は [cli.md](./cli.md)。
+
+パッケージ export:
+
+```ts
+// @b4moss/hyogen-md/config
+import { defineConfig } from "@b4moss/hyogen-md/config";
+import type { HyogenConfig } from "@b4moss/hyogen-md/config";
+
+export default defineConfig({
+  input: "./src/**/*.md",
+  // outDir: "./out",
+});
+```
+
+`defineConfig` は型付きの恒等関数。設定の読み込み・正規化は CLI 内部（`loadConfig`）が担う。
+
 ## 後続候補（未実装）
 
 （現時点なし）
 
 ## 関連
 
+- CLI: [cli.md](./cli.md)
 - TOC: [toc.md](./toc.md)
 - パイプライン: [pipeline.md](./pipeline.md)
 - パス: [paths.md](./paths.md)

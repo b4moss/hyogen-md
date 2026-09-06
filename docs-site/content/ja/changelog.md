@@ -5,97 +5,26 @@ description: @b4moss/hyogen-md のバージョン履歴
 
 # 変更履歴
 
-ライブラリの変更と Playground 専用の変更を区別して記載しています。alpha タグは開発用マーカーで、正式リリース tag は `v0.10.0` です。
+## リリースノートの正本
 
-English: [changelog.md](/changelog)
+ライブラリの変更履歴の正本は GitHub 上の次のファイルです。
 
-### 0.10.0-docs.3 — Playground（Netlify）
+- [user-docs/changelog_ja.md](https://github.com/b4moss/hyogen-md/blob/main/user-docs/changelog_ja.md)（日本語）
+- [user-docs/changelog.md](https://github.com/b4moss/hyogen-md/blob/main/user-docs/changelog.md)（英語）
 
-- 根の `netlify.toml`（`playground/` をビルド、`main` からデプロイ）
-- README（英・日、根・`app/`）から **https://hyogen-md.netlify.app** へ導線
-- サイト接続手順は `docs/repository.md`（ダッシュボード、サイト名 `hyogen-md`）
+npm リリースと、Playground / ドキュメントサイトの主な変更が載っています。
 
-### 0.10.0-docs.2 — CD / ブランチ保護
+## ドキュメントサイトの版トラック
 
-- **`release`** への push で npm publish（`.github/workflows/publish.yml`）。既存 `name@version` はスキップ
-- `NPM_TOKEN` と branch protection（`main` / `release` / `develop`）を `docs/repository.md` に記載
+このサイトはライブラリ SemVer とは別の **docs トラック**も持ちます（npm 版は上げません）。
 
-### 0.10.0-docs.1 — リポジトリ運用
+| トラック | 例 | 内容 |
+|----------|-----|------|
+| ライブラリ | `0.13.0` | npm の `@b4moss/hyogen-md` |
+| ドキュメントサイト | `0.10.0-docs.8` | Nuxt サイト、Playground 統合、コンテンツ |
 
-- 長期ブランチ **`main`** / **`release`**（`v0.10.0` 時点の `develop` から）。`develop` は維持
-- GitHub Actions CI（PR base: `dev-v*` / `hotfix/*`→`main`）。`.github/workflows/ci.yml`。docs CI は `doc-site`（`.github/workflows/ci-docs.yml`）
-- 仕様: [docs/specs/repository.md](https://github.com/b4moss/hyogen-md/blob/main/docs/specs/repository.md)（Pages の production は **`doc-site`**）
+`0.10.0-docs.*` 以降のライブラリ機能（**0.11.0**〜**0.13.0**）は、サイトコンテンツ更新とともに反映されます。
 
-### 0.10.0 — Playground UX + npm 初回公開
+## 現行ライブラリ版
 
-Playground（npm 非同梱）:
-
-- ファイル操作のアクションメニュー（⋯）
-- `@hg` / `@@` シンタックスハイライト（JS 近似）と `{{ }}` の軽い装飾
-- 非エントリ向け Diagnostics **note**（例: layout）。Preview はソース Markdown
-- ファイラー UX（OUT の read-only 見た目、アイコン）。Reset 時は `/src` 全体を `/out` へ再 render
-- Markdown タブの highlight.js 色分け
-
-ライブラリ配布:
-
-- `app/` から `@b4moss/hyogen-md@0.10.0` を初回公開（`dist` + README / LICENSE。`*.map` 除外）
-- git tag `v0.10.0` と npm 版を一致
-- ドキュメント構成: `docs/`（メンテナー）、`user-docs/`（changelog 等）
-
-### 0.10.0-beta.3
-
-- **Packaging:** npm tarball から `*.map` を除外。Vite `minify: true` を明示
-- **Tooling:** Makefile 拡充（`size` / `pack` / `check` / playground 向け）
-- **Docs:** README バッジ（npm / license / node / coverage）
-
-### 0.10.0-beta.2
-
-- **Docs / packaging:** MIT LICENSE、日英 README + CHANGELOG、パッケージ名 `@b4moss/hyogen-md`、GitHub homepage `b4m-oss/hyogen-md`
-
-### 0.10.0-beta.1
-
-- **Docs:** npm 初回公開方針（tag ↔ npm 版、MIT、README 同期、GitHub homepage）
-
-### 0.9.2 — ライブラリ
-
-- 展開後 Markdown の余分な空行を引き締め。以前のビルドより出力が変わりうる
-
-### 0.9.1 — Playground
-
-- `_` 始まりのファイル / ディレクトリを outDir から除外。SRC リネーム・アンハイライト時の OUT 同期
-
-### 0.9.0 — Playground
-
-- ローカル Playground: 仮想 FS、ファイラー、CodeMirror、自動 render、プレビュー、診断、デモシード、`localStorage`
-
-### 0.8.0 — ライブラリ
-
-- `formatDiagnosticLog`、`each` + `component`（式 props）、横断テスト / docs 仕上げ
-
-### 0.7.0 — ライブラリ
-
-- `@@` ショートハンド、三項・テンプレートリテラル、`for` / `do`–`while`、suspicious context 警告
-
-### 0.6.0 — ライブラリ
-
-- `renderClient` と `@b4moss/hyogen-md/client` 公開面
-
-### 0.5.0 — ライブラリ
-
-- `build`、`serverContext`、リモート loader
-
-### 0.4.0 — ライブラリ
-
-- `extend` / `block` レイアウト継承
-
-### 0.3.0 — ライブラリ
-
-- 宣言と `if` / `each`、演算子式
-
-### 0.2.0 — ライブラリ
-
-- パス解決、Node loader、`component`
-
-### 0.1.0 — ライブラリ
-
-- パイプライン MVP: `@hg`、front matter、`{{ }}`、`include`
+**@b4moss/hyogen-md@0.13.0** — 本サイトの API / CLI / 構文はこの版に合わせています。

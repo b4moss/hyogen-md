@@ -1,12 +1,13 @@
 # Changelog
 
-Library vs Playground-only changes are labeled. Latest formal release: **`v0.12.0`**.
+Library vs Playground-only changes are labeled. Latest formal release: **`v0.13.0`**.
 
 Japanese: [changelog_ja.md](./changelog_ja.md)
 
-### Unreleased — Library
+### 0.13.0 — Library
 
 - **CLI** — `hyogen-md create` / `dev` / `build` with `hyogen.config.(js|ts)` and `defineConfig` (`@b4moss/hyogen-md/config`). Writing preview server with file tree + HMR; `dev` does not write `outDir` (Issues #30 / #35)
+- **Docs site** — CLI pages (EN/JA); install quick start via CLI
 
 ### 0.12.0 — Library
 

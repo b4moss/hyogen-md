@@ -12,6 +12,7 @@ description: @b4moss/hyogen-md の公式ドキュメント — Markdown 向け�
 ## はじめる
 
 - [インストール](/ja/install) — npm インストールとクイックスタート
+- [CLI](/ja/cli) — `create` / `dev` / `build`
 - [Playground](/playground) — ブラウザで構文を試せます
 
 ## API リファレンス

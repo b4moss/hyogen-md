@@ -38,7 +38,7 @@
 | ファイラー | 左ペイン。`src` / `outDir` を区別 |
 | ファイル操作 | アクションメニュー（⋯）で create / rename / delete |
 | ペイン幅 | ファイラー／エディタ／プレビュー間をドラッグ可変（最小幅あり。幅は `localStorage` 保存可） |
-| シンタックスハイライト | `@hg` … `@endhg` と `@@` 内（CM6 のみ。コードフェンス内は対象外 → [dsl.md](./dsl.md)） |
+| シンタックスハイライト | `@hg` … `@endhg` と `@@` 内の**厳密 hyogen トークン**（CM6。JS 近似なし。フェンス内は対象外 → [dsl.md](./dsl.md) / [highlighter.md](./highlighter.md)） |
 | テーマ | dark / light / system。サイトと共有（[docs-site.md](./docs-site.md)） |
 | プレビュー | 展開後 Markdown と HTML 見た目の両方 |
 | HTML 化 | Playground 側（hyogen-md は Markdown のみ） |

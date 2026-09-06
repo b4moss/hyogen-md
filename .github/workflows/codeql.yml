@@ -1,6 +1,6 @@
-# CodeQL SAST — push + PR so Scorecard SAST covers recent commits.
+# CodeQL SAST — main push + weekly cron only (avoid dual runs with default setup).
 # Spec: #103 / docs/specs/repository.md
-# Prefer this advanced workflow over GitHub default setup (disable default setup if both run).
+# Disable GitHub Code scanning *default setup* so this advanced workflow is the only CodeQL run.
 
 name: CodeQL
 
@@ -8,23 +8,16 @@ on:
   push:
     branches:
       - main
-      - develop
-      - "dev-v*"
-      - release
-      - doc-site
-  pull_request:
-    branches:
-      - main
-      - develop
-      - "dev-v*"
-      - release
-      - doc-site
+    paths:
+      - "app/**"
+      - ".github/workflows/**"
+      - ".github/codeql/**"
   schedule:
     - cron: "17 2 * * 1"
   workflow_dispatch:
 
 concurrency:
-  group: codeql-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

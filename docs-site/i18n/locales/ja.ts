@@ -2,6 +2,11 @@ export default {
   nav: {
     home: 'ホーム',
     install: 'インストール',
+    cli: 'CLI',
+    cliCreate: 'create',
+    cliConfig: 'hyogen.config',
+    cliDev: 'dev',
+    cliBuild: 'build',
     api: 'API',
     apiRenderServer: 'renderServer',
     apiRenderClient: 'renderClient',

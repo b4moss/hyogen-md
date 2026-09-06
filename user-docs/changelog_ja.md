@@ -1,12 +1,13 @@
 # Changelog
 
-ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.12.0`** です。
+ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.13.0`** です。
 
 English: [changelog.md](./changelog.md)
 
-### Unreleased — ライブラリ
+### 0.13.0 — ライブラリ
 
 - **CLI** — `hyogen-md create` / `dev` / `build`。`hyogen.config.(js|ts)` と `defineConfig`（`@b4moss/hyogen-md/config`）。ファイルツリー + HMR の執筆プレビュー。`dev` は `outDir` に書き出さない（Issue #30 / #35）
+- **ドキュメントサイト** — CLI ページ（英日）。インストールの CLI クイックスタート
 
 ### 0.12.0 — ライブラリ
 

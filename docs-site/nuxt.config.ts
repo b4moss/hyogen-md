@@ -177,6 +177,11 @@ export default defineNuxtConfig({
       alias: {
         '@b4moss/hyogen-md/client': path.join(appSrc, 'client.ts'),
         '@b4moss/hyogen-md': path.join(appSrc, 'index.ts'),
+        '@hyogen/highlighter': path.resolve(rootDir, '../highlighter/src/index.ts'),
+        '@hyogen/highlighter-generated': path.resolve(
+          rootDir,
+          '../highlighter/generated',
+        ),
         'node:path': 'path-browserify',
         'node:fs': path.join(appSrc, 'shims/fs-browser.ts'),
         'node:fs/promises': path.join(appSrc, 'shims/fs-promises-browser.ts'),
@@ -196,7 +201,7 @@ export default defineNuxtConfig({
     },
     server: {
       fs: {
-        allow: [rootDir, appSrc],
+        allow: [rootDir, appSrc, path.resolve(rootDir, '../highlighter')],
       },
     },
   },
