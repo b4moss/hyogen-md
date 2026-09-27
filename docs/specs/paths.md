@@ -21,14 +21,14 @@
 
 ## 絶対パス（Node）
 
-- **禁止が基本**ではなく、正規化・解決後の実体が **`.doc_root`（rootDir）配下に収まるときだけ許可**
+- **禁止が基本**ではなく、正規化・解決後のパスが **`.doc_root`（rootDir）配下に収まるときだけ許可**（`constrainToRoot` 時は `assertNormalizedPathWithinRoot`）
 - `.doc_root` が無い場合、絶対パスは実質エラー
 
 ## シンボリックリンク（Node）
 
-- **追従する**
-- ただし解決後の実体が **rootDir 内に収まるときだけ**許可
-- `.doc_root` が無い場合、symlink 経由の外出しは実質エラー
+- 本番のパス解決（`resolveTemplatePath`）は **パス正規化のみ**で root 内かを見る（`path.resolve` + `assertNormalizedPathWithinRoot`）
+- `realpath` による symlink 追従チェック（`assertWithinRootDir`）は **現行の本番経路では未使用**（ユニットテスト用ヘルパとして残存）
+- したがって root 内から外へ出る symlink を realpath で塞ぐ保証は **現行実装には無い**
 
 ## ブラウザ（CSR）
 
@@ -37,16 +37,18 @@
 
 ## リモート（Node / SSR・SSG）
 
-- `https://...` 等のリモートを **include と component の両方で許可**する
+- `https://...` 等のリモートを **`include` / `component` / `extend`** で許可する（同一の `resolveIncludePath`）
 - （ブラウザのクロスオリジン禁止とは非対称）
+- **`dataSources` のリモートは不可**（[api.md](./api.md)）
 
 ## `_` プレフィックス（partial）
 
 Sass の `_` partial と同様:
 
-- `_` で始まる **ファイル**、および `_` で始まる **ディレクトリ以下**のファイルは、SSG / SSR の **エントリ対象外**（[pipeline.md](./pipeline.md)）
-- 除外は **マッチ後フィルタ**。glob で明示したパスは **除外を上書きしてエントリに含めてよい**
+- `_` で始まる **ファイル**、および `_` で始まる **ディレクトリ以下**のファイルは、**`build` / CLI build のエントリ対象外**（[pipeline.md](./pipeline.md)）
+- 除外は **glob マッチ後フィルタ**。リテラルパスは常に含める。glob で含めるには **`includeUnderscoreEntries: true`**
 - `include` / `component` による読み込み自体は、通常のパス規則に従い **可能**
+- `renderServer` 単発は `_` エントリフィルタを適用しない
 
 ## 関連
 

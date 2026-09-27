@@ -8,11 +8,12 @@
 
 | 項目 | 方針 |
 |------|------|
-| 読み込み範囲 | `.doc_root` があるとき rootDir 内 |
+| 読み込み範囲 | `.doc_root` があるとき rootDir 内（正規化パス） |
 | `.doc_root` 無し | 相対のみ。`../` 制限なし。ルート相対はエラー |
-| 絶対パス / symlink | 解決後 rootDir 内のみ |
+| 絶対パス | 正規化後 rootDir 内のみ（`constrainToRoot`） |
+| symlink | 本番は realpath 封じなし（[paths.md](./paths.md)） |
 | ブラウザ | loader 必須。クロスオリジンなし |
-| Node リモート include / component | 許可 |
+| Node リモート include / component / extend | 許可 |
 
 ## 式評価
 
@@ -21,7 +22,7 @@
 | 式の範囲 | `{{ }}` は式のみ。関数はユーザー登録（component `as`）のみ。メソッドは `.toLocaleString` のみ。許可プロパティは `.length`。詳細は [dsl.md](./dsl.md) |
 | 危険キー | `__proto__` / `prototype` / `constructor` / `__defineGetter__` |
 | 危険キーアクセス時 | **エラー**（`forbidden_property_access`） |
-| 変数パス深さ・文字種 | 明示制限なし（識別子は JS Unicode 相当） |
+| 変数パス深さ・文字種 | 明示制限なし（識別子は **ASCII**。詳細は [dsl.md](./dsl.md)） |
 
 ## XSS・出力
 

@@ -22,15 +22,17 @@ TDD の一般原則は [charter/tdd.md](../charter/tdd.md) に従い、本書は
 
 ### テスト仕様書の置き場所
 
-**バージョンごとに 1 ファイル**（[roadmap.md](../roadmap.md) の `v0.n.0` に対応）:
+OKF v0.1 のドメイン索引は [docs/tests/](../tests/)（`specs/` と同じドメイン切り）。  
+版別の詳細 TDD 入力は override により **バージョンごとに 1 ファイル**（[roadmap.md](../roadmap.md) の `v0.n.0` に対応）:
 
 ```
-app/test/specs/v0.1.0.md
+docs/tests/{domain}/     … ドメイン入口（OKF）
+app/test/specs/v0.1.0.md … 版別の詳細（TDD 入力の正）
 app/test/specs/v0.2.0.md
 …
 ```
 
-各ファイル内で、関数・メソッドごとに見出し（`### formatMessage` 等）を立て、テンプレートに従って記述する。
+各 `app/test/specs` ファイル内で、関数・メソッドごとに見出し（`### formatMessage` 等）を立て、テンプレートに従って記述する。
 
 対応するテストコード:
 
@@ -81,8 +83,12 @@ app/test/{モジュール}/{関数・メソッド名}.integration.test.ts … �
 ルートから:
 
 ```bash
-make help          # ターゲット一覧
+make help          # ターゲット一覧（正。下記は要約）
+make install       # app/
+make install-docs  # docs-site/
+make install-hl    # highlighter/
 make install-all   # app + docs-site + highlighter
+make typecheck     # app typecheck
 make test          # app テスト (vitest run)
 make test-pg       # docs-site 内 Playground テスト
 make test-hl       # highlighter パッケージ テスト
@@ -94,10 +100,15 @@ make size          # dist / gzip / npm pack 容量
 make pack          # npm pack --dry-run
 make check         # 公開前: typecheck + build + test + pack
 make act           # ローカルで app CI（nektos/act）を再現
+make dev           # app watch-build
 make dev-docs      # docs-site 開発サーバ（/playground 含む）
 make build-docs    # docs-site 静的生成
 make check-docs    # docs-site 静的生成の確認
+make clean / clean-docs / clean-all
+make ruleset-help / ruleset-create / ruleset-apply / ruleset-check
 ```
+
+ランタイム要件: アプリ / docs-site / CI は **Node.js >= 24**（highlighter 単体は `>=22` 可）。詳細は [distribution.md](./distribution.md)。
 
 ### ローカル CI（`make act`）
 
@@ -123,6 +134,9 @@ npm run build
 ## 関連
 
 - [charter/tdd.md](../charter/tdd.md) … TDD 一般原則
+- [charter/okf/](../charter/okf/) … OKF v0.1
+- [tests/](../tests/) … ドメイン別テスト索引
+- [override-charter.md](../override-charter.md) … `app/test/specs/` への差分
 - [roadmap.md](../roadmap.md) … 版一覧
 - [GitHub Issues](https://github.com/b4moss/hyogen-md/issues) … 未実装・追加機能
 

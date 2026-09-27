@@ -43,7 +43,7 @@
 | 項目 | 内容 |
 |------|------|
 | 追加機能 | GitHub Issue 起票 → Milestone 割当。実装完了後 [specs/](./specs/) を更新 |
-| テスト | [charter/tdd.md](./charter/tdd.md) + [specs/development.md](./specs/development.md)。入力は `app/test/specs/` |
+| テスト | [charter/tdd.md](./charter/tdd.md) + [specs/development.md](./specs/development.md)。ドメイン索引は [tests/](./tests/)、版別詳細は `app/test/specs/`（[override-charter.md](./override-charter.md)） |
 | ブランチ | `feat/*` → `dev-vX.Y.Z` → `develop` → `main` → `release` → [specs/repository.md](./specs/repository.md) |
 | docs トラック | `v0.10.0-docs.n`（npm 非連動） |
 | 完了版 | チェックリストは [_archived/roadmap/](./_archived/roadmap/) へ |

@@ -7,7 +7,7 @@
 | **関連 Issue** | [#35](https://github.com/b4moss/hyogen-md/issues/35)（config / create）、[#30](https://github.com/b4moss/hyogen-md/issues/30)（執筆用 dev server） |
 | **方針** | #30 と #35 は **一体** の CLI 体験として設計・実装する |
 
-旧 `docs/plans/v0.13.0/cli-dev-server.md` から昇格。テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)。
+旧 `docs/plans/v0.13.0/cli-dev-server.md` から昇格。テスト仕様: [docs/tests/cli/](../tests/cli/) / [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)。
 
 ---
 
@@ -59,9 +59,13 @@ npx hyogen-md build
 
 ```bash
 npx @b4moss/hyogen-md create
+npx @b4moss/hyogen-md create my-site
+npx @b4moss/hyogen-md create --language ts
 ```
 
-追加の `create-*` パッケージは置かない（単一 CLI 方針）。
+- 引数 `[dir]` は任意。省略時は **cwd**
+- 対象ディレクトリは **未存在、または空**であること（非空ならエラー）
+- 追加の `create-*` パッケージは置かない（単一 CLI 方針）
 
 ### 生成物（最小）
 
@@ -121,7 +125,14 @@ export default defineConfig({
 
 ### パッケージ export
 
-**`@b4moss/hyogen-md/config`** から `defineConfig` と設定型を export する。
+**`@b4moss/hyogen-md/config`** から次を export する。
+
+| シンボル | 役割 |
+|----------|------|
+| `defineConfig` | 型付き恒等関数（設定ファイル用） |
+| `loadConfig` | 設定ファイルの探索・読込・正規化（公開） |
+| `resolveConfigPath` | 設定ファイルパスの解決（公開） |
+| `HyogenConfig` / `ResolvedHyogenConfig` | 型 |
 
 ---
 
@@ -207,7 +218,7 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 - 既存 API 正本: [specs/api.md](./api.md)
 - Playground は VirtualFS＋ブラウザ編集であり、本 `dev`（実ディスク＋外部エディタ）とは役割を分ける: [specs/playground.md](./playground.md)
 - 憲章上、CLI は薄い DDD で CRUD Trait 必須ではない: [override-charter.md](../override-charter.md)
-- テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)
+- テスト仕様: [docs/tests/cli/](../tests/cli/) / [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)
 
 ---
 

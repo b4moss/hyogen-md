@@ -1,6 +1,6 @@
 # 公開 API
 
-シグネチャの細部は実装前に調整してよいが、方針は確定とする。
+実装済みの公開面（`@b4moss/hyogen-md@0.14.0`）。型・符号の正は `app/src/types.ts` / `app/src/index.ts` / `app/src/client.ts` / `app/src/config/`。
 
 ## レンダリング入口
 
@@ -8,6 +8,15 @@
   - **`renderServer`** … SSR / SSG 想定。`serverContext` を渡せる
   - **`renderClient`** … CSR 想定。`serverContext` は渡せない
 - SSG 一括は **`build`**
+
+### 入力の解釈
+
+第 1 引数 `string | { path: string }` の意味:
+
+| 形 | 意味 |
+|----|------|
+| **`string`** | **ソース Markdown 本文**（ファイルパスではない） |
+| **`{ path }`** | ディスク上のファイルを読む（`renderServer` は Node 側で FS 読込。`renderClient` は呼び出し側 `loader` 必須） |
 
 ## 型（概要）
 
@@ -29,6 +38,10 @@ type RenderOptions = {
   preserveHgComments?: boolean;
   loader?: Loader;
   root?: string;
+  /** エントリ／文書パス（診断・相対解決の基準） */
+  path?: string;
+  /** true のとき解決先を root 配下に正規化制約する */
+  constrainToRoot?: boolean;
 };
 
 type DataSourcesMap = Record<string, string>;
@@ -81,6 +94,7 @@ declare function build(options: BuildOptions): Promise<BuildResult>;
 /**
  * 複数データファイルを読み込み、変数名 → 値の HyogenContext を返す。
  * renderServer / build の dataSources と同じパース規則。
+ * 既定 loader は FS のみ（createFsLoader）。リモート URL は拒否。
  */
 declare function loadDataSources(
   sources: DataSourcesMap,
@@ -92,9 +106,37 @@ declare function formatDiagnosticLog(
   kind: "error" | "warning",
   diagnostic: HyogenDiagnostic,
 ): string;
+
+declare function createFsLoader(options?: {
+  from?: string;
+  via?: "include" | "component" | "extend";
+}): Loader;
+declare function createNodeLoader(options?: {
+  from?: string;
+  via?: "include" | "component" | "extend";
+}): Loader;
+declare function isRemotePath(path: string): boolean;
+declare function createHyogenError(options: {
+  code: string;
+  message?: string;
+  path?: string;
+  details?: Record<string, unknown>;
+}): HyogenError;
+declare function formatMessage(
+  code: string,
+  details?: Record<string, unknown>,
+): string;
 ```
 
-`formatDiagnosticLog` は `@b4moss/hyogen-md` および `@b4moss/hyogen-md/client` から export される。
+### パッケージ export 一覧
+
+| 入口 | export |
+|------|--------|
+| `@b4moss/hyogen-md` | `renderServer` / `renderClient` / `build` / `loadDataSources` / `createFsLoader` / `createNodeLoader` / `isRemotePath` / `createHyogenError` / `formatMessage` / `formatDiagnosticLog` + 関連型 |
+| `@b4moss/hyogen-md/client` | `renderClient` / `createHyogenError` / `formatMessage` / `formatDiagnosticLog` + 関連型（loaders / `loadDataSources` / `build` は載せない） |
+| `@b4moss/hyogen-md/config` | `defineConfig` / `loadConfig` / `resolveConfigPath` + `HyogenConfig` / `ResolvedHyogenConfig` |
+
+`formatDiagnosticLog` はメイン・client の両方から export される。
 
 - 1 行目: `[hyogen:{kind}] {code}`
 - 以降: `details` の各キーを `  {key}: {value}`（インデント 2 スペース）。値は `String(value)`。`undefined` のキーは省略
@@ -109,9 +151,11 @@ declare function formatDiagnosticLog(
 - context に秘密キー名を機械検出する機能は **設けない**（API 分離とドキュメントで防ぐ）
 
 ```ts
-await renderServer("./page.md", { title: "public" }, {
-  serverContext: { apiKey: "secret" },
-});
+await renderServer(
+  { path: "./page.md" },
+  { title: "public" },
+  { serverContext: { apiKey: "secret" } },
+);
 ```
 
 ## データソースのインポート
@@ -123,14 +167,18 @@ await renderServer("./page.md", { title: "public" }, {
 `renderServer` / `build` の options に **変数名 → ファイルパス** のマップを渡す。
 
 ```ts
-await renderServer("./page.md", {}, {
-  root: "./site",
-  dataSources: {
-    site: "./data/site.yaml",
-    products: "./data/products.json",
-    rows: "./data/rows.csv",
+await renderServer(
+  { path: "./page.md" },
+  {},
+  {
+    root: "./site",
+    dataSources: {
+      site: "./data/site.yaml",
+      products: "./data/products.json",
+      rows: "./data/rows.csv",
+    },
   },
-});
+);
 ```
 
 - パスは `options.root`（省略時は `.doc_root` 探索結果または cwd）からの **相対パス**
@@ -148,12 +196,12 @@ const fromFiles = await loadDataSources(
   { site: "./data/site.yaml" },
   { root: "./site" },
 );
-await renderServer("./page.md", { ...fromFiles, extra: 1 });
+await renderServer({ path: "./page.md" }, { ...fromFiles, extra: 1 });
 ```
 
 `@b4moss/hyogen-md`（サーバ向け）のみ export。`@b4moss/hyogen-md/client` には **載せない**。
 
-`renderServer` / `build` の `dataSources` と同じパース・上限・リモート拒否規則を適用する。
+`renderServer` / `build` の `dataSources` と同じパース・上限・リモート拒否規則を適用する。既定 loader は **`createFsLoader`（FS のみ）**。`createNodeLoader` は include / component / extend 用の Node 既定（FS + 許可リモート fetch）。
 
 ### context へのマージ順
 
@@ -204,15 +252,19 @@ CSV（厳格）:
 
 - 戻り値は `(path: string) => Promise<string>` で足りる（メタデータは後で拡張可）
 - **ブラウザ**: 呼び出し側が必須。同一オリジン想定
-- **Node**: 省略時は FS + 許可されたリモート fetch のデフォルト loader
+- **Node（`renderServer` / `build`）**: 省略時は **`createNodeLoader`**（FS + 許可されたリモート fetch）
+- **`loadDataSources`**: 省略時は **`createFsLoader`**（FS のみ。リモートは事前拒否）
 - 失敗時は `file_not_found` または `load_failed` で **中断**。`ENOENT` 等は hyogen エラーに包む
 
 ## 入力の指定（SSG / 一括）
 
 - 個別パス列挙 + **glob**
-- glob 方言: **Vite / JS エコシステムで一般的な glob**（実装は **picomatch + fast-glob** 等を想定）
-- SSG 既定: **エントリ指定 → 依存を辿って走査**
-- `_` partial: **マッチ後フィルタ**。input glob で明示したパスは **除外を上書きしてエントリに含めてよい**
+- glob 方言: **Vite / JS エコシステムで一般的な glob**（実装は **picomatch + fast-glob**）
+- SSG 既定: **エントリ指定 → 依存を辿って走査**（`build`）
+- `_` partial（`build` / CLI build のみ）:
+  - **リテラルパス**は `_` でも常にエントリに含める
+  - **glob マッチ**は既定で除外。含めるには `includeUnderscoreEntries: true`
+  - `renderServer` 単発は `_` フィルタを適用しない
 
 ## オプション（デフォルト）
 
@@ -274,8 +326,12 @@ CSV（厳格）:
 
 ```ts
 // @b4moss/hyogen-md/config
-import { defineConfig } from "@b4moss/hyogen-md/config";
-import type { HyogenConfig } from "@b4moss/hyogen-md/config";
+import {
+  defineConfig,
+  loadConfig,
+  resolveConfigPath,
+} from "@b4moss/hyogen-md/config";
+import type { HyogenConfig, ResolvedHyogenConfig } from "@b4moss/hyogen-md/config";
 
 export default defineConfig({
   input: "./src/**/*.md",
@@ -283,7 +339,9 @@ export default defineConfig({
 });
 ```
 
-`defineConfig` は型付きの恒等関数。設定の読み込み・正規化は CLI 内部（`loadConfig`）が担う。
+- `defineConfig` … 型付きの恒等関数
+- `loadConfig` / `resolveConfigPath` … 公開 API（CLI も利用）。プログラムから設定を読む用途向け
+- 英語メッセージカタログのランタイム正本は `app/src/errors/messages.en.json`（本ディレクトリの [messages.en.json](./messages.en.json) は docs 側の写し）
 
 ## 後続候補（未実装）
 
