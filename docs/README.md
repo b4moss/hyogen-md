@@ -2,7 +2,7 @@
 
 `hyogen.md`（表現.md）は、Markdownをテンプレートエンジンとして用いる TypeScript ライブラリ（npm パッケージ）である。
 
-開発の最上位方針は [charter/](./charter/)（[b4moss/charter](https://github.com/b4moss/charter) から取り込み）に従う。プロジェクト固有の例外は [override-charter.md](./override-charter.md) を参照。
+開発の最上位方針は [charter/](./charter/)（[b4moss/charter](https://github.com/b4moss/charter) v1.2.0 / OKF v0.1 から取り込み）に従う。プロジェクト固有の例外は [override-charter.md](./override-charter.md) を参照。OKF の版索引は [index.md](./index.md)。
 
 **未実装・追加機能は [GitHub Issues](https://github.com/b4moss/hyogen-md/issues) / [Milestones](https://github.com/b4moss/hyogen-md/milestones) で管理する**（`docs/` は現行実装の仕様正本）。
 
@@ -40,13 +40,15 @@
 
 | パス | 内容 |
 |------|------|
-| [charter/](./charter/) | 開発憲章 |
+| [index.md](./index.md) | OKF 索引（`okf_version`） |
+| [charter/](./charter/) | 開発憲章（OKF 定義含む） |
 | [override-charter.md](./override-charter.md) | 憲章のプロジェクト例外 |
 | [roadmap.md](./roadmap.md) | 版一覧・進捗ハブ |
-| [specs/](./specs/) | 現行機能の仕様正本 |
+| [specs/](./specs/) | 現行機能の仕様正本（ドメイン単位のファイル） |
+| [tests/](./tests/) | テスト仕様のドメイン索引（OKF）。詳細は `app/test/specs/` |
 | [_archived/](./_archived/) | 完了ロードマップ・歴史 |
 | [wishlist.md](./wishlist.md) | PO 個人メモ（未整理のみ） |
-| [app/test/specs/](../app/test/specs/) | テスト仕様（TDD 入力） |
+| [app/test/specs/](../app/test/specs/) | 版別テスト仕様（TDD 入力・override） |
 | GitHub [Issues](https://github.com/b4moss/hyogen-md/issues) | 未実装・追加機能 |
 
 ### specs/ 主要文書

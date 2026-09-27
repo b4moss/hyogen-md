@@ -61,7 +61,7 @@ extend / if / each / component に加え、**コードフェンス内 `${}`**（
 
 - 純ロジック（仮想 FS、loader、写像、永続化／Reset）: 単体テスト
 - UI: 手動確認
-- テスト仕様: [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)、[v0.14.0.md](../../app/test/specs/v0.14.0.md)
+- テスト仕様: [docs/tests/playground/](../tests/playground/) / [app/test/specs/v0.9.0.md](../../app/test/specs/v0.9.0.md)、[v0.10.0.md](../../app/test/specs/v0.10.0.md)、[v0.14.0.md](../../app/test/specs/v0.14.0.md)
 
 ----
 

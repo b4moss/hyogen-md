@@ -7,7 +7,7 @@
 | **関連 Issue** | [#35](https://github.com/b4moss/hyogen-md/issues/35)（config / create）、[#30](https://github.com/b4moss/hyogen-md/issues/30)（執筆用 dev server） |
 | **方針** | #30 と #35 は **一体** の CLI 体験として設計・実装する |
 
-旧 `docs/plans/v0.13.0/cli-dev-server.md` から昇格。テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)。
+旧 `docs/plans/v0.13.0/cli-dev-server.md` から昇格。テスト仕様: [docs/tests/cli/](../tests/cli/) / [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)。
 
 ---
 
@@ -207,7 +207,7 @@ Markdown を外部エディタで書きながら、ブラウザでレンダー�
 - 既存 API 正本: [specs/api.md](./api.md)
 - Playground は VirtualFS＋ブラウザ編集であり、本 `dev`（実ディスク＋外部エディタ）とは役割を分ける: [specs/playground.md](./playground.md)
 - 憲章上、CLI は薄い DDD で CRUD Trait 必須ではない: [override-charter.md](../override-charter.md)
-- テスト仕様: [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)
+- テスト仕様: [docs/tests/cli/](../tests/cli/) / [app/test/specs/v0.13.0.md](../../app/test/specs/v0.13.0.md)
 
 ---
 

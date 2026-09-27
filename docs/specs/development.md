@@ -22,15 +22,17 @@ TDD の一般原則は [charter/tdd.md](../charter/tdd.md) に従い、本書は
 
 ### テスト仕様書の置き場所
 
-**バージョンごとに 1 ファイル**（[roadmap.md](../roadmap.md) の `v0.n.0` に対応）:
+OKF v0.1 のドメイン索引は [docs/tests/](../tests/)（`specs/` と同じドメイン切り）。  
+版別の詳細 TDD 入力は override により **バージョンごとに 1 ファイル**（[roadmap.md](../roadmap.md) の `v0.n.0` に対応）:
 
 ```
-app/test/specs/v0.1.0.md
+docs/tests/{domain}/     … ドメイン入口（OKF）
+app/test/specs/v0.1.0.md … 版別の詳細（TDD 入力の正）
 app/test/specs/v0.2.0.md
 …
 ```
 
-各ファイル内で、関数・メソッドごとに見出し（`### formatMessage` 等）を立て、テンプレートに従って記述する。
+各 `app/test/specs` ファイル内で、関数・メソッドごとに見出し（`### formatMessage` 等）を立て、テンプレートに従って記述する。
 
 対応するテストコード:
 
@@ -123,6 +125,9 @@ npm run build
 ## 関連
 
 - [charter/tdd.md](../charter/tdd.md) … TDD 一般原則
+- [charter/okf/](../charter/okf/) … OKF v0.1
+- [tests/](../tests/) … ドメイン別テスト索引
+- [override-charter.md](../override-charter.md) … `app/test/specs/` への差分
 - [roadmap.md](../roadmap.md) … 版一覧
 - [GitHub Issues](https://github.com/b4moss/hyogen-md/issues) … 未実装・追加機能
 

@@ -1,7 +1,7 @@
 # リポジトリ運用・ブランチ・CI/CD
 
 Playground の公開面、Git ブランチ戦略、CI/CD、docs 系バージョンの運用を定める。  
-ライブラリ機能仕様は同ディレクトリ（`api.md` 等）および [main.md](../main.md) が正。本ファイルは **リポジトリ運用の正**。
+ライブラリ機能仕様は同ディレクトリ（`api.md` 等）および [README.md](../README.md)（pillar）が正。本ファイルは **リポジトリ運用の正**。
 
 Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う。本プロジェクト固有の差分は [override-charter.md](../override-charter.md) を優先する。
 
@@ -15,7 +15,7 @@ Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う�
 |------|-----|------|
 | **`origin`** | 社内 `b4m-oss/hyogen-md` | ブランチ同期・社内作業 |
 | **`github`** | 公開 `b4moss/hyogen-md` | OSS 正本・CI/CD・Pages |
-| **`charter`** | `https://github.com/b4moss/charter.git` | 開発憲章（`docs` ブランチ）。更新時は `git fetch charter` → `git merge charter/docs` |
+| **`charter`** | `https://github.com/b4moss/charter.git` | 開発憲章（**`main` の `docs/`** / OKF v0.1）。更新時は `git fetch charter` → `git merge charter/main`（共有対象は `docs/`。かつての `docs` 専用ブランチは使わない） |
 
 憲章の取り込み方式は [charter/README.md](../charter/README.md) を参照。プロジェクト側で憲章ファイルを上書き・削除しない。
 

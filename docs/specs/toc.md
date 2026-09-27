@@ -129,6 +129,7 @@ output（抜粋）:
 - DSL（`@@` ショートハンド）: [dsl.md](./dsl.md)
 - パイプライン: [pipeline.md](./pipeline.md)
 - 公開 API: [api.md](./api.md)
+- テスト仕様: [docs/tests/toc/](../tests/toc/) / [app/test/specs/v0.12.0.md](../../app/test/specs/v0.12.0.md)
 - ロードマップ: [roadmap.md](../roadmap.md)（v0.12.0）
 
 ---
