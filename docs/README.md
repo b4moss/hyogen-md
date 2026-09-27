@@ -77,6 +77,7 @@
 ## 現行版
 
 - npm: **`@b4moss/hyogen-md@0.14.0`**（`app/package.json`）
+- Node: **`>=24`**（`engines`）
 - 次 Milestone: [Until v1.0.0](https://github.com/b4moss/hyogen-md/milestone/2)（[roadmap.md](./roadmap.md)）
 
 ---

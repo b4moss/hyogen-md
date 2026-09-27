@@ -15,17 +15,18 @@ TypeScript で実装し、npm パッケージとして配布する。
 - **SSR**: リクエスト時に 1 本を描画する
 - 入力の集め方は **パス列挙**に加え **glob** も許可する（[api.md](./api.md)）
 
-### SSG / SSR のエントリ対象外（Sass の `_` partial に相当）
+### SSG（`build` / CLI build）のエントリ対象外（Sass の `_` partial に相当）
 
-次は **SSG / SSR のレンダリング対象（エントリ）に含めない**:
+次は **`build` のレンダリング対象（エントリ）に含めない**（`renderServer` / `renderClient` 単発には適用しない）:
 
 - ファイル名が `_` で始まるファイル（例: `_meta.md`）
 - `_` で始まるディレクトリ配下のファイル（例: `_partials/card.md`）
 
 これらは単体では出力されないが、他ファイルから `include` / `component` 等で参照することはできる。
 
-- `_` 除外は **マッチ後フィルタ**（一度候補に上がってから落とす）
-- glob で `_partials/**` 等を **明示した場合は除外を上書きしてエントリに含めてよい**
+- `_` 除外は **glob マッチ後フィルタ**
+- **リテラルパス**で指定した `_…` は常にエントリに含める
+- glob で `_partials/**` 等を明示しても、**`includeUnderscoreEntries: true` が無い限り除外される**
 
 ### ブラウザ（CSR）
 
@@ -37,21 +38,22 @@ TypeScript で実装し、npm パッケージとして配布する。
 ## ファイル1本の処理順（確定）
 
 1. YAML front matter のパース・変数注入
-2. hyogen ブロックの実行（`@hg` / `@@` ショートハンド。文書順。宣言・代入・`echo`（本文置換）・`component as`・`extend` 指示の収集など。**`if` / `each` の本文展開は含まない**）
-3. `extend` / block の解決（**include より先**）
-4. `include` の展開
-5. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）
-6. 本文の `{{ }}` 評価（component 呼び出し含む）
-7. **コードフェンス内の `${}` 展開**（[variables.md](./variables.md)。`each` 反復本体でも同様）
-8. **`toc` ヘルパの展開**（[toc.md](./toc.md)）
-9. hyogen コメントの strip（オプション）
-10. front matter の strip（デフォルト）
+2. 宣言ブロックの実行（`const` / `let` / 代入・`echo` 等。文書順）
+3. `extend` / block の解決
+4. hyogen ブロックの収集（`component … as` 登録・`include` 指示など）
+5. `include` の展開
+6. `if` / `each` 等の本文制御の展開（構造ディレクティブ。分岐・ループ本体中の `{{ }}` はまだ未評価）
+7. 本文の `{{ }}` 評価（component 呼び出し含む）
+8. **コードフェンス内の `${}` 展開**（[variables.md](./variables.md)。`each` 反復本体でも同様）
+9. **`toc` ヘルパの展開**（[toc.md](./toc.md)）
+10. hyogen コメントの strip（オプション）
+11. front matter の strip（デフォルト）
 
 補足:
 
-- 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行。step 5 の `if` / `each` 展開とは別）
+- 複数の hyogen ブロック（`@hg` / `@@`）は **文書出現順**に評価する（step 2 の宣言実行と step 4 の収集。step 6 の `if` / `each` 展開とは別）
 - **`if` / `each` が先**、その本体中および分岐外の `{{ }}` が後。**`{{ }}` の中で `if` / `each` は書けない**
-- フェンス内 `${}` は step 6 の直後（TOC の前）。フェンス外の `${…}` は触らない
+- フェンス内 `${}` は step 7 の直後（TOC の前）。フェンス外の `${…}` は触らない
 - 未展開ソースに `{{ }}` が残るプレビューは許容する（Markdown 互換の範囲）
 - **include / component 挿入時は直前見出しに合わせて見出しレベルをシフトする**（[templating.md](./templating.md)「見出し階層適合」）
 

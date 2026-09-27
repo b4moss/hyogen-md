@@ -10,13 +10,17 @@
 
 ## 構文
 
-次の **3 形式すべて** で `toc(N)` を書ける（等価）。
+`toc` / `toc(N)` は **HTML コメント内の hyogen ブロック**として書く（`scanHgBlocks` が拾うものだけが展開対象）。
 
 | 形式 | 例 |
 |------|-----|
-| HTML コメント（ショートハンド） | `<!--@@ toc(3) @@-->` |
-| インラインショートハンド | `@@ toc(3) @@` |
-| hyogen ブロック | `@hg toc(3) @hg` |
+| HTML コメント（`@@` ショートハンド） | `<!--@@ toc(3) @@-->` |
+| HTML コメント（`@hg` ブロック） | `<!--@hg toc(3) @endhg-->` |
+
+次は **対象外**（現行実装では TOC にならない）:
+
+- フェンス外の裸 `@@ toc(3) @@` / `@hg toc(3) @endhg`（HTML コメントで囲まない形）
+- 閉じが `@hg` だけの誤記（正は `@endhg`）
 
 展開後、該当ディレクティブは TOC の Markdown に **置換** される（[pipeline.md](./pipeline.md)）。
 
@@ -38,7 +42,7 @@
 
 ### 抽出元
 
-extend / include / component 展開後、式評価（`{{ }}`）完了後の **最終 Markdown** から抽出する。
+extend / include / component 展開後、式評価（`{{ }}`）およびフェンス内 `${}` 完了後の **最終 Markdown** から抽出する。
 
 | ソース | 含めるか |
 |--------|----------|
@@ -110,12 +114,12 @@ output（抜粋）:
 
 [pipeline.md](./pipeline.md) のファイル1本の処理順において、次の位置で実行する。
 
-1. …（front matter 〜 `{{ }}` 評価まで）
-2. **`toc` ヘルパの展開**（step 6 の直後）
+1. …（front matter 〜 `{{ }}` 評価・フェンス内 `${}` まで）
+2. **`toc` ヘルパの展開**（step 8 の直後＝フェンス `${}` の後）
 3. hyogen コメントの strip（オプション）
 4. front matter の strip（デフォルト）
 
-つまり `include` / `extend` / `if` / `each` / `component` / `{{ }}` がすべて完了した **後**、hyogen コメント除去の **前** に TOC を生成する。
+つまり `include` / `extend` / `if` / `each` / `component` / `{{ }}` / フェンス `${}` がすべて完了した **後**、hyogen コメント除去の **前** に TOC を生成する。
 
 ## エラー
 

@@ -16,7 +16,7 @@
 | フレームワーク | Vue + TypeScript、CodeMirror 6 |
 | hyogen-md | 開発時 alias で `app/` ソースを参照 |
 | ハイライト定義 | `highlighter/` 生成物＋`classifyHyogenTokens`（[highlighter.md](./highlighter.md)） |
-| 単独 `playground/` | **削除済み**（v0.10.0-docs.6 でサイト内統合） |
+| 単独 `playground/` | **ソースパッケージは削除済み**（v0.10.0-docs.6 でサイト内統合）。リポジトリに残る `playground/.vite` 等はキャッシュ残骸であり製品ではない |
 
 ---
 

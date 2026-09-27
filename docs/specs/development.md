@@ -83,8 +83,12 @@ app/test/{モジュール}/{関数・メソッド名}.integration.test.ts … �
 ルートから:
 
 ```bash
-make help          # ターゲット一覧
+make help          # ターゲット一覧（正。下記は要約）
+make install       # app/
+make install-docs  # docs-site/
+make install-hl    # highlighter/
 make install-all   # app + docs-site + highlighter
+make typecheck     # app typecheck
 make test          # app テスト (vitest run)
 make test-pg       # docs-site 内 Playground テスト
 make test-hl       # highlighter パッケージ テスト
@@ -96,10 +100,15 @@ make size          # dist / gzip / npm pack 容量
 make pack          # npm pack --dry-run
 make check         # 公開前: typecheck + build + test + pack
 make act           # ローカルで app CI（nektos/act）を再現
+make dev           # app watch-build
 make dev-docs      # docs-site 開発サーバ（/playground 含む）
 make build-docs    # docs-site 静的生成
 make check-docs    # docs-site 静的生成の確認
+make clean / clean-docs / clean-all
+make ruleset-help / ruleset-create / ruleset-apply / ruleset-check
 ```
+
+ランタイム要件: アプリ / docs-site / CI は **Node.js >= 24**（highlighter 単体は `>=22` 可）。詳細は [distribution.md](./distribution.md)。
 
 ### ローカル CI（`make act`）
 
