@@ -7,8 +7,10 @@ Japanese: [changelog_ja.md](./changelog_ja.md)
 ### 0.14.1 — Security / dependencies
 
 - Pin patched transitive dependencies via npm `overrides` (no intentional public API changes)
-- Docs-site / highlighter lockfiles updated for the same advisories where applicable
-- Remaining: `braces` / `sprintf-js` (no upstream patch yet); Vitest 3.x advisories need a major upgrade (deferred)
+- **Vitest 5** (+ `@vitest/coverage-v8`) across app / docs-site / highlighter — clears `@vitest/mocker` / tinypool advisories (devDependency only)
+- **vite-plugin-dts 5** — drops vulnerable `sprintf-js` path; emitted `.d.ts` unchanged vs 0.14.0 build
+- **Docs site** — Nuxt 4.6.x, `@nuxt/content` 3.16.x, `@nuxtjs/i18n` 10.6.x, and related lockfile updates
+- **Known remaining:** `braces` (no upstream patched release yet; also pulls `micromatch` / `fast-glob`). Docs-site `node-forge` via `listhen` likewise has no patched release yet (not a Dependabot alert today)
 
 ### 0.14.0 — Library / Playground
 
