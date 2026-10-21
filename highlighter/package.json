@@ -25,5 +25,9 @@
     "tsx": "^4.20.3",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "launch-editor": "2.14.2",
+    "source-map-js": "1.2.2"
   }
 }
