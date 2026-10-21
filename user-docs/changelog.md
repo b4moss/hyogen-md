@@ -1,8 +1,14 @@
 # Changelog
 
-Library vs Playground-only changes are labeled. Latest formal release: **`v0.14.0`**.
+Library vs Playground-only changes are labeled. Latest formal release: **`v0.14.1`**.
 
 Japanese: [changelog_ja.md](./changelog_ja.md)
+
+### 0.14.1 — Security / dependencies
+
+- Pin patched transitive dependencies via npm `overrides` (no intentional public API changes)
+- Docs-site / highlighter lockfiles updated for the same advisories where applicable
+- Remaining: `braces` / `sprintf-js` (no upstream patch yet); Vitest 3.x advisories need a major upgrade (deferred)
 
 ### 0.14.0 — Library / Playground
 

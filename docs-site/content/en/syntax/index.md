@@ -5,7 +5,7 @@ description: hyogen.md template syntax — expressions, blocks, includes, and co
 
 # Template Syntax
 
-hyogen.md extends Markdown with HTML-comment directives and Mustache-style expressions. Everything below is available in **@b4moss/hyogen-md@0.14.0**.
+hyogen.md extends Markdown with HTML-comment directives and Mustache-style expressions. Everything below is available in **@b4moss/hyogen-md@0.14.1**.
 
 ## Two layers
 

@@ -9,7 +9,7 @@
 
 ## 現行 npm
 
-**`@b4moss/hyogen-md@0.14.0`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
+**`@b4moss/hyogen-md@0.14.1`**（`app/package.json` を正）。詳細: [specs/distribution.md](./specs/distribution.md)。
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "name": "hyogen-md-highlighter",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "private": true,
   "type": "module",
   "description": "Repo-local hyogen syntax highlighter DSL and codegen (not published)",

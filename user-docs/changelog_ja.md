@@ -1,8 +1,14 @@
 # Changelog
 
-ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.14.0`** です。
+ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.14.1`** です。
 
 English: [changelog.md](./changelog.md)
+
+### 0.14.1 — セキュリティ / 依存関係
+
+- npm `overrides` で transitive 依存のパッチ版を固定（公開 API の意図的な変更なし）
+- 同じ advisories 向けに docs-site / highlighter の lockfile も更新
+- 未対応: `braces` / `sprintf-js`（upstream パッチなし）; Vitest 3.x 系はメジャーアップが必要なため延期
 
 ### 0.14.0 — ライブラリ / Playground
 

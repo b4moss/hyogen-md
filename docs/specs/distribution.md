@@ -13,7 +13,7 @@ npm パッケージとリポジトリ公開の決定事項。運用フローは 
 | 公開物 | `dist/`（ソースマップ除外）+ `LICENSE` + `README.md` + `README_ja.md`。Playground・docs-site・highlighter は **非同梱** |
 | ライセンス | MIT |
 | 初回公開 | **v0.10.0 済み** |
-| 現行版 | **`app/package.json` を正**（執筆時点: **0.14.0**） |
+| 現行版 | **`app/package.json` を正**（執筆時点: **0.14.1**） |
 | tag ↔ version | **一致**させる |
 | publish | **`release` ブランチ** merge → CD（Trusted Publishing / OIDC） |
 | 公開前 | `build` / `test` / `npm pack --dry-run` |
