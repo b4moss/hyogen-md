@@ -1,8 +1,15 @@
+---
+type: Rule
+title: TDD方針
+description: テスト駆動開発と氷山パターン、テスト仕様書の運用方針。
+tags: [charter, tdd, testing]
+timestamp: 2026-08-13T14:53:50Z
+---
 # TDD方針
 
 各プロジェクトでは、テストを以下の`TDD方針`にまとめ、開発においてはこれを基本とする。
 
-プロダクト仕様の正本は、各プロジェクトの `docs/main.md` および `docs/specs/`。  
+プロダクト仕様の正本は、各プロジェクトの `docs/README.md`（pillar）および `docs/specs/`。  
 アーキテクチャ: [thin-ddd.md](./thin-ddd.md)
 
 ## TDD
@@ -66,7 +73,7 @@
 
 ## TDD開発の実際
 
-- 仕様書がFIXする（各プロジェクトの `docs/main.md` / `docs/specs/`）。
+- 仕様書がFIXする（各プロジェクトの `docs/README.md` / `docs/specs/`）。
 - 仕様書に基づき、`テスト仕様書`を書く。
 - テスト仕様書の配置場所・分割は、各プロジェクトに依る。原則は `docs/tests/`。ドメイン別フォルダに分割してよい。
 - テスト仕様書には、規定のフォーマットに従って記述する。

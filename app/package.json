@@ -1,6 +1,6 @@
 {
   "name": "@b4moss/hyogen-md",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Extended Markdown template engine (hyogen.md)",
   "type": "module",
   "license": "MIT",
@@ -59,11 +59,11 @@
     "@types/path-browserify": "^1.0.3",
     "@types/picomatch": "^4.0.3",
     "@types/ws": "^8.18.1",
-    "@vitest/coverage-v8": "^3",
+    "@vitest/coverage-v8": "^5.0.5",
     "typescript": "^5.9.2",
-    "vite": "^7.0.6",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "vite": "^7.3.7",
+    "vite-plugin-dts": "^5.1.2",
+    "vitest": "^5.0.5"
   },
   "engines": {
     "node": ">=24"
@@ -82,5 +82,12 @@
   },
   "bin": {
     "hyogen-md": "./dist/cli.js"
+  },
+  "overrides": {
+    "brace-expansion@2": "2.1.7",
+    "brace-expansion@5": "5.0.12",
+    "fast-uri": "3.1.9",
+    "launch-editor": "2.14.2",
+    "source-map-js": "1.2.2"
   }
 }

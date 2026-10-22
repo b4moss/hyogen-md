@@ -2,6 +2,8 @@
 
 [charter/](./charter/) の内容より **本ファイルを優先**する。PO が必要に応じて追記・改訂する。
 
+憲章の取り込み元: [b4moss/charter](https://github.com/b4moss/charter) **v1.2.0**（`main` の `docs/` / OKF v0.1）。
+
 ---
 
 ## Git ブランチ（[git-rule.md](./charter/git-rule.md) への差分）
@@ -25,23 +27,25 @@
 
 ---
 
-## ドキュメント配置（[doc-rule.md](./charter/doc-rule.md) への差分）
+## ドキュメント配置（[doc-rule.md](./charter/doc-rule.md) / [OKF](./charter/okf/) への差分）
 
-| 項目 | 憲章 | hyogen-md |
-|------|------|-----------|
-| テスト仕様 | `docs/tests/` | **`app/test/specs/`** |
+| 項目 | 憲章（OKF v0.1） | hyogen-md |
+|------|------------------|-----------|
+| pillar | `docs/README.md` | **`docs/README.md`**（旧 `main.md`） |
+| テスト仕様 | `docs/tests/{domain}/`（SemVer フォルダ禁止） | **ドメイン索引は `docs/tests/`**。版別の詳細 TDD 入力はこれまでどおり **`app/test/specs/vX.Y.Z.md`**（アプリテストの書き換えはしない） |
+| specs | ドメイン別 | **ドメイン単位のフラットファイル**（`specs/{domain}.md`）。サブフォルダ化は任意 |
 | 未実装・追加機能 | `docs/plans/` | **GitHub Issues / Milestones**（`docs/plans/README.md` は索引のみ） |
 | アーカイブ | `docs/_archived/` | **`docs/_archived/`** |
 | 薄い DDD | Web/デスクトップは必須 | CRUD Trait **不要可**（CLI パッケージ） |
 
-`docs/` ルートは [charter/doc-rule.md](./charter/doc-rule.md) に従う。**未実装・追加機能は GitHub Issues が正**。
+`docs/` ルートは [charter/doc-rule.md](./charter/doc-rule.md) と [charter/okf/](./charter/okf/) に従う。**未実装・追加機能は GitHub Issues が正**。
 
 ---
 
 ## リモート
 
 - 公開 OSS 正本: **`github`**（`b4moss/hyogen-md`）
-- 憲章: **`charter`** remote → `charter/docs` をマージ（[specs/repository.md](./specs/repository.md)）
+- 憲章: **`charter`** remote → **`charter/main`** の `docs/` を取り込む（[specs/repository.md](./specs/repository.md)）。かつての `docs` 専用ブランチは使わない
 
 -----
 

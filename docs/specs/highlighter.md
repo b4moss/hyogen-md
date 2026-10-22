@@ -34,5 +34,5 @@ hyogen 向けシンタックスハイライト定義。Issue [#111](https://gith
 
 ## テスト
 
-- テスト仕様: [`app/test/specs/v0.14.0.md`](../../app/test/specs/v0.14.0.md)
+- テスト仕様: [`docs/tests/highlighter/`](../tests/highlighter/) / [`app/test/specs/v0.14.0.md`](../../app/test/specs/v0.14.0.md)
 - 実行: `make test-hl` / `make test-pg`

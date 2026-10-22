@@ -33,6 +33,7 @@ siteName: hyogen-md
 siteUrl: https://hyogenmd.oss.b4m.jp
 description: Extended Markdown template engine for TypeScript / JavaScript
 githubUrl: https://github.com/b4moss/hyogen-md
+# ヘッダー右端の npm アイコン。空 / 未設定なら非表示。
 npmUrl: https://www.npmjs.com/package/@b4moss/hyogen-md
 footerText: "MIT License · 2026 Bicycle for Mind LLC."
 

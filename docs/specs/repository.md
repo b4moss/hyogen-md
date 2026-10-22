@@ -1,7 +1,7 @@
 # リポジトリ運用・ブランチ・CI/CD
 
 Playground の公開面、Git ブランチ戦略、CI/CD、docs 系バージョンの運用を定める。  
-ライブラリ機能仕様は同ディレクトリ（`api.md` 等）および [main.md](../main.md) が正。本ファイルは **リポジトリ運用の正**。
+ライブラリ機能仕様は同ディレクトリ（`api.md` 等）および [README.md](../README.md)（pillar）が正。本ファイルは **リポジトリ運用の正**。
 
 Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う。本プロジェクト固有の差分は [override-charter.md](../override-charter.md) を優先する。
 
@@ -15,7 +15,7 @@ Git の一般原則は [charter/git-rule.md](../charter/git-rule.md) に従う�
 |------|-----|------|
 | **`origin`** | 社内 `b4m-oss/hyogen-md` | ブランチ同期・社内作業 |
 | **`github`** | 公開 `b4moss/hyogen-md` | OSS 正本・CI/CD・Pages |
-| **`charter`** | `https://github.com/b4moss/charter.git` | 開発憲章（`docs` ブランチ）。更新時は `git fetch charter` → `git merge charter/docs` |
+| **`charter`** | `https://github.com/b4moss/charter.git` | 開発憲章（**`main` の `docs/`** / OKF v0.1）。更新時は `git fetch charter` → `git merge charter/main`（共有対象は `docs/`。かつての `docs` 専用ブランチは使わない） |
 
 憲章の取り込み方式は [charter/README.md](../charter/README.md) を参照。プロジェクト側で憲章ファイルを上書き・削除しない。
 
@@ -139,7 +139,7 @@ flowchart LR
 |--------|----------|------|
 | **PR** base **`dev-v*`**（`app/**` 等） | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) | app: `make check` |
 | **PR** **`hotfix/*` → `main`**（同上 paths） | 同上 | app: `make check`（通常の `develop`→`main` では job を skip） |
-| **PR** base **`doc-site`**（`docs-site/**` / `app/**` 等） | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs` |
+| **PR** base **`doc-site`**（`docs-site/**` / `app/**` 等） | [`.github/workflows/ci-docs.yml`](../../.github/workflows/ci-docs.yml) | `make test-pg` + `make build-docs`。**path に `highlighter/**` は含まれない**（highlighter のみの変更では docs CI は走らない） |
 | **`develop` / `main` / `release` への通常昇格 PR** | — | **機能 CI なし**（`dev-v*` で通済みとみなす） |
 
 `paths` フィルタで docs / specs のみの変更では app / docs CI を起動しない。ローカルでは PR 前に **`make act`** で app CI 相当を再現できる（[development.md](./development.md)）。
@@ -160,7 +160,7 @@ flowchart LR
 
 | 項目 | 方針 |
 |------|------|
-| トリガ | **`doc-site` への push**（`docs-site/**` / `app/**` 等。および手動 `workflow_dispatch`） |
+| トリガ | **`doc-site` への push**（`docs-site/**` / `app/**` / `Makefile` / workflow。および手動 `workflow_dispatch`）。**`highlighter/**` は path フィルタ外** |
 | Workflow | [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) |
 | 動作 | `make build-docs` のあと `actions/deploy-pages` で公開 |
 
@@ -187,9 +187,22 @@ flowchart LR
 
 ---
 
+## GitHub Release（tag）
+
+| 項目 | 方針 |
+|------|------|
+| トリガ | **任意 tag の push** |
+| Workflow | [`.github/workflows/release-on-tag.yml`](../../.github/workflows/release-on-tag.yml) |
+| 動作 | 未作成なら `gh release create`（`--generate-notes`）。tag 名に `alpha` / `beta` / `rc` / `rev` / `doc` / `docs` を含む場合は **prerelease** |
+| 既存 | 同名 Release があればスキップ |
+
+npm publish とは独立（`release` ブランチ CD が npm、tag push が GitHub Release）。
+
+---
+
 ## ブランチ保護・権限
 
-対象は **GitHub `b4m-oss/hyogen-md`**（社内 `origin` はブランチ同期のみでよい）。
+公開 OSS **`b4moss/hyogen-md`**（CI/CD・Pages・Trusted Publisher の実行面）を対象とする。社内 `b4m-oss/hyogen-md`（`origin`）はブランチ同期用。
 
 | ブランチ | 設定 |
 |----------|------|
@@ -212,6 +225,7 @@ flowchart LR
 - [x] docs CI: PR → `doc-site`（`.github/workflows/ci-docs.yml`）
 - [x] Quality: `main` push（app paths）→ Codecov（`.github/workflows/quality.yml`）；Scorecard は週次；CodeQL は advanced のみ（default setup 無効）+ `main` paths / 週次
 - [x] CD: `release` マージ → npm publish（`.github/workflows/publish.yml` + 既存版スキップ）
+- [x] tag push → GitHub Release（`.github/workflows/release-on-tag.yml`）
 - [x] ドキュメントサイトを GitHub Pages 公開し、README から導線（`.github/workflows/pages.yml` + `https://hyogenmd.oss.b4m.jp`）
 - [x] ドキュメントサイト（docs.5〜8）: Nuxt Content・Playground 内包・テーマ・API/構文網羅 → [docs-site.md](./docs-site.md)
 

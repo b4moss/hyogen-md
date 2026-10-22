@@ -1,8 +1,16 @@
 # Changelog
 
-ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.14.0`** です。
+ライブラリ変更と Playground 専用を区別して記載します。最新の正式リリースは **`v0.14.1`** です。
 
 English: [changelog.md](./changelog.md)
+
+### 0.14.1 — セキュリティ / 依存関係
+
+- npm `overrides` で transitive 依存のパッチ版を固定（公開 API の意図的な変更なし）
+- **Vitest 5**（`@vitest/coverage-v8` 含む）を app / docs-site / highlighter で更新 — `@vitest/mocker` / tinypool 系を解消（開発用依存のみ）
+- **vite-plugin-dts 5** — 脆弱な `sprintf-js` 経路を除去。出力 `.d.ts` は 0.14.0 ビルドと同一
+- **ドキュメントサイト** — Nuxt 4.6.x、`@nuxt/content` 3.16.x、`@nuxtjs/i18n` 10.6.x など
+- **既知の残件:** `braces`（upstream に patched version なし。`micromatch` / `fast-glob` 経由）。docs-site の `node-forge`（`listhen` 経由）も現状パッチなし（Dependabot アラートには未掲載）
 
 ### 0.14.0 — ライブラリ / Playground
 

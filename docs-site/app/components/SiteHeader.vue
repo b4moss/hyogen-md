@@ -38,7 +38,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
         <HeaderPrefsMenu />
         <a
           v-if="githubUrl"
-          class="icon-link"
+          class="ext-link"
           :href="githubUrl"
           target="_blank"
           rel="noopener noreferrer"
@@ -46,7 +46,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
           :title="t('nav.github')"
         >
           <svg
-            class="icon"
+            class="ext-icon"
             viewBox="0 0 16 16"
             width="20"
             height="20"
@@ -60,7 +60,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
         </a>
         <a
           v-if="npmUrl"
-          class="icon-link"
+          class="ext-link"
           :href="npmUrl"
           target="_blank"
           rel="noopener noreferrer"
@@ -68,7 +68,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
           :title="t('nav.npm')"
         >
           <svg
-            class="icon"
+            class="ext-icon"
             viewBox="0 0 16 16"
             width="20"
             height="20"
@@ -76,7 +76,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
           >
             <path
               fill="currentColor"
-              d="M0 0v16h16V0H0zm13 13h-2V5H8.5v8h-5V3H13v10z"
+              d="M0 0v16h16V0H0zm13 13h-2V5H8v8H3V3h10v10z"
             />
           </svg>
         </a>
@@ -189,7 +189,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
   flex-shrink: 0;
 }
 
-.icon-link {
+.ext-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -200,7 +200,7 @@ const npmUrl = computed(() => String(config.public.npmUrl || ""));
   text-decoration: none;
 }
 
-.icon-link:hover {
+.ext-link:hover {
   color: var(--color-ink);
   background: var(--color-accent-soft);
 }

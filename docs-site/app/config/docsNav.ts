@@ -10,6 +10,18 @@ export type DocsNavItem = {
 }
 
 /**
+ * Accordion behaviour for nested sidebar groups.
+ * - expandable: false → children always visible (legacy indent only)
+ * - defaultOpen: initial open state when expandable
+ * - persist: remember open/closed per parent key in localStorage
+ */
+export const docsNavAccordion = {
+  expandable: true,
+  defaultOpen: false,
+  persist: true,
+} as const
+
+/**
  * Edit this list to shape the docs sidebar / pager.
  * Labels come from `i18n/locales/{ja,en}.ts` → `nav.<labelKey>`.
  */

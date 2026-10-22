@@ -15,7 +15,7 @@
 | hyogen-md | 開発時 alias で `app/` ソース |
 | ホスティング | GitHub Actions → Pages（トリガ: **`doc-site`**）。独自ドメイン `docs-site/public/CNAME` |
 | 言語 | `@nuxtjs/i18n` prefix（`/ja/…`、`/en/…`。`/` は locale redirect） |
-| UI 殻 | b4moss/git-template `doc-site` 系（ヘッダー・sidebar・pager） |
+| UI 殻 | b4moss/git-template `doc-site` 系（ヘッダー・accordion sidebar・gear prefs・pager） |
 
 ---
 
