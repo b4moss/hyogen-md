@@ -1,6 +1,6 @@
 # 公開 API
 
-実装済みの公開面（`@b4moss/hyogen-md@0.14.0`）。型・符号の正は `app/src/types.ts` / `app/src/index.ts` / `app/src/client.ts` / `app/src/config/`。
+実装済みの公開面（`@b4moss/hyogen-md@0.14.1`）。型・符号の正は `app/src/types.ts` / `app/src/index.ts` / `app/src/client.ts` / `app/src/config/`。
 
 ## レンダリング入口
 
