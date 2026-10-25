@@ -1,7 +1,7 @@
 # 開発方針
 
 機能仕様は [specs/](./) が正。本書は **実装の進め方** を定める。  
-TDD の一般原則は [charter/tdd.md](../charter/tdd.md) に従い、本書は hyogen-md 固有の置き場・コマンドを補足する。  
+TDD の一般原則は [tdd.md](https://github.com/b4moss/charter/blob/v1/docs/charter/tech/tdd.md) に従い、本書は hyogen-md 固有の置き場・コマンドを補足する。  
 ブランチ・CI/CD・公開運用は [repository.md](./repository.md)。  
 ドキュメントサイトは [docs-site.md](./docs-site.md)。
 
@@ -9,7 +9,7 @@ TDD の一般原則は [charter/tdd.md](../charter/tdd.md) に従い、本書は
 
 ## TDD 実装
 
-[charter/tdd.md](../charter/tdd.md) の Red → Green → Refactor に従う。  
+[tdd.md](https://github.com/b4moss/charter/blob/v1/docs/charter/tech/tdd.md) の Red → Green → Refactor に従う。  
 本プロジェクトでは **1 関数・1 メソッドごと**に単体テストと結合テストを書く（詳細は下記）。
 
 ### 手順
@@ -133,8 +133,8 @@ npm run build
 
 ## 関連
 
-- [charter/tdd.md](../charter/tdd.md) … TDD 一般原則
-- [charter/okf/](../charter/okf/) … OKF v0.1
+- [tdd.md](https://github.com/b4moss/charter/blob/v1/docs/charter/tech/tdd.md) … TDD 一般原則
+- [doc-rule.md](https://github.com/b4moss/charter/blob/v1/docs/charter/doc-rule.md) … 文書ルール（OKF）
 - [tests/](../tests/) … ドメイン別テスト索引
 - [override-charter.md](../override-charter.md) … `app/test/specs/` への差分
 - [roadmap.md](../roadmap.md) … 版一覧
