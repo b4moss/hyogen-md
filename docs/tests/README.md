@@ -33,7 +33,7 @@ OKF v0.1 では `docs/tests/` を **`docs/specs/` と同じドメイン切り**�
 | [repository](./repository/) | [specs/repository.md](../specs/repository.md) | （運用手順。自動テスト仕様は版ファイルに分散） |
 | [development](./development/) | [specs/development.md](../specs/development.md) | TDD 手順の正は development.md。入力は `app/test/specs/` |
 
-override: [override-charter.md](../override-charter.md)。OKF の定義: [charter/okf/](../charter/okf/)。
+override: [override-charter.md](../override-charter.md)。OKF の定義: [doc-rule.md](https://github.com/b4moss/charter/blob/v1/docs/charter/doc-rule.md)。
 
 ----
 
