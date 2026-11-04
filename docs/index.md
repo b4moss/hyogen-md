@@ -10,7 +10,7 @@ okf_version: "0.1"
 
 * [README.md](README.md) - プロダクト目的・スコープ・技術方針の pillar（正）
 * [OKF / 文書ルール](https://github.com/b4moss/charter/blob/v1/docs/charter/doc-rule.md) - 憲章側の文書ルール（OKF）
-* [憲章（charter）](charter/) - 開発方針の最上位取り決めと個別ルール
+* [憲章（charter）](https://github.com/b4moss/charter/tree/v1/docs/charter) - 開発方針の最上位取り決めと個別ルール
 * [このプロジェクト独自のルール](override-charter.md) - 憲章をオーバーライドする範囲
 
 # Project Docs
